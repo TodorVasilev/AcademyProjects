@@ -82,7 +82,7 @@ namespace SmartGarage.Areas.Identity.Pages.Account
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
                 var signedUser = await _userManager.FindByEmailAsync(Input.Email);
 
-                if(signedUser.IsDeleted == true)
+                if(signedUser != null && signedUser.IsDeleted == true)
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
                     return Page();
