@@ -107,6 +107,10 @@ namespace SmartGarage
                     };
                 });
 
+                .AddEntityFrameworkStores<SmartGarageContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddTransient<IEmailsService, GmailSmtpEmailsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
