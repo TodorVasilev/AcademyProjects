@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace SmartGarage.Service
+namespace SmartGarage.Service.ServiceContracts
 {
     public interface IEmailsService
     {
