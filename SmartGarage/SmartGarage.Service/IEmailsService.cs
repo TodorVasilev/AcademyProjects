@@ -6,6 +6,6 @@ namespace SmartGarage.Service
     {
         Task SendRegistrationEmail(string email, string template);
 
-        Task ReSendRegistrationEmail( string email);
+       // Task ReSendRegistrationEmail( string email);
     }
 }
