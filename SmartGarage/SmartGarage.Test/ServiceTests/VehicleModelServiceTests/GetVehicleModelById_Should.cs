@@ -4,9 +4,6 @@ using SmartGarage.Data;
 using SmartGarage.Data.Models;
 using SmartGarage.Service;
 using SmartGarage.Service.DTOs.GetDTOs;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Test.ServiceTests.VehicleModelServiceTests
@@ -43,29 +40,29 @@ namespace SmartGarage.Test.ServiceTests.VehicleModelServiceTests
             }
         }
 
-        //[TestMethod]
-        //public async Task ReturnNull_When_VehicleDoesNotExists()
-        //{
-        //    //Arrange
-        //    var options = Util.GetOptions(nameof(ReturnNull_When_VehicleDoesNotExists));
-        //    var vehicleId = -1;
-        //    var vehicle = new Vehicle();
+        [TestMethod]
+        public async Task ReturnNull_When_VehicleModelDoesNotExists()
+        {
+            //Arrange
+            var options = Util.GetOptions(nameof(ReturnNull_When_VehicleModelDoesNotExists));
+            var vehicleId = -1;
+            var vehicle = new VehicleModel();
 
-        //    using (var arrCtx = new SmartGarageContext(options))
-        //    {
-        //        arrCtx.SeedData();
-        //        await arrCtx.SaveChangesAsync();
-        //    }
+            using (var arrCtx = new SmartGarageContext(options))
+            {
+                arrCtx.SeedData();
+                await arrCtx.SaveChangesAsync();
+            }
 
-        //    //Act
-        //    using (var actCtx = new SmartGarageContext(options))
-        //    {
-        //        var sut = new VehicleService(actCtx);
-        //        var result = await sut.GetAsync(vehicleId);
+            //Act
+            using (var actCtx = new SmartGarageContext(options))
+            {
+                var sut = new VehicleModelService(actCtx);
+                var result = await sut.GetAsync(vehicleId);
 
-        //        //Assert
-        //        Assert.IsNull(result);
-        //    }
-        //}
+                //Assert
+                Assert.IsNull(result);
+            }
+        }
     }
 }

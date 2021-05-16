@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SmartGarage.Data;
 using SmartGarage.Data.Helpers;
+using SmartGarage.Data.Models;
 using SmartGarage.Data.QueryObjects;
+using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.ServiceContracts;
 
@@ -21,6 +23,26 @@ namespace SmartGarage.Service
         }
 
         public SmartGarageContext Context { get; }
+
+        public async Task<GetVehicleModelDTO> CreateAsync(CreateVehicleModelDTO vehicleModelInformation)
+        {
+            var vehicleModelToAdd = new VehicleModel
+            {
+                Name = vehicleModelInformation.Name,
+                VehicleTypeId = vehicleModelInformation.VehicleTypeId,
+                ManufacturerId = vehicleModelInformation.ManufacturerId
+            };
+
+            await Context.VehicleModels.AddAsync(vehicleModelToAdd);
+            await Context.SaveChangesAsync();
+
+            var vehicleModel = await Context.VehicleModels
+               .Include(vm => vm.Manufacturer)
+               .Include(vm => vm.VehicleType)
+               .FirstOrDefaultAsync(mv => mv.Id == vehicleModelToAdd.Id);
+
+            return new GetVehicleModelDTO(vehicleModel);
+        }
 
         public async Task<Pager<GetVehicleModelDTO>> GetAllAsync(PaginationQueryObject pagination)
         {

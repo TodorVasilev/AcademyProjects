@@ -13,7 +13,7 @@ namespace SmartGarage.Service.ServiceContracts
 
         Task<GetVehicleDTO> CreateAsync(CreateVehicleDTO vehicleInformation);
 
-        Task<GetVehicleDTO> UpdateAsync(UpdateVehicleDTO update, int id);
+        Task<GetVehicleDTO> UpdateAsync(UpdateVehicleDTO updateInformation, int id);
 
         Task<GetVehicleDTO> GetAsync(int id);
 

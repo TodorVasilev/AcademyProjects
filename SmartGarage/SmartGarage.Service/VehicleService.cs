@@ -123,7 +123,7 @@ namespace SmartGarage.Service
             return true;
         }
 
-        public async Task<GetVehicleDTO> UpdateAsync(UpdateVehicleDTO update, int id)
+        public async Task<GetVehicleDTO> UpdateAsync(UpdateVehicleDTO updateInformation, int id)
         {
             var vehicle = await Context.Vehicles
               .Include(v => v.User)
@@ -136,7 +136,7 @@ namespace SmartGarage.Service
                 return null;
             }
 
-            vehicle.UpdateVehicle(update);
+            vehicle.UpdateVehicle(updateInformation);
 
             Context.Update(vehicle);
             await Context.SaveChangesAsync();
