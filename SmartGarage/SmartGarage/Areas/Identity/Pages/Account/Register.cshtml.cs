@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using SmartGarage.Data.Models;
 using SmartGarage.Service;
+using SmartGarage.Service.ServiceContracts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

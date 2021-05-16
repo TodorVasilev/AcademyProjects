@@ -1,5 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartGarage.Data;
+using SmartGarage.Data.Helpers;
+using SmartGarage.Data.QueryObjects;
 using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.ServiceContracts;
 using System;
@@ -19,27 +21,45 @@ namespace SmartGarage.Service
 
         public SmartGarageContext Context { get; set; }
 
-        public async Task<List<GetVehicleDTO>> GetAllAsync(string name)
+        public async Task<Pager<GetVehicleDTO>> GetAllAsync(PaginationQueryObject pagination, string name)
         {
+            var skipPages = (pagination.Page - 1) * pagination.ItemsOnPage;
+
             var vehicles = Context.Vehicles
                 .Include(v => v.User)
                 .Include(v => v.VehicleModel)
                     .ThenInclude(vm => vm.Manufacturer)
                     .AsQueryable();
 
-            var vehiclesDTO = new List<GetVehicleDTO>();
-
-            foreach (var vehicle in vehicles)
+            if(name != default)
             {
-                vehiclesDTO.Add(new GetVehicleDTO(vehicle));
+                vehicles = vehicles.Where(v => v.User.UserName == name);
             }
 
-            return vehiclesDTO;
+            var count = vehicles.Count();
+
+            var vehiclesDTO = await vehicles.Skip(skipPages)
+                .Take(pagination.ItemsOnPage)
+                .Select(x => new GetVehicleDTO(x))
+                .ToListAsync();
+
+            Pager<GetVehicleDTO> result = new Pager<GetVehicleDTO>(vehiclesDTO, pagination)
+            {
+                Count = count
+            };
+
+            return result;
         }
 
         public async Task<GetVehicleDTO> GetAsync(int id)
         {
-            throw new NotImplementedException();
+            var vehicle = await Context.Vehicles
+               .Include(v => v.User)
+               .Include(v => v.VehicleModel)
+                   .ThenInclude(vm => vm.Manufacturer)
+               .FirstOrDefaultAsync(v => v.Id == id);
+
+            return new GetVehicleDTO(vehicle);
         }
     }
 }
