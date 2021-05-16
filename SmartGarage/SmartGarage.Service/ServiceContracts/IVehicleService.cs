@@ -1,7 +1,6 @@
-﻿using SmartGarage.Service.DTOs.GetDTOs;
-using System;
+﻿using SmartGarage.Data.QueryObjects;
+using SmartGarage.Service.DTOs.GetDTOs;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Service.ServiceContracts
@@ -10,6 +9,6 @@ namespace SmartGarage.Service.ServiceContracts
     {
         Task<GetVehicleDTO> GetAsync(int id);
 
-        Task<List<GetVehicleDTO>> GetAllAsync(string name);
+        Task<List<GetVehicleDTO>> GetAllAsync(PaginationQueryObject pagination, string name);
     }
 }
