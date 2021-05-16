@@ -3,15 +3,18 @@ using SmartGarage.Data;
 using SmartGarage.Data.Helpers;
 using SmartGarage.Data.QueryObjects;
 using SmartGarage.Service.DTOs.GetDTOs;
+using SmartGarage.Service.DTOs.UpdateDTOs;
 using SmartGarage.Service.ServiceContracts;
-using System;
-using System.Collections.Generic;
+using SmartGarage.Service.ServiceHelpes;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Service
 {
+    /// <summary>
+    /// This class is responsible for CRUD operations performed on the vehicles.
+    /// </summary>
+    /// <seealso cref="SmartGarage.Service.ServiceContracts.IVehicleService" />
     public class VehicleService : IVehicleService
     {
         public VehicleService(SmartGarageContext context)
@@ -31,7 +34,7 @@ namespace SmartGarage.Service
                     .ThenInclude(vm => vm.Manufacturer)
                     .AsQueryable();
 
-            if(name != default)
+            if (name != default)
             {
                 vehicles = vehicles.Where(v => v.User.UserName == name);
             }
@@ -58,6 +61,19 @@ namespace SmartGarage.Service
                .Include(v => v.VehicleModel)
                    .ThenInclude(vm => vm.Manufacturer)
                .FirstOrDefaultAsync(v => v.Id == id);
+
+            return new GetVehicleDTO(vehicle);
+        }
+
+        public async Task<GetVehicleDTO> Update(UpdateVehicleDTO update, int id)
+        {
+            var vehicle = await Context.Vehicles
+              .Include(v => v.User)
+              .Include(v => v.VehicleModel)
+                  .ThenInclude(vm => vm.Manufacturer)
+              .FirstOrDefaultAsync(v => v.Id == id);
+
+            vehicle.UpdateVehicle(update);
 
             return new GetVehicleDTO(vehicle);
         }
