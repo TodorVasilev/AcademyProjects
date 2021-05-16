@@ -62,10 +62,15 @@ namespace SmartGarage.Service
                    .ThenInclude(vm => vm.Manufacturer)
                .FirstOrDefaultAsync(v => v.Id == id);
 
+            if (vehicle == null)
+            {
+                return null;
+            }
+
             return new GetVehicleDTO(vehicle);
         }
 
-        public async Task<GetVehicleDTO> Update(UpdateVehicleDTO update, int id)
+        public async Task<bool> RemoveAsync(int id)
         {
             var vehicle = await Context.Vehicles
               .Include(v => v.User)
@@ -73,7 +78,36 @@ namespace SmartGarage.Service
                   .ThenInclude(vm => vm.Manufacturer)
               .FirstOrDefaultAsync(v => v.Id == id);
 
+            if (vehicle == null)
+            {
+                return false;
+            }
+
+            vehicle.IsDeleted = true;
+
+            Context.Update(vehicle);
+            Context.SaveChanges();
+
+            return true;
+        }
+
+        public async Task<GetVehicleDTO> UpdateAsync(UpdateVehicleDTO update, int id)
+        {
+            var vehicle = await Context.Vehicles
+              .Include(v => v.User)
+              .Include(v => v.VehicleModel)
+                  .ThenInclude(vm => vm.Manufacturer)
+              .FirstOrDefaultAsync(v => v.Id == id);
+
+            if (vehicle == null)
+            {
+                return null;
+            }
+
             vehicle.UpdateVehicle(update);
+
+            Context.Update(vehicle);
+            Context.SaveChanges();
 
             return new GetVehicleDTO(vehicle);
         }

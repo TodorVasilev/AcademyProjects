@@ -8,7 +8,9 @@ namespace SmartGarage.Service.ServiceContracts
 {
     interface IVehicleService
     {
-        Task<GetVehicleDTO> Update(UpdateVehicleDTO update, int id);
+        Task<bool> RemoveAsync(int id);
+
+        Task<GetVehicleDTO> UpdateAsync(UpdateVehicleDTO update, int id);
 
         Task<GetVehicleDTO> GetAsync(int id);
 
