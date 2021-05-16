@@ -8,6 +8,6 @@ namespace SmartGarage.Service.Contracts
 {
     public interface IUserService
     {
-        Task<UserDTO> AuthenticateAsync(LoginDTO loginDTO);
+        Task<UserDTO> AuthenticateAsync(LoginDTO loginDTO);       
     }
 }

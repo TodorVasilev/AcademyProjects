@@ -19,6 +19,7 @@ using SmartGarage.Service.Helpers;
 using SmartGarage.Service.Contracts;
 using SmartGarage.Service.Services;
 
+
 namespace SmartGarage
 {
     public class Startup
@@ -36,22 +37,55 @@ namespace SmartGarage
             services.AddDbContext<SmartGarageContext>(options =>
            options.UseSqlServer(
                Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddIdentity<User, Role>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = false;
+                options.Password.RequireNonAlphanumeric = false;
+
+            })
+                .AddEntityFrameworkStores<SmartGarageContext>()
+                .AddDefaultTokenProviders();
+
+            services.AddScoped<IUserService, UserService>();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SmartGarage API", Version = "v1", Description = "SmartGarage REST Api" });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 // c.IncludeXmlComments(xmlPath);
+               
+                var securityScheme = new OpenApiSecurityScheme
+                {
+                    Name = "JWT Authentication",
+                    Description = "Enter JWT Bearer token **_only_**",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "bearer", // must be lower case
+                    BearerFormat = "JWT",
+                    Reference = new OpenApiReference
+                    {
+                        Id = JwtBearerDefaults.AuthenticationScheme,
+                        Type = ReferenceType.SecurityScheme
+                    }
+                };
+                c.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                    {
+                        {securityScheme, new string[] { }}
+                    });
 
             });
 
-            // configure strongly typed settings objects
+            //configure strongly typed settings objects
             var appSettingsSection = this.Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
 
-            // configure jwt authentication
+            //configure jwt authentication
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
 
@@ -72,17 +106,6 @@ namespace SmartGarage
                         ValidateAudience = false
                     };
                 });
-
-            services.AddIdentity<User, Role>(options =>
-            {
-                options.SignIn.RequireConfirmedAccount = false;
-                options.Password.RequireNonAlphanumeric = false;
-
-            })
-                .AddEntityFrameworkStores<SmartGarageContext>()
-                .AddDefaultTokenProviders();
-
-            services.AddScoped<IUserService, UserService>(); 
 
         }
 
