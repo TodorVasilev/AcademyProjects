@@ -1,13 +1,25 @@
-﻿using Microsoft.AspNetCore.Identity;
-using SmartGarage.Data.Contracts;
+﻿using SmartGarage.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 
-namespace SmartGarage.Data.Models
+namespace SmartGarage.Service.DTOs
 {
-    public class User : IdentityUser<int>, IIsDeletable
+    public class UserDTO
     {
+        public UserDTO(User user)
+        {
+            this.FirstName = user.FirstName;
+            this.LastName = user.LastName;
+            this.PhoneNumber = user.PhoneNumber;
+            this.Age = user.Age;
+            this.DrivingLicenseNumber = user.DrivingLicenseNumber;
+            this.Address = user.Address;
+
+        }
+        public int Id { get; set; }
+
         [Required]
         [MinLength(2), MaxLength(20)]
         public string FirstName { get; set; }
@@ -18,7 +30,7 @@ namespace SmartGarage.Data.Models
 
         [StringLength(10)]
         [DataType(DataType.PhoneNumber)]
-        public override string PhoneNumber { get => base.PhoneNumber; set => base.PhoneNumber = value; }
+        public string PhoneNumber { get; set; }
 
         [Required]
         [Range(18, 100)]
@@ -30,12 +42,6 @@ namespace SmartGarage.Data.Models
         [Required]
         public string Address { get; set; }
 
-        public bool IsDeleted { get; set; }
 
-        public string Role { get; set; }
-
-        public string Token { get; set; }
-
-        public List<Vehicle> Vehicles { get; set; } = new List<Vehicle>();
     }
 }
