@@ -12,25 +12,47 @@ using System.Threading.Tasks;
 namespace SmartGarage.Test.ServiceTests.ManufacturerServiceTests
 {
     [TestClass]
-    public class UpdateManufacturer_Should
+    public class GetManufacturerById_Should
     {
         [TestMethod]
-        public async Task UpdateManufacturer_When_ManufacturerExist()
+        public async Task ReturnCorrectManufacturerWithSpecificId()
         {
             //Arrange
-            var options = Util.GetOptions(nameof(UpdateManufacturer_When_ManufacturerExist));
-            var updateInfo = new ManufacturerDTO(new Manufacturer { Name = "BMW" });
-            var manufacturerId = 1;
+            var options = Util.GetOptions(nameof(ReturnCorrectManufacturerWithSpecificId));
+            var manufacturerId = 4;
+            var manufacturer = new Manufacturer();
 
             using (var arrCtx = new SmartGarageContext(options))
             {
                 arrCtx.SeedData();
                 await arrCtx.SaveChangesAsync();
-
-                var vehicleModelToUpdate = await arrCtx.Manufacturers
+                manufacturer = await arrCtx.Manufacturers
                     .FirstOrDefaultAsync(v => v.Id == manufacturerId);
+            }
 
-                vehicleModelToUpdate.Name = updateInfo.Name;
+            //Act
+            using (var actCtx = new SmartGarageContext(options))
+            {
+                var sut = new ManufacturerService(actCtx);
+                var result = await sut.GetAsync(manufacturerId);
+
+                //Assert
+                Assert.AreEqual(manufacturer.Name, result.Name);
+                Assert.IsInstanceOfType(result, typeof(ManufacturerDTO));
+            }
+        }
+
+        [TestMethod]
+        public async Task ReturnNull_When_ManufacturerDoesNotExists()
+        {
+            //Arrange
+            var options = Util.GetOptions(nameof(ReturnNull_When_ManufacturerDoesNotExists));
+            var manufacturerId = -1;
+            var manufacturer = new Manufacturer();
+
+            using (var arrCtx = new SmartGarageContext(options))
+            {
+                arrCtx.SeedData();
                 await arrCtx.SaveChangesAsync();
             }
 
@@ -38,27 +60,7 @@ namespace SmartGarage.Test.ServiceTests.ManufacturerServiceTests
             using (var actCtx = new SmartGarageContext(options))
             {
                 var sut = new ManufacturerService(actCtx);
-                var result = await sut.UpdateAsync(updateInfo, manufacturerId);
-
-                //Assert
-                Assert.AreEqual(updateInfo.Name, result.Name);
-                Assert.IsInstanceOfType(result, typeof(ManufacturerDTO));
-            }
-        }
-
-        [TestMethod]
-        public async Task UpdateManufacturer_When_ManufacturerDoesNotExist()
-        {
-            //Arrange
-            var options = Util.GetOptions(nameof(UpdateManufacturer_When_ManufacturerDoesNotExist));
-            var updateInfo = new ManufacturerDTO(new Manufacturer { Name = "BMW" });
-            var manufacturerId = -1;
-
-            //Act
-            using (var actCtx = new SmartGarageContext(options))
-            {
-                var sut = new ManufacturerService(actCtx);
-                var result = await sut.UpdateAsync(updateInfo, manufacturerId);
+                var result = await sut.GetAsync(manufacturerId);
 
                 //Assert
                 Assert.IsNull(result);

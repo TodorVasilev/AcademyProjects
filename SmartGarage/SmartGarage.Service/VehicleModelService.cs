@@ -45,19 +45,19 @@ namespace SmartGarage.Service
         {
             var skipPages = (pagination.Page - 1) * pagination.ItemsOnPage;
 
-            var vehicles = Context.VehicleModels
+            var vehicleModels = Context.VehicleModels
                 .Include(vm => vm.Manufacturer)
                 .Include(vm => vm.VehicleType)
                 .AsQueryable();
 
-            if (vehicles.Count() == 0)
+            if (vehicleModels.Count() == 0)
             {
                 return null;
             }
 
-            var count = vehicles.Count();
+            var count = vehicleModels.Count();
 
-            var vehicleModelsDTO = await vehicles.Skip(skipPages)
+            var vehicleModelsDTO = await vehicleModels.Skip(skipPages)
                 .Take(pagination.ItemsOnPage)
                 .Select(x => new GetVehicleModelDTO(x))
                 .ToListAsync();
@@ -72,17 +72,17 @@ namespace SmartGarage.Service
 
         public async Task<GetVehicleModelDTO> GetAsync(int id)
         {
-            var vehicle = await Context.VehicleModels
+            var vehicleModels = await Context.VehicleModels
                .Include(vm => vm.Manufacturer)
                .Include(vm => vm.VehicleType)
                .FirstOrDefaultAsync(v => v.Id == id);
 
-            if (vehicle == null)
+            if (vehicleModels == null)
             {
                 return null;
             }
 
-            return new GetVehicleModelDTO(vehicle);
+            return new GetVehicleModelDTO(vehicleModels);
         }
 
         public async Task<GetVehicleModelDTO> UpdateAsync(VehicleModelDTO updateInformation, int id)
