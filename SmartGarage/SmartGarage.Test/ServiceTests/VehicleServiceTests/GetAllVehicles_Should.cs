@@ -57,6 +57,7 @@ namespace SmartGarage.Test.ServiceTests.VehicleServiceTests
                 await arrCtx.SaveChangesAsync();
                 count = arrCtx.Vehicles
                     .Where(v => v.User.UserName == customeUserrName)
+                    .Where(v => !v.IsDeleted)
                     .Count();
             }
 

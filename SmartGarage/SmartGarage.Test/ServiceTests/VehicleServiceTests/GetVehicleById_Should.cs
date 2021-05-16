@@ -44,12 +44,12 @@ namespace SmartGarage.Test.ServiceTests.VehicleServiceTests
         }
 
         [TestMethod]
-        public async Task ReturnNull_When_VehicleDoesNotExists()
+        public async Task ReturnNull_When_VehicleModelDoesNotExists()
         {
             //Arrange
-            var options = Util.GetOptions(nameof(ReturnNull_When_VehicleDoesNotExists));
-            var vehicleId = -1;
-            var vehicle = new Vehicle();
+            var options = Util.GetOptions(nameof(ReturnNull_When_VehicleModelDoesNotExists));
+            var vehicleModelId = -1;
+            var vehicleModel = new VehicleModel();
 
             using (var arrCtx = new SmartGarageContext(options))
             {
@@ -60,8 +60,8 @@ namespace SmartGarage.Test.ServiceTests.VehicleServiceTests
             //Act
             using (var actCtx = new SmartGarageContext(options))
             {
-                var sut = new VehicleService(actCtx);
-                var result = await sut.GetAsync(vehicleId);
+                var sut = new VehicleModelService(actCtx);
+                var result = await sut.GetAsync(vehicleModelId);
 
                 //Assert
                 Assert.IsNull(result);

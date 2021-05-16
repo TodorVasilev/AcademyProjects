@@ -24,7 +24,7 @@ namespace SmartGarage.Service
             this.Context = context;
         }
 
-        public SmartGarageContext Context { get; set; }
+        public SmartGarageContext Context { get; }
 
         public async Task<GetVehicleDTO> CreateAsync(CreateVehicleDTO vehicleInformation)
         {
@@ -43,8 +43,8 @@ namespace SmartGarage.Service
             var vehicle = await Context.Vehicles
                 .Include(v => v.User)
                 .Include(v => v.VehicleModel)
-                    .ThenInclude(vm => vm.Manufacturer)
-                    .FirstOrDefaultAsync(v => v.Id == vehicleToAdd.Id);
+                .ThenInclude(vm => vm.Manufacturer)
+                .FirstOrDefaultAsync(v => v.Id == vehicleToAdd.Id);
 
             return new GetVehicleDTO(vehicle);
         }
@@ -56,11 +56,11 @@ namespace SmartGarage.Service
             var vehicles = Context.Vehicles
                 .Include(v => v.User)
                 .Include(v => v.VehicleModel)
-                    .ThenInclude(vm => vm.Manufacturer)
+                .ThenInclude(vm => vm.Manufacturer)
                 .Where(v => !v.IsDeleted)
                 .AsQueryable();
 
-            if(vehicles.Count() == 0)
+            if (vehicles.Count() == 0)
             {
                 return null;
             }
@@ -90,7 +90,7 @@ namespace SmartGarage.Service
             var vehicle = await Context.Vehicles
                .Include(v => v.User)
                .Include(v => v.VehicleModel)
-                   .ThenInclude(vm => vm.Manufacturer)
+               .ThenInclude(vm => vm.Manufacturer)
                .Where(v => !v.IsDeleted)
                .FirstOrDefaultAsync(v => v.Id == id);
 
@@ -107,7 +107,7 @@ namespace SmartGarage.Service
             var vehicle = await Context.Vehicles
               .Include(v => v.User)
               .Include(v => v.VehicleModel)
-                  .ThenInclude(vm => vm.Manufacturer)
+              .ThenInclude(vm => vm.Manufacturer)
               .FirstOrDefaultAsync(v => v.Id == id);
 
             if (vehicle == null)
@@ -128,7 +128,7 @@ namespace SmartGarage.Service
             var vehicle = await Context.Vehicles
               .Include(v => v.User)
               .Include(v => v.VehicleModel)
-                  .ThenInclude(vm => vm.Manufacturer)
+              .ThenInclude(vm => vm.Manufacturer)
               .FirstOrDefaultAsync(v => v.Id == id);
 
             if (vehicle == null)
