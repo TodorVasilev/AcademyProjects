@@ -19,6 +19,7 @@ using Microsoft.IdentityModel.Tokens;
 using SmartGarage.Service.Helpers;
 using SmartGarage.Service.Contracts;
 using SmartGarage.Service.Services;
+using SmartGarage.Service.ServiceContracts;
 
 
 namespace SmartGarage
