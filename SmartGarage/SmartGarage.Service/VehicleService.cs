@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartGarage.Data;
 using SmartGarage.Data.Helpers;
+using SmartGarage.Data.Models;
 using SmartGarage.Data.QueryObjects;
+using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;
 using SmartGarage.Service.ServiceContracts;
@@ -24,6 +26,29 @@ namespace SmartGarage.Service
 
         public SmartGarageContext Context { get; set; }
 
+        public async Task<GetVehicleDTO> CreateAsync(CreateVehicleDTO vehicleInformation)
+        {
+            var vehicleToAdd = new Vehicle
+            {
+                UserId = vehicleInformation.UserId,
+                VehicleModelId = vehicleInformation.VehicleModelId,
+                NumberPlate = vehicleInformation.NumberPlate,
+                VIN = vehicleInformation.VIN,
+                Colour = vehicleInformation.Colour
+            };
+
+            await Context.Vehicles.AddAsync(vehicleToAdd);
+            await Context.SaveChangesAsync();
+
+            var vehicle = await Context.Vehicles
+                .Include(v => v.User)
+                .Include(v => v.VehicleModel)
+                    .ThenInclude(vm => vm.Manufacturer)
+                    .FirstOrDefaultAsync(v => v.Id == vehicleToAdd.Id);
+
+            return new GetVehicleDTO(vehicle);
+        }
+
         public async Task<Pager<GetVehicleDTO>> GetAllAsync(PaginationQueryObject pagination, string name)
         {
             var skipPages = (pagination.Page - 1) * pagination.ItemsOnPage;
@@ -32,7 +57,8 @@ namespace SmartGarage.Service
                 .Include(v => v.User)
                 .Include(v => v.VehicleModel)
                     .ThenInclude(vm => vm.Manufacturer)
-                    .AsQueryable();
+                .Where(v => !v.IsDeleted)
+                .AsQueryable();
 
             if (name != default)
             {
@@ -60,6 +86,7 @@ namespace SmartGarage.Service
                .Include(v => v.User)
                .Include(v => v.VehicleModel)
                    .ThenInclude(vm => vm.Manufacturer)
+               .Where(v => !v.IsDeleted)
                .FirstOrDefaultAsync(v => v.Id == id);
 
             if (vehicle == null)
@@ -86,7 +113,7 @@ namespace SmartGarage.Service
             vehicle.IsDeleted = true;
 
             Context.Update(vehicle);
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
 
             return true;
         }
@@ -107,7 +134,7 @@ namespace SmartGarage.Service
             vehicle.UpdateVehicle(update);
 
             Context.Update(vehicle);
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
 
             return new GetVehicleDTO(vehicle);
         }

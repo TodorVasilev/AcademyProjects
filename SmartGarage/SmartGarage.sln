@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31229.75
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartGarage", "SmartGarage\SmartGarage.csproj", "{DF1A05B2-2D63-4D75-8DF6-393F0B6B7445}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartGarage", "SmartGarage\SmartGarage.csproj", "{DF1A05B2-2D63-4D75-8DF6-393F0B6B7445}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartGarage.Data", "SmartGarage.Data\SmartGarage.Data.csproj", "{9117BC35-596F-45D2-9573-EDE5FFEBEDFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartGarage.Data", "SmartGarage.Data\SmartGarage.Data.csproj", "{9117BC35-596F-45D2-9573-EDE5FFEBEDFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartGarage.Service", "SmartGarage.Service\SmartGarage.Service.csproj", "{021E68DD-17C8-4160-A5E6-B0454B3513E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartGarage.Service", "SmartGarage.Service\SmartGarage.Service.csproj", "{021E68DD-17C8-4160-A5E6-B0454B3513E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartGarage.Test", "SmartGarage.Test\SmartGarage.Test.csproj", "{BE9B9495-FA59-4667-BE7E-E6F252ED2371}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{021E68DD-17C8-4160-A5E6-B0454B3513E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{021E68DD-17C8-4160-A5E6-B0454B3513E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{021E68DD-17C8-4160-A5E6-B0454B3513E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE9B9495-FA59-4667-BE7E-E6F252ED2371}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE9B9495-FA59-4667-BE7E-E6F252ED2371}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE9B9495-FA59-4667-BE7E-E6F252ED2371}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE9B9495-FA59-4667-BE7E-E6F252ED2371}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
