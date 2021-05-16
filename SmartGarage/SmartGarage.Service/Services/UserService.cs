@@ -30,14 +30,15 @@ namespace SmartGarage.Service.Services
         public UserService(SmartGarageContext smartGarageContext,
             UserManager<User> userManager,
             IOptions<AppSettings> appSettings,
-            SignInManager<User> signInManager,
-        RoleManager<IdentityRole<int>> roleManager)
+            SignInManager<User> signInManager
+            //RoleManager<IdentityRole<int>> roleManager
+            )
         {
             this.smartGarageContext = smartGarageContext;
             this.userManager = userManager;
             this.appSettings = appSettings;
             this.signInManager = signInManager;
-            this.roleManager = roleManager;
+          //  this.roleManager = roleManager;
         }
 
         public async Task<UserDTO> AuthenticateAsync(LoginDTO loginDTO)

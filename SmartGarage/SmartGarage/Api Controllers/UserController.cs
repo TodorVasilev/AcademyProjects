@@ -35,7 +35,6 @@ namespace SmartGarage.Api_Controllers
 
             if (user != null)
             {
-               
                 return Ok(user);
             }
 

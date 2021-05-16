@@ -134,11 +134,11 @@ namespace SmartGarage.Data
             users[0].PasswordHash = passHasher.HashPassword(users[0], "Admin123");
             users[1].PasswordHash = passHasher.HashPassword(users[1], "Employee123");
             users[2].PasswordHash = passHasher.HashPassword(users[2], "Customer123");
-            users[2].PasswordHash = passHasher.HashPassword(users[3], "Ivan123");
-            users[2].PasswordHash = passHasher.HashPassword(users[4], "Todor123");
+            users[3].PasswordHash = passHasher.HashPassword(users[3], "Ivan123");
+            users[4].PasswordHash = passHasher.HashPassword(users[4], "Todor123");
 
-            builder.Entity<User>().Property(u => u.Email).IsRequired();
             builder.Entity<User>().HasIndex(u => u.Email).IsUnique();
+            builder.Entity<User>().HasIndex(u => u.UserName).IsUnique();
             builder.Entity<User>().HasData(users);
 
             var roles = new List<Role>

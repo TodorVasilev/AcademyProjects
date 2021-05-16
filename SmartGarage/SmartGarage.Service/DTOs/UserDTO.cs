@@ -10,12 +10,14 @@ namespace SmartGarage.Service.DTOs
     {
         public UserDTO(User user)
         {
+            this.Id = user.Id;
             this.FirstName = user.FirstName;
             this.LastName = user.LastName;
             this.PhoneNumber = user.PhoneNumber;
             this.Age = user.Age;
             this.DrivingLicenseNumber = user.DrivingLicenseNumber;
             this.Address = user.Address;
+            this.Token = user.Token;
 
         }
         public int Id { get; set; }
@@ -42,6 +44,6 @@ namespace SmartGarage.Service.DTOs
         [Required]
         public string Address { get; set; }
 
-
+        public string Token { get; set; }
     }
 }

@@ -16,6 +16,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using SmartGarage.Service.Helpers;
+using SmartGarage.Service.Contracts;
+using SmartGarage.Service.Services;
 
 namespace SmartGarage
 {
@@ -41,7 +43,7 @@ namespace SmartGarage
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SmartGarage API", Version = "v1", Description = "SmartGarage REST Api" });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-               // c.IncludeXmlComments(xmlPath);
+                // c.IncludeXmlComments(xmlPath);
 
             });
 
@@ -80,7 +82,8 @@ namespace SmartGarage
                 .AddEntityFrameworkStores<SmartGarageContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddTransient<IEmailsService, GmailSmtpEmailsService>();
+            services.AddScoped<IUserService, UserService>(); 
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
