@@ -1,8 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SmartGarage.Data;
 using SmartGarage.Service;
-using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.GetDTOs;
+using SmartGarage.Service.DTOs.SharedDTOs;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Test.ServiceTests.VehicleModelServiceTests
@@ -15,7 +15,7 @@ namespace SmartGarage.Test.ServiceTests.VehicleModelServiceTests
         {
             //Arrange
             var options = Util.GetOptions(nameof(CreateVehicleModel_When_ParamsAreValid));
-            var vehicleToAdd = new CreateVehicleModelDTO
+            var vehicleToAdd = new VehicleModelDTO
             {
                 Name = "E36",
                 ManufacturerId = 5,

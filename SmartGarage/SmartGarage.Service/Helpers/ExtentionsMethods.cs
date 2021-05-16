@@ -1,4 +1,5 @@
 ﻿using SmartGarage.Data.Models;
+using SmartGarage.Service.DTOs.SharedDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;
 
 namespace SmartGarage.Service.ServiceHelpes
@@ -29,6 +30,24 @@ namespace SmartGarage.Service.ServiceHelpes
             }
 
             return vehicle;
+        }
+
+        public static VehicleModel UpdateVehicleModel(this VehicleModel vehicleModel, VehicleModelDTO update)
+        {
+            if (update.Name != default)
+            {
+                vehicleModel.Name = update.Name;
+            }
+            if (update.ManufacturerId != default)
+            {
+                vehicleModel.ManufacturerId = update.ManufacturerId;
+            }
+            if (update.VehicleTypeId != default)
+            {
+                vehicleModel.VehicleTypeId = update.VehicleTypeId;
+            }
+
+            return vehicleModel;
         }
     }
 }

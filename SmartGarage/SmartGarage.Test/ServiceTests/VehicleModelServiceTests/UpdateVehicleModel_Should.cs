@@ -3,26 +3,25 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SmartGarage.Data;
 using SmartGarage.Service;
 using SmartGarage.Service.DTOs.GetDTOs;
-using SmartGarage.Service.DTOs.UpdateDTOs;
+using SmartGarage.Service.DTOs.SharedDTOs;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartGarage.Test.ServiceTests.VehicleServiceTests
+namespace SmartGarage.Test.ServiceTests.VehicleModelServiceTests
 {
     [TestClass]
-    public class UpdateVehicle_Should
+    public class UpdateVehicleModel_Should
     {
         [TestMethod]
-        public async Task UpdateVehicle_When_ParamsAreValid()
+        public async Task UpdateVehicleModel_When_ParamsAreValid()
         {
             //Arrange
-            var options = Util.GetOptions(nameof(UpdateVehicle_When_ParamsAreValid));
-            var updateInfo = new UpdateVehicleDTO
+            var options = Util.GetOptions(nameof(UpdateVehicleModel_When_ParamsAreValid));
+            var updateInfo = new VehicleModelDTO
             {
-                Colour = "Transparent"
+                Name = "E31"
             };
             var vehicleId = 1;
 
@@ -31,33 +30,33 @@ namespace SmartGarage.Test.ServiceTests.VehicleServiceTests
                 arrCtx.SeedData();
                 await arrCtx.SaveChangesAsync();
 
-                var vehicleToUppdate = await arrCtx.Vehicles
+                var vehicleModelToUpdate = await arrCtx.VehicleModels
                     .FirstOrDefaultAsync(v => v.Id == vehicleId);
 
-                vehicleToUppdate.Colour = updateInfo.Colour;
+                vehicleModelToUpdate.Name = updateInfo.Name;
                 await arrCtx.SaveChangesAsync();
             }
 
             //Act
             using (var actCtx = new SmartGarageContext(options))
             {
-                var sut = new VehicleService(actCtx);
+                var sut = new VehicleModelService(actCtx);
                 var result = await sut.UpdateAsync(updateInfo, vehicleId);
 
                 //Assert
-                Assert.AreEqual(result.Colour, "Transparent");
-                Assert.IsInstanceOfType(result, typeof(GetVehicleDTO));
+                Assert.AreEqual(updateInfo.Name, result.Name);
+                Assert.IsInstanceOfType(result, typeof(GetVehicleModelDTO));
             }
         }
 
         [TestMethod]
-        public async Task ReturnNull_When_VehicleDoesntNotExist()
+        public async Task ReturnNull_When_VehicleModelDoesntNotExist()
         {
             //Arrange
-            var options = Util.GetOptions(nameof(ReturnNull_When_VehicleDoesntNotExist));
-            var updateInfo = new UpdateVehicleDTO
+            var options = Util.GetOptions(nameof(ReturnNull_When_VehicleModelDoesntNotExist));
+            var updateInfo = new VehicleModelDTO
             {
-                Colour = "Transparent"
+                Name = "E31"
             };
             var vehicleId = -1;
 
@@ -73,7 +72,7 @@ namespace SmartGarage.Test.ServiceTests.VehicleServiceTests
             //Act
             using (var actCtx = new SmartGarageContext(options))
             {
-                var sut = new VehicleService(actCtx);
+                var sut = new VehicleModelService(actCtx);
                 var result = await sut.UpdateAsync(updateInfo, vehicleId);
 
                 //Assert

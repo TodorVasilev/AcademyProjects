@@ -1,17 +1,14 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SmartGarage.Data;
 using SmartGarage.Data.Helpers;
 using SmartGarage.Data.Models;
 using SmartGarage.Data.QueryObjects;
-using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.GetDTOs;
+using SmartGarage.Service.DTOs.SharedDTOs;
 using SmartGarage.Service.ServiceContracts;
+using SmartGarage.Service.ServiceHelpes;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SmartGarage.Service
 {
@@ -24,7 +21,7 @@ namespace SmartGarage.Service
 
         public SmartGarageContext Context { get; }
 
-        public async Task<GetVehicleModelDTO> CreateAsync(CreateVehicleModelDTO vehicleModelInformation)
+        public async Task<GetVehicleModelDTO> CreateAsync(VehicleModelDTO vehicleModelInformation)
         {
             var vehicleModelToAdd = new VehicleModel
             {
@@ -77,7 +74,7 @@ namespace SmartGarage.Service
         {
             var vehicle = await Context.VehicleModels
                .Include(vm => vm.Manufacturer)
-               .Include(vm => vm.VehicleType)             
+               .Include(vm => vm.VehicleType)
                .FirstOrDefaultAsync(v => v.Id == id);
 
             if (vehicle == null)
@@ -86,6 +83,26 @@ namespace SmartGarage.Service
             }
 
             return new GetVehicleModelDTO(vehicle);
+        }
+
+        public async Task<GetVehicleModelDTO> UpdateAsync(VehicleModelDTO updateInformation, int id)
+        {
+            var vehicleModel = await Context.VehicleModels
+             .Include(vm => vm.Manufacturer)
+             .Include(vm => vm.VehicleType)
+             .FirstOrDefaultAsync(v => v.Id == id);
+
+            if (vehicleModel == null)
+            {
+                return null;
+            }
+            
+            vehicleModel.UpdateVehicleModel(updateInformation);
+
+            Context.Update(vehicleModel);
+            await Context.SaveChangesAsync();
+
+            return new GetVehicleModelDTO(vehicleModel);
         }
     }
 }

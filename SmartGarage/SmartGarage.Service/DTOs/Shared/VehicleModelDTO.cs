@@ -1,8 +1,8 @@
 ﻿using SmartGarage.Data.Models;
 
-namespace SmartGarage.Service.DTOs.CreateDTOs
+namespace SmartGarage.Service.DTOs.SharedDTOs
 {
-    public class CreateVehicleModelDTO
+    public class VehicleModelDTO
     {
         public string Name { get; set; }
 

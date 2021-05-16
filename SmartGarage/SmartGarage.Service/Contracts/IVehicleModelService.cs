@@ -1,7 +1,7 @@
 ﻿using SmartGarage.Data.Helpers;
 using SmartGarage.Data.QueryObjects;
-using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.GetDTOs;
+using SmartGarage.Service.DTOs.SharedDTOs;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Service.ServiceContracts
@@ -12,6 +12,8 @@ namespace SmartGarage.Service.ServiceContracts
 
         Task<GetVehicleModelDTO> GetAsync(int id);
 
-        Task<GetVehicleModelDTO> CreateAsync(CreateVehicleModelDTO vehicleModelInformation);
+        Task<GetVehicleModelDTO> CreateAsync(VehicleModelDTO vehicleModelInformation);
+
+        Task<GetVehicleModelDTO> UpdateAsync(VehicleModelDTO updateInformation, int id);
     }
 }
