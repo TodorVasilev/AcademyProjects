@@ -15,15 +15,15 @@ namespace SmartGarage.Test.ServiceTests.VehicleModelServiceTests
     public class UpdateVehicleModel_Should
     {
         [TestMethod]
-        public async Task UpdateVehicleModel_When_ParamsAreValid()
+        public async Task UpdateVehicleModel_When_VehicleModelExists()
         {
             //Arrange
-            var options = Util.GetOptions(nameof(UpdateVehicleModel_When_ParamsAreValid));
+            var options = Util.GetOptions(nameof(UpdateVehicleModel_When_VehicleModelExists));
             var updateInfo = new VehicleModelDTO
             {
                 Name = "E31"
             };
-            var vehicleId = 1;
+            var vehicleModelId = 1;
 
             using (var arrCtx = new SmartGarageContext(options))
             {
@@ -31,7 +31,7 @@ namespace SmartGarage.Test.ServiceTests.VehicleModelServiceTests
                 await arrCtx.SaveChangesAsync();
 
                 var vehicleModelToUpdate = await arrCtx.VehicleModels
-                    .FirstOrDefaultAsync(v => v.Id == vehicleId);
+                    .FirstOrDefaultAsync(v => v.Id == vehicleModelId);
 
                 vehicleModelToUpdate.Name = updateInfo.Name;
                 await arrCtx.SaveChangesAsync();
@@ -41,7 +41,7 @@ namespace SmartGarage.Test.ServiceTests.VehicleModelServiceTests
             using (var actCtx = new SmartGarageContext(options))
             {
                 var sut = new VehicleModelService(actCtx);
-                var result = await sut.UpdateAsync(updateInfo, vehicleId);
+                var result = await sut.UpdateAsync(updateInfo, vehicleModelId);
 
                 //Assert
                 Assert.AreEqual(updateInfo.Name, result.Name);
@@ -50,15 +50,15 @@ namespace SmartGarage.Test.ServiceTests.VehicleModelServiceTests
         }
 
         [TestMethod]
-        public async Task ReturnNull_When_VehicleModelDoesntNotExist()
+        public async Task ReturnNull_When_VehicleModelDoesNotExist()
         {
             //Arrange
-            var options = Util.GetOptions(nameof(ReturnNull_When_VehicleModelDoesntNotExist));
+            var options = Util.GetOptions(nameof(ReturnNull_When_VehicleModelDoesNotExist));
             var updateInfo = new VehicleModelDTO
             {
                 Name = "E31"
             };
-            var vehicleId = -1;
+            var vehicleModelId = -1;
 
             using (var arrCtx = new SmartGarageContext(options))
             {
@@ -66,14 +66,14 @@ namespace SmartGarage.Test.ServiceTests.VehicleModelServiceTests
                 await arrCtx.SaveChangesAsync();
 
                 var vehicleToUppdate = await arrCtx.Vehicles
-                    .FirstOrDefaultAsync(v => v.Id == vehicleId);
+                    .FirstOrDefaultAsync(v => v.Id == vehicleModelId);
             }
 
             //Act
             using (var actCtx = new SmartGarageContext(options))
             {
                 var sut = new VehicleModelService(actCtx);
-                var result = await sut.UpdateAsync(updateInfo, vehicleId);
+                var result = await sut.UpdateAsync(updateInfo, vehicleModelId);
 
                 //Assert
                 Assert.IsNull(result);

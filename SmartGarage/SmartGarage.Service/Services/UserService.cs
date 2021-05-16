@@ -25,7 +25,7 @@ namespace SmartGarage.Service.Services
         private readonly UserManager<User> userManager;
         private readonly IOptions<AppSettings> appSettings;
         private readonly SignInManager<User> signInManager;
-        private readonly RoleManager<IdentityRole<int>> roleManager;
+        //private readonly RoleManager<IdentityRole<int>> roleManager;
 
         public UserService(SmartGarageContext smartGarageContext,
             UserManager<User> userManager,

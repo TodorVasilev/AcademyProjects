@@ -1,4 +1,5 @@
-﻿using SmartGarage.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using SmartGarage.Data;
 using SmartGarage.Data.Models;
 using SmartGarage.Service.Contracts;
 using SmartGarage.Service.DTOs.Shared;
@@ -26,6 +27,24 @@ namespace SmartGarage.Service
             };
 
             await Context.Manufacturers.AddAsync(manufacturer);
+            await Context.SaveChangesAsync();
+
+            return new ManufacturerDTO(manufacturer);
+        }
+
+        public async Task<ManufacturerDTO> UpdateAsync(ManufacturerDTO updateInformation, int id)
+        {
+            var manufacturer = await Context.Manufacturers
+             .FirstOrDefaultAsync(v => v.Id == id);
+
+            if (manufacturer == null)
+            {
+                return null;
+            }
+
+            manufacturer.Name = updateInformation.Name;
+
+            Context.Update(manufacturer);
             await Context.SaveChangesAsync();
 
             return new ManufacturerDTO(manufacturer);
