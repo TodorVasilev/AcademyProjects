@@ -60,6 +60,11 @@ namespace SmartGarage.Service
                 .Where(v => !v.IsDeleted)
                 .AsQueryable();
 
+            if(vehicles.Count() == 0)
+            {
+                return null;
+            }
+
             if (name != default)
             {
                 vehicles = vehicles.Where(v => v.User.UserName == name);
