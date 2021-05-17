@@ -57,7 +57,7 @@ namespace SmartGarage.Test.ServiceTests.ServiceServiceTests
             //Act
             using (var actCtx = new SmartGarageContext(options))
             {
-                var sut = new ManufacturerService(actCtx);
+                var sut = new ServiceService(actCtx);
                 var result = await sut.GetAsync(serviceId);
 
                 //Assert

@@ -8,6 +8,7 @@ using SmartGarage.Data;
 using System.Linq;
 using SmartGarage.Service.ServiceHelpes;
 using Microsoft.EntityFrameworkCore;
+using SmartGarage.Service.DTOs.CreateDTOs;
 
 namespace SmartGarage.Service
 {
@@ -19,6 +20,20 @@ namespace SmartGarage.Service
         }
 
         public SmartGarageContext Context { get; }
+
+        public async Task<GetServiceDTO> CreateAsync(CreateServiceDTO serviceInformation)
+        {
+            var serviceToAdd = new Data.Models.Service
+            {
+                Name = serviceInformation.Name,
+                Price = serviceInformation.Price
+            };
+
+            await Context.Services.AddAsync(serviceToAdd);
+            await Context.SaveChangesAsync();
+
+            return new GetServiceDTO(serviceToAdd);
+        }
 
         public async Task<Pager<GetServiceDTO>> GetAllAsync(PaginationQueryObject pagination, ServiceFilterQueryObject filterObject)
         {
