@@ -5,14 +5,15 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
 using SmartGarage.Data;
 using SmartGarage.Data.Models;
-using SmartGarage.Service;
-using SmartGarage.Service.ServiceContracts;
 using System;
 using System.Text;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -20,7 +21,6 @@ using SmartGarage.Service.Helpers;
 using SmartGarage.Service.Contracts;
 using SmartGarage.Service.Services;
 using SmartGarage.Service.ServiceContracts;
-
 using SmartGarage.Service;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
@@ -62,7 +62,7 @@ namespace SmartGarage
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
-               
+
                 var securityScheme = new OpenApiSecurityScheme
                 {
                     Name = "JWT Authentication",
@@ -95,8 +95,8 @@ namespace SmartGarage
 
             services.AddAuthentication(config =>
             {
-               // config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-               // config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                // config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                // config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
                 .AddCookie(config => config.SlidingExpiration = true)
                 .AddJwtBearer(config =>
@@ -111,9 +111,6 @@ namespace SmartGarage
                         ValidateAudience = false
                     };
                 });
-
-                .AddEntityFrameworkStores<SmartGarageContext>()
-                .AddDefaultTokenProviders();
 
             services.AddTransient<IEmailsService, GmailSmtpEmailsService>();
         }
@@ -147,8 +144,6 @@ namespace SmartGarage
             app.UseStaticFiles();
 
             app.UseRouting();
-
-
 
             app.UseAuthentication();
             app.UseAuthorization();
