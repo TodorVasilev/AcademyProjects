@@ -35,6 +35,24 @@ namespace SmartGarage.Service
             return new GetServiceDTO(serviceToAdd);
         }
 
+        public async Task<bool> RemoveAsync(int id)
+        {
+            var service = await Context.Services
+               .FirstOrDefaultAsync(v => v.Id == id);
+
+            if (service == null)
+            {
+                return false;
+            }
+
+            service.IsDeleted = true;
+
+            Context.Update(service);
+            await Context.SaveChangesAsync();
+
+            return true;
+        }
+
         public async Task<Pager<GetServiceDTO>> GetAllAsync(PaginationQueryObject pagination, ServiceFilterQueryObject filterObject)
         {
             var skipPages = (pagination.Page - 1) * pagination.ItemsOnPage;

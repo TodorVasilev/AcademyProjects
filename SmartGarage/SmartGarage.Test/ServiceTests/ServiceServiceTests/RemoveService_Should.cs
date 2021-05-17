@@ -1,24 +1,22 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SmartGarage.Data;
 using SmartGarage.Service;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartGarage.Test.ServiceTests.VehicleServiceTests
+namespace SmartGarage.Test.ServiceTests.ServiceServiceTests
 {
     [TestClass]
-    public class RemoveVehicle_Should
+    public class RemoveService_Should
     {
         [TestMethod]
-        public async Task ReturnTrue_When_VehicleExists()
+        public async Task ReturnTrue_When_ServiceExists()
         {
             //Arrange
-            var options = Util.GetOptions(nameof(ReturnTrue_When_VehicleExists));
-            var vehicleId = 1;
+            var options = Util.GetOptions(nameof(ReturnTrue_When_ServiceExists));
+            var serviceId = 1;
 
             using (var arrCtx = new SmartGarageContext(options))
             {
@@ -29,8 +27,8 @@ namespace SmartGarage.Test.ServiceTests.VehicleServiceTests
             //Act
             using (var actCtx = new SmartGarageContext(options))
             {
-                var sut = new VehicleService(actCtx);
-                var result = await sut.RemoveAsync(vehicleId);
+                var sut = new ServiceService(actCtx);
+                var result = await sut.RemoveAsync(serviceId);
 
                 //Assert
                 Assert.IsTrue(result);
@@ -38,11 +36,11 @@ namespace SmartGarage.Test.ServiceTests.VehicleServiceTests
         }
 
         [TestMethod]
-        public async Task ReturnFalse_When_VehicleDoesNotExists()
+        public async Task ReturnTrue_When_ServiceDoesNotExists()
         {
             //Arrange
-            var options = Util.GetOptions(nameof(ReturnFalse_When_VehicleDoesNotExists));
-            var vehicleId = -1;
+            var options = Util.GetOptions(nameof(ReturnTrue_When_ServiceDoesNotExists));
+            var serviceId = -1;
 
             using (var arrCtx = new SmartGarageContext(options))
             {
@@ -53,8 +51,8 @@ namespace SmartGarage.Test.ServiceTests.VehicleServiceTests
             //Act
             using (var actCtx = new SmartGarageContext(options))
             {
-                var sut = new VehicleService(actCtx);
-                var result = await sut.RemoveAsync(vehicleId);
+                var sut = new ServiceService(actCtx);
+                var result = await sut.RemoveAsync(serviceId);
 
                 //Assert
                 Assert.IsFalse(result);

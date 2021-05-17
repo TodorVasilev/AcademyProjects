@@ -13,5 +13,7 @@ namespace SmartGarage.Service.Contracts
         Task<GetServiceDTO> GetAsync(int id);
 
         Task<GetServiceDTO> CreateAsync(CreateServiceDTO serviceInformation);
+
+        Task<bool> RemoveAsync(int id);
     }
 }
