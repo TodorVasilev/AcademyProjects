@@ -61,7 +61,7 @@ namespace SmartGarage
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SmartGarage API", Version = "v1", Description = "SmartGarage REST Api" });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                // c.IncludeXmlComments(xmlPath);
+                c.IncludeXmlComments(xmlPath);
                
                 var securityScheme = new OpenApiSecurityScheme
                 {

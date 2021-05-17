@@ -5,6 +5,15 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Helpers\**" />
+	  <Compile Remove="QueryObjects\**" />
+	  <EmbeddedResource Remove="Helpers\**" />
+	  <EmbeddedResource Remove="QueryObjects\**" />
+	  <None Remove="Helpers\**" />
+	  <None Remove="QueryObjects\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <Compile Remove="Migrations\20210516124251_User_Role_property.cs" />
 	  <Compile Remove="Migrations\20210516124251_User_Role_property.Designer.cs" />
 	</ItemGroup>
@@ -23,8 +32,5 @@
 		</PackageReference>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Helpers\" />
-	</ItemGroup>
 
 </Project>

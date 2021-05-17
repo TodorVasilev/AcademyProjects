@@ -4,6 +4,8 @@
 		<TargetFramework>netcoreapp3.1</TargetFramework>
 		<UserSecretsId>aspnet-SmartGarage-7F301C9E-0E7F-4593-B474-836D3F9A19C4</UserSecretsId>
 		<CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<NoWarn>$(NoWarn);1591</NoWarn>
 	</PropertyGroup>
 
 	<ItemGroup>
