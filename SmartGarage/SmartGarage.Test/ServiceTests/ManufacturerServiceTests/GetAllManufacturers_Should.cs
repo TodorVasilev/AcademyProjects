@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SmartGarage.Data;
-using SmartGarage.Data.QueryObjects;
+using SmartGarage.Service.QueryObjects;
 using SmartGarage.Service;
 using SmartGarage.Service.DTOs.Shared;
 using System;

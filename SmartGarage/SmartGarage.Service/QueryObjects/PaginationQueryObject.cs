@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SmartGarage.Data.QueryObjects
+﻿namespace SmartGarage.Service.QueryObjects
 {
     public class PaginationQueryObject
     {

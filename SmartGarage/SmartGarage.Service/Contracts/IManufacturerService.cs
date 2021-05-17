@@ -1,5 +1,5 @@
-﻿using SmartGarage.Data.Helpers;
-using SmartGarage.Data.QueryObjects;
+﻿using SmartGarage.Service.Helpers;
+using SmartGarage.Service.QueryObjects;
 using SmartGarage.Service.DTOs.Shared;
 using System.Threading.Tasks;
 

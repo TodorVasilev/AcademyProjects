@@ -21,6 +21,8 @@ using SmartGarage.Service.Contracts;
 using SmartGarage.Service.Services;
 using SmartGarage.Service.ServiceContracts;
 
+using SmartGarage.Service;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace SmartGarage
 {
@@ -93,9 +95,10 @@ namespace SmartGarage
 
             services.AddAuthentication(config =>
             {
-                config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+               // config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+               // config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
+                .AddCookie(config => config.SlidingExpiration = true)
                 .AddJwtBearer(config =>
                 {
                     config.RequireHttpsMetadata = false;

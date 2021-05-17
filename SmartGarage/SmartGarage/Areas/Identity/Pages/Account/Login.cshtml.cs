@@ -116,3 +116,4 @@ namespace SmartGarage.Areas.Identity.Pages.Account
         }
     }
 }
+    

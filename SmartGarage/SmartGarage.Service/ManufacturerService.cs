@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartGarage.Data;
-using SmartGarage.Data.Helpers;
+using SmartGarage.Service.Helpers;
 using SmartGarage.Data.Models;
-using SmartGarage.Data.QueryObjects;
+using SmartGarage.Service.QueryObjects;
 using SmartGarage.Service.Contracts;
 using SmartGarage.Service.DTOs.Shared;
 using System;

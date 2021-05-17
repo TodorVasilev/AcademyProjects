@@ -1,7 +1,7 @@
-﻿using SmartGarage.Data.QueryObjects;
+﻿using SmartGarage.Service.QueryObjects;
 using System.Collections.Generic;
 
-namespace SmartGarage.Data.Helpers
+namespace SmartGarage.Service.Helpers
 {
     public class Pager<T>
     {

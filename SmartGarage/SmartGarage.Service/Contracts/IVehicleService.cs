@@ -1,5 +1,5 @@
-﻿using SmartGarage.Data.Helpers;
-using SmartGarage.Data.QueryObjects;
+﻿using SmartGarage.Service.Helpers;
+using SmartGarage.Service.QueryObjects;
 using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;

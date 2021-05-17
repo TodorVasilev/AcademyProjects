@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SmartGarage.Data\SmartGarage.Data.csproj" />
     <ProjectReference Include="..\SmartGarage.Service\SmartGarage.Service.csproj" />
+    <ProjectReference Include="..\SmartGarage\SmartGarage.csproj" />
   </ItemGroup>
 
 </Project>
