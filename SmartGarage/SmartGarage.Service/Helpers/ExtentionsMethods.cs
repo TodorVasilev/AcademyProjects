@@ -65,5 +65,19 @@ namespace SmartGarage.Service.ServiceHelpes
 
             return services;
         }
+
+        public static Data.Models.Service UpdateService(this Data.Models.Service service, UpdateServiceDTO updateInformation)
+        {
+            if(updateInformation.Name != default)
+            {
+                service.Name = updateInformation.Name;
+            }
+            if (updateInformation.Price != default)
+            {
+                service.Price = updateInformation.Price;
+            }
+
+            return service;
+        }
     }
 }

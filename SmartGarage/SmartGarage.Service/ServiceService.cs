@@ -9,6 +9,7 @@ using System.Linq;
 using SmartGarage.Service.ServiceHelpes;
 using Microsoft.EntityFrameworkCore;
 using SmartGarage.Service.DTOs.CreateDTOs;
+using SmartGarage.Service.DTOs.UpdateDTOs;
 
 namespace SmartGarage.Service
 {
@@ -92,6 +93,24 @@ namespace SmartGarage.Service
             }
 
             return new GetServiceDTO(vehicleModels);
+        }
+
+        public async Task<GetServiceDTO> UpdateAsync(UpdateServiceDTO updateInformation, int id)
+        {
+            var service = await Context.Services
+             .FirstOrDefaultAsync(v => v.Id == id);
+
+            if (service == null)
+            {
+                return null;
+            }
+
+            service.UpdateService(updateInformation);
+
+            Context.Update(service);
+            await Context.SaveChangesAsync();
+
+            return new GetServiceDTO(service);
         }
     }
 }
