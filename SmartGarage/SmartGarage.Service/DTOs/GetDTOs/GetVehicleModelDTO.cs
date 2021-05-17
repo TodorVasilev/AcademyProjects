@@ -9,10 +9,13 @@ namespace SmartGarage.Service.DTOs.GetDTOs
     {
         public GetVehicleModelDTO(VehicleModel vehicleModel)
         {
+            this.Id = vehicleModel.Id;
             this.Name = vehicleModel.Name;
             this.ManafacturerName = vehicleModel.Manufacturer.Name;
             this.VehicleType = vehicleModel.VehicleType.Name;
         }
+
+        public int Id { get; }
 
         public string Name { get; }
 

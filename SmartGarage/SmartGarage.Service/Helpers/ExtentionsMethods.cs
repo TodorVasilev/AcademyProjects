@@ -1,6 +1,8 @@
 ﻿using SmartGarage.Data.Models;
 using SmartGarage.Service.DTOs.SharedDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;
+using SmartGarage.Service.QueryObjects;
+using System.Linq;
 
 namespace SmartGarage.Service.ServiceHelpes
 {
@@ -48,6 +50,20 @@ namespace SmartGarage.Service.ServiceHelpes
             }
 
             return vehicleModel;
+        }
+
+        public static IQueryable<Data.Models.Service> FilterServices(this IQueryable<Data.Models.Service> services, ServiceFilterQueryObject filterObject)
+        {
+            if (filterObject.Name != default)
+            {
+                services = services.Where(s => s.Name == filterObject.Name);
+            }
+            if (filterObject.Price != default)
+            {
+                services = services.Where(s => s.Price == filterObject.Price);
+            }
+
+            return services;
         }
     }
 }
