@@ -7,6 +7,7 @@ using SmartGarage.Data.Models;
 using SmartGarage.Service.Contracts;
 using SmartGarage.Service.DTOs;
 using SmartGarage.Service.DTOs.CreateDTOs;
+using SmartGarage.Service.DTOs.UpdateDTOs;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Api_Controllers
@@ -53,7 +54,7 @@ namespace SmartGarage.Api_Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize(Roles = "Admin,Employee")]
         [HttpPost()]
-        public async Task<IActionResult> RegisterUser([FromBody] CreateUserDTO createUserDTO)
+        public async Task<IActionResult> RegisterUserAsync([FromBody] CreateUserDTO createUserDTO)
 
         {
            var operationResult = await this.userService.CreateUserAsync(createUserDTO);
@@ -62,6 +63,19 @@ namespace SmartGarage.Api_Controllers
                 return Ok(new { message = "User created!" });
             }
             return BadRequest(new { message = "Unable to create user!" });
+        }
+
+        [Authorize(Roles = "Admin,Employee")]
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateUserAsync(int id, [FromBody] UpdateUserDTO uspdateUserDTO)
+
+        {
+            var operationResult = await this.userService.UpdateUserAsync(id, uspdateUserDTO);
+            if (operationResult)
+            {
+                return Ok(new { message = "User updated!" });
+            }
+            return BadRequest(new { message = "Unable to update user!" });
         }
     }
 }
