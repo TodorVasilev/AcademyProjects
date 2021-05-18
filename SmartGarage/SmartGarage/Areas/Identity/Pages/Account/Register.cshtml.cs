@@ -1,20 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Logging;
 using SmartGarage.Data.Models;
-using SmartGarage.Service;
-using SmartGarage.Service.ServiceContracts;
+using SmartGarage.Service.Contracts;
+using SmartGarage.Service.DTOs.CreateDTOs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Areas.Identity.Pages.Account
@@ -23,20 +18,14 @@ namespace SmartGarage.Areas.Identity.Pages.Account
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<User> _signInManager;
-        private readonly UserManager<User> _userManager;
-        private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailsService _emailSender;
+        private readonly IUserService _userService;
 
         public RegisterModel(
-            UserManager<User> userManager,
             SignInManager<User> signInManager,
-            ILogger<RegisterModel> logger,
-            IEmailsService emailSender)
+            IUserService userService)
         {
-            _userManager = userManager;
             _signInManager = signInManager;
-            _logger = logger;
-            _emailSender = emailSender;
+            _userService = userService;
         }
 
         [BindProperty]
@@ -95,64 +84,42 @@ namespace SmartGarage.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
-            var passwordLength = 12;
-            var password = CreatePassword(passwordLength);
-
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
             if (ModelState.IsValid)
             {
-                var user = new User
+                var userDTO = new CreateUserDTO
                 {
+                    UserName = Input.UserName,
                     FirstName = Input.FirstName,
                     LastName = Input.LastName,
                     PhoneNumber = Input.PhoneNumber,
                     Age = Input.Age,
                     DrivingLicenseNumber = Input.DrivingLicenseNumber,
                     Address = Input.Address,
-                    UserName = Input.UserName,
-                    Email = Input.Email          
+                    Email = Input.Email
                 };
-
-                var result = await _userManager.CreateAsync(user, password);
-
-                if (result.Succeeded)
+                try
                 {
-                    await _userManager.AddToRoleAsync(user, "Customer");
-                    _logger.LogInformation("User created a new account with password.");
+                    var result = await _userService.CreateUserAsync(userDTO);
 
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
+                    foreach (var error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
 
-                    await _emailSender.SendRegistrationEmail(Input.Email, password);
+                    return RedirectToPage("./Login");
                 }
-                foreach (var error in result.Errors)
+                catch (Exception)
                 {
-                    ModelState.AddModelError(string.Empty, error.Description);
+                    return RedirectToPage("./Login");
                 }
 
-                return RedirectToPage("./Login");
             }
 
             // If we got this far, something failed, redisplay form
             return Page();
-        }
-        private string CreatePassword(int length)
-        {
-            const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-            const string ensureIsValid = "aA1";
-            StringBuilder res = new StringBuilder();
-            Random rnd = new Random();
-            while (0 < length--)
-            {
-                res.Append(valid[rnd.Next(valid.Length)]);
-            }
-            return res.ToString() + ensureIsValid;
         }
     }
 }
