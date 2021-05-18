@@ -1,16 +1,14 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SmartGarage.Service.Contracts;
 using SmartGarage.Service.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Api_Controllers
 {
-    [Authorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     [Route("api/[controller]")]
     public class UserController : ControllerBase
@@ -39,6 +37,6 @@ namespace SmartGarage.Api_Controllers
             }
 
             return BadRequest(new { message = "Username or password is incorrect" });
-        }                
+        }
     }
 }

@@ -16,7 +16,7 @@ using SmartGarage.Service.DTOs;
 using System.Linq;
 using SmartGarage.Service.Contracts;
 
-namespace SmartGarage.Service.Services
+namespace SmartGarage.Service
 
 {
     public class UserService : IUserService
@@ -38,10 +38,10 @@ namespace SmartGarage.Service.Services
             this.userManager = userManager;
             this.appSettings = appSettings;
             this.signInManager = signInManager;
-          //  this.roleManager = roleManager;
+            //  this.roleManager = roleManager;
         }
 
-        public async Task<UserDTO> AuthenticateAsync(LoginDTO loginDTO)
+        public async Task<UserAuthDTO> AuthenticateAsync(LoginDTO loginDTO)
         {
             var user = await this.smartGarageContext.Users
                 .SingleOrDefaultAsync(u => u.UserName == loginDTO.Username);
@@ -53,7 +53,7 @@ namespace SmartGarage.Service.Services
 
                 if (signInAttempt.Succeeded)
                 {
-                    user.Role = (await this.userManager.GetRolesAsync(user)).FirstOrDefault();
+                    var userRole = (await this.userManager.GetRolesAsync(user)).FirstOrDefault();
 
                     // authentication successful so generate jwt token
                     var tokenHandler = new JwtSecurityTokenHandler();
@@ -63,22 +63,23 @@ namespace SmartGarage.Service.Services
                         Subject = new ClaimsIdentity(new Claim[]
                         {
                             new Claim(ClaimTypes.Name, user.Id.ToString()),
-                            new Claim(ClaimTypes.Role, user.Role)
+                            new Claim(ClaimTypes.Role, userRole)
                         }),
                         Expires = DateTime.UtcNow.AddDays(7),
                         SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
                     };
 
-                    var token = tokenHandler.CreateToken(tokenDescriptor);
-                    user.Token = tokenHandler.WriteToken(token);
+                    var token = tokenHandler.CreateToken(tokenDescriptor);                  
 
-                    UserDTO result = new UserDTO(user);
+                    UserAuthDTO result = new UserAuthDTO(user);
+
+                    result.Token = tokenHandler.WriteToken(token);
 
                     return result;
                 }
-            }                     
+            }
             return null;
         }
-               
+
     }
 }

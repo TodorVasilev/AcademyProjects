@@ -51,6 +51,7 @@ namespace SmartGarage.Data
                 .WithMany(o => o.ServiceOrder)
                 .OnDelete(DeleteBehavior.Restrict);
 
+
             var users = new List<User>
             {
                new User

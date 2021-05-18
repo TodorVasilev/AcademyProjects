@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -5,24 +6,18 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SmartGarage.Data;
 using SmartGarage.Data.Models;
-using System;
-using System.Text;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using SmartGarage.Service.Helpers;
-using SmartGarage.Service.Contracts;
-using SmartGarage.Service.Services;
-using SmartGarage.Service.ServiceContracts;
 using SmartGarage.Service;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using SmartGarage.Service.Contracts;
+using SmartGarage.Service.Helpers;
+using SmartGarage.Service.ServiceContracts;
+using System;
+using System.IO;
+using System.Reflection;
+using System.Text;
 
 namespace SmartGarage
 {

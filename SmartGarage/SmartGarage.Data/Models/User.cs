@@ -30,11 +30,7 @@ namespace SmartGarage.Data.Models
         [Required]
         public string Address { get; set; }
 
-        public bool IsDeleted { get; set; }
-
-        public string Role { get; set; }
-
-        public string Token { get; set; }
+        public bool IsDeleted { get; set; }          
 
         public List<Vehicle> Vehicles { get; set; } = new List<Vehicle>();
     }

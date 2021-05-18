@@ -111,13 +111,14 @@ namespace SmartGarage.Areas.Identity.Pages.Account
                     DrivingLicenseNumber = Input.DrivingLicenseNumber,
                     Address = Input.Address,
                     UserName = Input.UserName,
-                    Email = Input.Email
+                    Email = Input.Email          
                 };
 
                 var result = await _userManager.CreateAsync(user, password);
 
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, "Customer");
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
