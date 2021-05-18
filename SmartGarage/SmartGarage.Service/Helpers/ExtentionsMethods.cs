@@ -79,5 +79,19 @@ namespace SmartGarage.Service.ServiceHelpes
 
             return service;
         }
+        public static IQueryable<ServiceOrder> FilterCustomerServices(this IQueryable<ServiceOrder> serviceOrders, CustomerServicesFilterQueryObject filterObject)
+        {
+            if (filterObject.VehicleId != default)
+            {
+                serviceOrders = serviceOrders.Where(so => so.Order.Vehicle.Id == filterObject.VehicleId);
+            }
+            if (filterObject.VisitDate != default)
+            {
+                serviceOrders = serviceOrders.Where(so => so.Order.ArrivalDate == filterObject.VisitDate);
+            }
+
+            return serviceOrders;
+        }
+
     }
 }

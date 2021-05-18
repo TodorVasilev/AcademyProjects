@@ -125,8 +125,8 @@ namespace SmartGarage.Test
 
             context.AddRange(roles);
 
-            var adminUserRoles = new IdentityUserRole<int>[]
-           {
+            var userRoles = new IdentityUserRole<int>[]
+            {
                 new IdentityUserRole<int>
                 {
                     UserId = 1,
@@ -144,9 +144,9 @@ namespace SmartGarage.Test
                     UserId = 3,
                     RoleId = 3
                 }
-           };
+            };
 
-            context.AddRange(adminUserRoles);
+            context.AddRange(userRoles);
 
             var garage = new Garage
             {
@@ -446,6 +446,47 @@ namespace SmartGarage.Test
             };
 
             context.AddRange(vehicles);
+
+            var orders = new Order[]
+            {
+                new Order
+                {
+                    Id = 1,
+                    GarageId = 1,
+                    VehicleId = 1,
+                    OrderStatusId = 2,
+                    ArrivalDate = DateTime.Now.AddDays(1),
+                    FinishDate = DateTime.Now.AddDays(3),
+                },
+                new Order
+                {
+                    Id = 2,
+                    GarageId = 1,
+                    VehicleId = 3,
+                    OrderStatusId = 1,
+                    ArrivalDate = DateTime.Now.AddDays(2),
+                    FinishDate = DateTime.Now.AddDays(5),
+                },
+            };
+
+            context.AddRange(orders);
+
+            var serviceOrders = new ServiceOrder[]
+            {
+                new ServiceOrder
+                {
+                    ServiceId = 1,
+                    OrderId = 1
+                },
+
+                new ServiceOrder
+                {
+                    ServiceId = 2,
+                    OrderId = 2
+                }
+            };
+
+            context.AddRange(serviceOrders);
         }
     }
 }

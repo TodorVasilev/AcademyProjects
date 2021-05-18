@@ -1,4 +1,5 @@
-﻿using SmartGarage.Service.DTOs.CreateDTOs;
+﻿using SmartGarage.Data.Models;
+using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;
 using SmartGarage.Service.Helpers;
@@ -16,6 +17,8 @@ namespace SmartGarage.Service.Contracts
         Task<GetServiceDTO> CreateAsync(CreateServiceDTO serviceInformation);
 
         Task<GetServiceDTO> UpdateAsync(UpdateServiceDTO updateInformation, int id);
+
+        Task<Pager<GetServiceDTO>> GetAllLinkedToCustomerAsync(PaginationQueryObject pagination, CustomerServicesFilterQueryObject filterObject, User user);
 
         Task<bool> RemoveAsync(int id);
     }

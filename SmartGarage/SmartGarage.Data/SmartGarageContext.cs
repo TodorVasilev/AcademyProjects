@@ -167,7 +167,7 @@ namespace SmartGarage.Data
 
             builder.Entity<Role>().HasData(roles);
 
-            var adminUserRoles = new IdentityUserRole<int>[]
+            var userRoles = new IdentityUserRole<int>[]
             {
                 new IdentityUserRole<int>
                 {
@@ -188,7 +188,7 @@ namespace SmartGarage.Data
                 }
             };
 
-            builder.Entity<IdentityUserRole<int>>().HasData(adminUserRoles);
+            builder.Entity<IdentityUserRole<int>>().HasData(userRoles);
 
             var garage = new Garage
             {
@@ -488,6 +488,48 @@ namespace SmartGarage.Data
             };
 
             builder.Entity<Vehicle>().HasData(vehicles);
+
+
+            var orders = new Order[]
+            {
+                new Order
+                {
+                    Id = 1,
+                    GarageId = 1,
+                    VehicleId = 1,
+                    OrderStatusId = 2,
+                    ArrivalDate = DateTime.Now.AddDays(1),
+                    FinishDate = DateTime.Now.AddDays(3),
+                },
+                new Order
+                {
+                    Id = 2,
+                    GarageId = 1,
+                    VehicleId = 3,
+                    OrderStatusId = 1,
+                    ArrivalDate = DateTime.Now.AddDays(2),
+                    FinishDate = DateTime.Now.AddDays(5),
+                },
+            };
+
+            builder.Entity<Order>().HasData(orders);
+
+            var serviceOrders = new ServiceOrder[]
+            {
+                new ServiceOrder
+                {
+                    ServiceId = 1,
+                    OrderId = 1
+                },
+
+                new ServiceOrder
+                {
+                    ServiceId = 2,
+                    OrderId = 2
+                }
+            };
+
+            builder.Entity<ServiceOrder>().HasData(serviceOrders);
         }
     }
 }

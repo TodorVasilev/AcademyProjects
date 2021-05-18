@@ -10,6 +10,7 @@ using SmartGarage.Service.ServiceHelpes;
 using Microsoft.EntityFrameworkCore;
 using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;
+using SmartGarage.Data.Models;
 
 namespace SmartGarage.Service
 {
@@ -111,6 +112,38 @@ namespace SmartGarage.Service
             await Context.SaveChangesAsync();
 
             return new GetServiceDTO(service);
+        }
+
+        public async Task<Pager<GetServiceDTO>> GetAllLinkedToCustomerAsync(PaginationQueryObject pagination, CustomerServicesFilterQueryObject filterObject, User user)
+        {
+            var skipPages = (pagination.Page - 1) * pagination.ItemsOnPage;
+
+            var servicesOrders = Context.ServiceOrders
+                .Include(so => so.Service)
+                .Include(so => so.Order)
+                .ThenInclude(o => o.Vehicle)
+                .ThenInclude(v => v.User)
+                .Where(so => so.Order.Vehicle.User.UserName == user.UserName)
+                .FilterCustomerServices(filterObject);
+
+            if (servicesOrders.Count() == 0)
+            {
+                return null;
+            }
+
+            var count = servicesOrders.Count();
+
+            var vehicleModelsDTO = await servicesOrders.Skip(skipPages)
+                .Take(pagination.ItemsOnPage)
+                .Select(x => new GetServiceDTO(x.Service))
+                .ToListAsync();
+
+            Pager<GetServiceDTO> result = new Pager<GetServiceDTO>(vehicleModelsDTO, pagination)
+            {
+                Count = count
+            };
+
+            return result;
         }
     }
 }
