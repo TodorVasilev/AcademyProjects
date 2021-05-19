@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartGarage.Data;
-using SmartGarage.Data.Models;
 using SmartGarage.Service.Contracts;
 using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.GetDTOs;
@@ -8,6 +7,7 @@ using SmartGarage.Service.DTOs.UpdateDTOs;
 using SmartGarage.Service.Helpers;
 using SmartGarage.Service.QueryObjects;
 using SmartGarage.Service.ServiceHelpes;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,7 +31,7 @@ namespace SmartGarage.Service
             var serviceToAdd = new Data.Models.Service
             {
                 Name = serviceInformation.Name,
-                Price = serviceInformation.Price
+                Price = (double)serviceInformation.Price
             };
 
             await Context.Services.AddAsync(serviceToAdd);
@@ -65,25 +65,25 @@ namespace SmartGarage.Service
         {
             var skipPages = (pagination.Page - 1) * pagination.ItemsOnPage;
 
-            var vehicleModels = Context.Services
+            var services = Context.Services
                 .Where(s => !s.IsDeleted)
                 .AsQueryable()
                 .FilterServices(filterObject);
 
             //Returns null when there is not a service with this id.
-            if (vehicleModels.Count() == 0)
+            if (services.Count() == 0)
             {
                 return null;
             }
 
-            var count = vehicleModels.Count();
+            var count = services.Count();
 
-            var vehicleModelsDTO = await vehicleModels.Skip(skipPages)
+            var serviceDTOs = await services.Skip(skipPages)
                 .Take(pagination.ItemsOnPage)
                 .Select(x => new GetServiceDTO(x))
                 .ToListAsync();
 
-            Pager<GetServiceDTO> result = new Pager<GetServiceDTO>(vehicleModelsDTO, pagination)
+            Pager<GetServiceDTO> result = new Pager<GetServiceDTO>(serviceDTOs, pagination)
             {
                 Count = count
             };
@@ -107,7 +107,7 @@ namespace SmartGarage.Service
         }
 
         //Updates a service with specific id.
-        public async Task<GetServiceDTO> UpdateAsync(UpdateServiceDTO updateInformation, int id)
+        public async Task<bool> UpdateAsync(UpdateServiceDTO updateInformation, int id)
         {
             var service = await Context.Services
              .FirstOrDefaultAsync(v => v.Id == id);
@@ -115,7 +115,7 @@ namespace SmartGarage.Service
             //Returns null when there is not a service with this id or when is deleted.
             if (service == null || service.IsDeleted)
             {
-                return null;
+                return false;
             }
 
             service.UpdateService(updateInformation);
@@ -123,11 +123,11 @@ namespace SmartGarage.Service
             Context.Update(service);
             await Context.SaveChangesAsync();
 
-            return new GetServiceDTO(service);
+            return true;
         }
 
         //Gets all services linked to customer, possibly filtered by some creteria, based on some specified pagination information.
-        public async Task<Pager<GetServiceDTO>> GetAllLinkedToCustomerAsync(PaginationQueryObject pagination, CustomerServicesFilterQueryObject filterObject, User customer)
+        public async Task<Pager<GetServiceDTO>> GetAllLinkedToCustomerAsync(PaginationQueryObject pagination, CustomerServicesFilterQueryObject filterObject, int userId)
         {
             //The amount of items to skip
             var skipPages = (pagination.Page - 1) * pagination.ItemsOnPage;
@@ -137,7 +137,7 @@ namespace SmartGarage.Service
                 .Include(so => so.Order)
                 .ThenInclude(o => o.Vehicle)
                 .ThenInclude(v => v.User)
-                .Where(so => so.Order.Vehicle.User.UserName == customer.UserName)
+                .Where(so => so.Order.Vehicle.User.Id == userId)
                 .FilterCustomerServices(filterObject);
 
             //Returns null when there aren't any services linked to the customer.

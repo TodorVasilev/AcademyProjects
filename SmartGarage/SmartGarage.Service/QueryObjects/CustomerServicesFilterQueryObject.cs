@@ -6,8 +6,8 @@ namespace SmartGarage.Service.QueryObjects
 {
     public class CustomerServicesFilterQueryObject
     {
-        public int VehicleId { get; }
+        public int VehicleId { get; set; }
 
-        public DateTime VisitDate { get; }
+        public DateTime VisitDate { get; set; }
     }
 }

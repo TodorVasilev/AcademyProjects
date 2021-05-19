@@ -3,50 +3,73 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SmartGarage.Data.Models;
+using SmartGarage.Service.Contracts;
 using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;
 using SmartGarage.Service.QueryObjects;
-using SmartGarage.Service.Contracts;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Api_Controllers
 {
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    [ApiController]
+    //[ApiController]
     [Route("api/[controller]")]
-    public class VehicleController : ControllerBase
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    public class ServiceController : ControllerBase
     {
-        private readonly IVehicleService service;
+        private readonly IServiceService service;
 
-        public VehicleController(IVehicleService service)
+        public ServiceController(IServiceService service)
         {
             this.service = service;
         }
 
         /// <summary>
-        /// Gets all vehicles possibly filtered by name, based on some specified pagination information.
+        /// Gets all services possibly filtered by some criteria, based on some specified pagination information.
         /// </summary>
         /// <param name="pagination">The pagination information.</param>
-        /// <param name="name">The name of the vehicle.</param>
+        /// <param name="filterObject">The filter information.</param>
         /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Get([FromQuery] PaginationQueryObject pagination, string name)
+        public async Task<IActionResult> Get([FromQuery] PaginationQueryObject pagination, ServiceFilterQueryObject filterObject)
         {
-            var vehicles = await service.GetAllAsync(pagination, name);
+            var services = await service.GetAllAsync(pagination, filterObject);
 
-            if (vehicles.ItemsOnPage == 0)
+            if (services == null)
             {
                 return NotFound();
             }
 
-            return Ok(vehicles);
+            return Ok(services);
         }
 
         /// <summary>
-        /// Gets vehicle with specified identifier.
+        ///Gets all services linked to user, possibly filtered by some criteria and based on some specified pagination information.
+        /// </summary>
+        /// <param name="pagination">The pagination information.</param>
+        /// <param name="filterObject">The filter information.</param>
+        /// <param name="userID">The user identifier.</param>
+        /// <returns></returns>
+        [HttpGet("User")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Get([FromQuery] PaginationQueryObject pagination, [FromQuery]CustomerServicesFilterQueryObject filterObject, int userID)
+        {
+            var services = await service.GetAllLinkedToCustomerAsync(pagination, filterObject, userID);
+
+            if (services == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(services);
+        }
+
+        /// <summary>
+        /// Gets service with specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
@@ -56,18 +79,18 @@ namespace SmartGarage.Api_Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get(int id)
         {
-            var vehicle = await service.GetAsync(id);
+            var service = await this.service.GetAsync(id);
 
-            if (vehicle == null)
+            if (service == null)
             {
                 return NotFound();
             }
 
-            return Ok(vehicle);
+            return base.Ok(service);
         }
 
         /// <summary>
-        /// Deletes vehicle with specified identifier.
+        /// Deletes service with specified identifier using soft delete.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
@@ -88,7 +111,7 @@ namespace SmartGarage.Api_Controllers
         }
 
         /// <summary>
-        /// Updates vehicle with specified update information.
+        /// Updates service with specified identifier.
         /// </summary>
         /// <param name="updateInformation">The update information.</param>
         /// <param name="id">The identifier.</param>
@@ -97,7 +120,7 @@ namespace SmartGarage.Api_Controllers
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Put([FromBody] UpdateVehicleDTO updateInformation, int id)
+        public async Task<IActionResult> Put([FromBody] UpdateServiceDTO updateInformation, int id)
         {
             var result = await service.UpdateAsync(updateInformation, id);
 
@@ -110,19 +133,19 @@ namespace SmartGarage.Api_Controllers
         }
 
         /// <summary>
-        /// Creates vehicle.
+        /// Creates new service.
         /// </summary>
-        /// <param name="vehicleInformation">The vehicle information.</param>
+        /// <param name="serviceInformation">The vehicle information.</param>
         /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Post([FromBody] CreateVehicleDTO vehicleInformation)
+        public async Task<IActionResult> Post([FromBody] CreateServiceDTO serviceInformation)
         {
             try
             {
-                var vehicle = await service.CreateAsync(vehicleInformation);
+                var vehicle = await service.CreateAsync(serviceInformation);
 
                 return Ok(vehicle);
             }
@@ -130,6 +153,8 @@ namespace SmartGarage.Api_Controllers
             {
                 return BadRequest();
             }
+
+
         }
     }
 }
