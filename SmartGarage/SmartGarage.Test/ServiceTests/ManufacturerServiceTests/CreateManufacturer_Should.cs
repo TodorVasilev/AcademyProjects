@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SmartGarage.Data;
-using SmartGarage.Data.Models;
 using SmartGarage.Service;
+using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.Shared;
 using System.Threading.Tasks;
 
@@ -15,12 +15,11 @@ namespace SmartGarage.Test.ServiceTests.ManufacturerModelServiceTests
         {
             //Arrange
             var options = Util.GetOptions(nameof(CreateManufacturer_When_ParamsAreValid));
-            var manufacturerToAdd = new Manufacturer
+            var manufacturerToAdd = new ManufacturerDTO
             {
                 Name = "BMW"
             };
-            var manufacturerDTO = new ManufacturerDTO(manufacturerToAdd);
-            
+
             using (var arrCtx = new SmartGarageContext(options))
             {
                 arrCtx.SeedData();
@@ -31,11 +30,11 @@ namespace SmartGarage.Test.ServiceTests.ManufacturerModelServiceTests
             using (var actCtx = new SmartGarageContext(options))
             {
                 var sut = new ManufacturerService(actCtx);
-                var result = await sut.CreateAsync(manufacturerDTO);
+                var result = await sut.CreateAsync(manufacturerToAdd);
 
                 //Assert
                 Assert.AreEqual(manufacturerToAdd.Name, result.Name);
-                Assert.IsInstanceOfType(result, typeof(ManufacturerDTO));
+                Assert.IsInstanceOfType(result, typeof(GetManufacturerDTO));
             }
         }
     }

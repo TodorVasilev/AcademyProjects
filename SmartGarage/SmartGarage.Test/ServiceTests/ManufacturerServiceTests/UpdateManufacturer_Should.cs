@@ -15,11 +15,14 @@ namespace SmartGarage.Test.ServiceTests.ManufacturerServiceTests
     public class UpdateManufacturer_Should
     {
         [TestMethod]
-        public async Task UpdateManufacturer_When_ManufacturerExist()
+        public async Task ReturnTrue_When_ManufacturerIsUpdated()
         {
             //Arrange
-            var options = Util.GetOptions(nameof(UpdateManufacturer_When_ManufacturerExist));
-            var updateInfo = new ManufacturerDTO(new Manufacturer { Name = "BMW" });
+            var options = Util.GetOptions(nameof(ReturnTrue_When_ManufacturerIsUpdated));
+            var updateInfo = new ManufacturerDTO
+            {
+                Name = "BMW"
+            };
             var manufacturerId = 1;
 
             using (var arrCtx = new SmartGarageContext(options))
@@ -41,17 +44,20 @@ namespace SmartGarage.Test.ServiceTests.ManufacturerServiceTests
                 var result = await sut.UpdateAsync(updateInfo, manufacturerId);
 
                 //Assert
-                Assert.AreEqual(updateInfo.Name, result.Name);
-                Assert.IsInstanceOfType(result, typeof(ManufacturerDTO));
+                Assert.IsTrue(result);
             }
         }
 
         [TestMethod]
-        public async Task UpdateManufacturer_When_ManufacturerDoesNotExist()
+        public async Task ReturnFalse_When_ManufacturerDoesNotExist()
         {
             //Arrange
-            var options = Util.GetOptions(nameof(UpdateManufacturer_When_ManufacturerDoesNotExist));
-            var updateInfo = new ManufacturerDTO(new Manufacturer { Name = "BMW" });
+            var options = Util.GetOptions(nameof(ReturnFalse_When_ManufacturerDoesNotExist));
+            var updateInfo = new ManufacturerDTO
+            {
+                Name = "BMW"
+            };
+
             var manufacturerId = -1;
 
             //Act
@@ -61,7 +67,7 @@ namespace SmartGarage.Test.ServiceTests.ManufacturerServiceTests
                 var result = await sut.UpdateAsync(updateInfo, manufacturerId);
 
                 //Assert
-                Assert.IsNull(result);
+                Assert.IsFalse(result);
             }
         }
     }
