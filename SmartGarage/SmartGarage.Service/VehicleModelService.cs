@@ -95,7 +95,7 @@ namespace SmartGarage.Service
         }
 
         //Updates a vehicle model with specific id.
-        public async Task<GetVehicleModelDTO> UpdateAsync(VehicleModelDTO updateInformation, int id)
+        public async Task<bool> UpdateAsync(VehicleModelDTO updateInformation, int id)
         {
             var vehicleModel = await Context.VehicleModels
              .Include(vm => vm.Manufacturer)
@@ -106,7 +106,7 @@ namespace SmartGarage.Service
             //Returns null when there is not a vehicle model with this id.
             if (vehicleModel == null)
             {
-                return null;
+                return false;
             }
 
             vehicleModel.UpdateVehicleModel(updateInformation);
@@ -114,7 +114,7 @@ namespace SmartGarage.Service
             Context.Update(vehicleModel);
             await Context.SaveChangesAsync();
 
-            return new GetVehicleModelDTO(vehicleModel);
+            return true;
         }
     }
 }

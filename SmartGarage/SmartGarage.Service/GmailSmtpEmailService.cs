@@ -20,7 +20,7 @@ namespace SmartGarage.Service
                 mail.From = new MailAddress(fromEmail);
                 mail.To.Add(email);
                 mail.Subject = "New confirmation email with a login password";
-                mail.Body = "Confirmation password " + userPassword + "<a href= 'https://localhost:5001/Identity/Account/Login' > Configuration link </ a > ";
+                mail.Body = "Confirmation password " + userPassword + "<a href= 'https://localhost:5001/Identity/Account/Login' > Login page: https://localhost:5001/Identity/Account/Login </ a > ";
                 mail.IsBodyHtml = true;
 
                 using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
@@ -31,21 +31,6 @@ namespace SmartGarage.Service
                     await smtp.SendMailAsync(mail);
                 }
             }
-        }
-
-        private AlternateView GetEmbeddedImage(String filePath, string template)
-        {
-            LinkedResource res = new LinkedResource(filePath);
-            res.ContentType = new ContentType()
-            {
-                MediaType = "image/png",
-                Name = "logo_transparent.png"
-            };
-            res.ContentId = Guid.NewGuid().ToString();
-            string htmlBody = string.Format(template, res.ContentId);
-            AlternateView alternateView = AlternateView.CreateAlternateViewFromString(htmlBody, null, MediaTypeNames.Text.Html);
-            alternateView.LinkedResources.Add(res);
-            return alternateView;
         }
     }
 }

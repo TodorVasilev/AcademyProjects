@@ -2,52 +2,49 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SmartGarage.Data.Models;
-using SmartGarage.Service.DTOs.CreateDTOs;
-using SmartGarage.Service.DTOs.UpdateDTOs;
+using SmartGarage.Service.DTOs.SharedDTOs;
 using SmartGarage.Service.QueryObjects;
-using SmartGarage.Service.Contracts;
-using System.Threading.Tasks;
+using SmartGarage.Service.ServiceContracts;
 using System;
+using System.Threading.Tasks;
 
 namespace SmartGarage.Api_Controllers
 {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     [Route("api/[controller]")]
-    public class VehicleController : ControllerBase
+    public class VehicleModelController : ControllerBase
     {
-        private readonly IVehicleService service;
+        private readonly IVehicleModelService service;
 
-        public VehicleController(IVehicleService service)
+        public VehicleModelController(IVehicleModelService service)
         {
             this.service = service;
         }
 
         /// <summary>
-        /// Gets all vehicles possibly filtered by name, based on some specified pagination information.
+        /// Gets all vehicle models based on some specified pagination information.
         /// </summary>
         /// <param name="pagination">The pagination information.</param>
-        /// <param name="name">The name of the vehicle.</param>
         /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Get([FromQuery] PaginationQueryObject pagination, string name)
+        public async Task<IActionResult> Get([FromQuery] PaginationQueryObject pagination)
         {
-            var vehicles = await service.GetAllAsync(pagination, name);
+            var vehicleModels = await service.GetAllAsync(pagination);
 
-            if (vehicles.ItemsOnPage == 0)
+            if (vehicleModels.ItemsOnPage == 0)
             {
                 return NotFound();
             }
 
-            return Ok(vehicles);
+            return Ok(vehicleModels);
         }
 
         /// <summary>
-        /// Gets vehicle with specified identifier.
+        /// Gets vehicle model with specified identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
@@ -57,39 +54,18 @@ namespace SmartGarage.Api_Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get(int id)
         {
-            var vehicle = await service.GetAsync(id);
+            var vehicleModel = await service.GetAsync(id);
 
-            if (vehicle == null)
+            if (vehicleModel == null)
             {
                 return NotFound();
             }
 
-            return Ok(vehicle);
+            return Ok(vehicleModel);
         }
 
         /// <summary>
-        /// Deletes vehicle with specified identifier.
-        /// </summary>
-        /// <param name="id">The identifier.</param>
-        /// <returns></returns>
-        [HttpDelete("{id}")]
-        [AllowAnonymous]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var result = await service.RemoveAsync(id);
-
-            if (result == false)
-            {
-                return NotFound();
-            }
-
-            return NoContent();
-        }
-
-        /// <summary>
-        /// Updates vehicle with specified update information.
+        /// Updates vehicle model with specified update information.
         /// </summary>
         /// <param name="updateInformation">The update information.</param>
         /// <param name="id">The identifier.</param>
@@ -99,7 +75,7 @@ namespace SmartGarage.Api_Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Put([FromBody] UpdateVehicleDTO updateInformation, int id)
+        public async Task<IActionResult> Put([FromBody] VehicleModelDTO updateInformation, int id)
         {
             try
             {
@@ -122,19 +98,19 @@ namespace SmartGarage.Api_Controllers
         /// <summary>
         /// Creates vehicle.
         /// </summary>
-        /// <param name="vehicleInformation">The vehicle information.</param>
+        /// <param name="vehicleModelInformation">The vehicle information.</param>
         /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Post([FromBody] CreateVehicleDTO vehicleInformation)
+        public async Task<IActionResult> Post([FromBody] VehicleModelDTO vehicleModelInformation)
         {
             try
             {
-                var vehicle = await service.CreateAsync(vehicleInformation);
+                var vehicleModel = await service.CreateAsync(vehicleModelInformation);
 
-                return Ok(vehicle);
+                return Ok(vehicleModel);
             }
             catch (System.Exception)
             {
