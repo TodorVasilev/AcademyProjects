@@ -7,7 +7,7 @@ using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;
 using SmartGarage.Service.Helpers;
 using SmartGarage.Service.QueryObjects;
-using System;
+using SmartGarage.Service.ServiceHelpes;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -37,8 +37,8 @@ namespace SmartGarage.Service
                 Colour = vehicleInformation.Colour
             };
 
-                await Context.Vehicles.AddAsync(vehicleToAdd);
-                await Context.SaveChangesAsync();
+            await Context.Vehicles.AddAsync(vehicleToAdd);
+            await Context.SaveChangesAsync();
 
             var vehicle = await Context.Vehicles
                 .Include(v => v.User)
@@ -143,6 +143,8 @@ namespace SmartGarage.Service
             {
                 return false;
             }
+
+            vehicle.UpdateVehicle(updateInformation);
 
             Context.Update(vehicle);
             await Context.SaveChangesAsync();

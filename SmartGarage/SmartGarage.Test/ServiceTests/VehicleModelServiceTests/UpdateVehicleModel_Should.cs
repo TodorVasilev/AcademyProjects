@@ -15,10 +15,10 @@ namespace SmartGarage.Test.ServiceTests.VehicleModelServiceTests
     public class UpdateVehicleModel_Should
     {
         [TestMethod]
-        public async Task UpdateVehicleModel_When_VehicleModelExists()
+        public async Task ReturnTrue_When_VehicleModelIsUpdated()
         {
             //Arrange
-            var options = Util.GetOptions(nameof(UpdateVehicleModel_When_VehicleModelExists));
+            var options = Util.GetOptions(nameof(ReturnTrue_When_VehicleModelIsUpdated));
             var updateInfo = new VehicleModelDTO
             {
                 Name = "E31"
@@ -44,16 +44,15 @@ namespace SmartGarage.Test.ServiceTests.VehicleModelServiceTests
                 var result = await sut.UpdateAsync(updateInfo, vehicleModelId);
 
                 //Assert
-                Assert.AreEqual(updateInfo.Name, result.Name);
-                Assert.IsInstanceOfType(result, typeof(GetVehicleModelDTO));
+                Assert.IsTrue(result);
             }
         }
 
         [TestMethod]
-        public async Task ReturnNull_When_VehicleModelDoesNotExist()
+        public async Task ReturnFalse_When_VehicleModelDoesNotExist()
         {
             //Arrange
-            var options = Util.GetOptions(nameof(ReturnNull_When_VehicleModelDoesNotExist));
+            var options = Util.GetOptions(nameof(ReturnFalse_When_VehicleModelDoesNotExist));
             var updateInfo = new VehicleModelDTO
             {
                 Name = "E31"
@@ -76,7 +75,7 @@ namespace SmartGarage.Test.ServiceTests.VehicleModelServiceTests
                 var result = await sut.UpdateAsync(updateInfo, vehicleModelId);
 
                 //Assert
-                Assert.IsNull(result);
+                Assert.IsFalse(result);
             }
         }
     }
