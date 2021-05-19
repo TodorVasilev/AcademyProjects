@@ -8,8 +8,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SmartGarage.Contracts;
 using SmartGarage.Data;
 using SmartGarage.Data.Models;
+using SmartGarage.Helpers;
 using SmartGarage.Service;
 using SmartGarage.Service.Contracts;
 using SmartGarage.Service.Helpers;
@@ -47,6 +49,7 @@ namespace SmartGarage
                 .AddDefaultTokenProviders();
 
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserHelper, UserHelper>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

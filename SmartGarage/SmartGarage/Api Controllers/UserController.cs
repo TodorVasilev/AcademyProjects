@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SmartGarage.Contracts;
 using SmartGarage.Data.Models;
 using SmartGarage.Service.Contracts;
 using SmartGarage.Service.DTOs;
@@ -18,9 +19,12 @@ namespace SmartGarage.Api_Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService userService;
-        public UserController(IUserService userService, UserManager<User> userManager)
+        private readonly IUserHelper userHelper;
+
+        public UserController(IUserService userService, IUserHelper userHelper)
         {
             this.userService = userService;
+            this.userHelper = userHelper;
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -33,7 +37,7 @@ namespace SmartGarage.Api_Controllers
         {
             var loginDTO = model;
 
-            var user = await this.userService.AuthenticateAsync(loginDTO);
+            var user = await this.userHelper.AuthenticateAsync(loginDTO);
 
             if (user != null)
             {
@@ -57,20 +61,23 @@ namespace SmartGarage.Api_Controllers
         public async Task<IActionResult> RegisterUserAsync([FromBody] CreateUserDTO createUserDTO)
 
         {
-           var operationResult = await this.userService.CreateUserAsync(createUserDTO);
+           var operationResult = await this.userHelper.CreateUserAsync(createUserDTO);
             if (operationResult.Succeeded)
             {
                 return Ok(new { message = "User created!" });
             }
             return BadRequest(new { message = "Unable to create user!" });
         }
-
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize(Roles = "Admin,Employee")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateUserAsync(int id, [FromBody] UpdateUserDTO uspdateUserDTO)
+        public async Task<IActionResult> UpdateUserAsync(int id, [FromBody] UpdateUserDTO updateUserDTO)
 
-        {
-            var operationResult = await this.userService.UpdateUserAsync(id, uspdateUserDTO);
+        {            
+            var operationResult = await this.userService.UpdateUserAsync(id, updateUserDTO);
             if (operationResult)
             {
                 return Ok(new { message = "User updated!" });

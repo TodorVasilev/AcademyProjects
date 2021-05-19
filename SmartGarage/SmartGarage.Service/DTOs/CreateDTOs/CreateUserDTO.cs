@@ -8,7 +8,21 @@ namespace SmartGarage.Service.DTOs.CreateDTOs
 {
     public class CreateUserDTO
     {
+        public CreateUserDTO()
+        {
 
+        }
+        public CreateUserDTO(User user)
+        {
+            this.UserName = user.UserName;
+            this.FirstName = user.FirstName;
+            this.LastName = user.LastName;
+            this.PhoneNumber = user.PhoneNumber;
+            this.Age = user.Age;
+            this.DrivingLicenseNumber = user.DrivingLicenseNumber;
+            this.Address = user.Address;
+            this.Email = user.Email;
+        }
         public User UserMap(CreateUserDTO createUserDTO)
         {
             var user = new User();

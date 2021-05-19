@@ -1,0 +1,75 @@
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SmartGarage.Data;
+using SmartGarage.Data.Models;
+using SmartGarage.Service;
+using SmartGarage.Service.DTOs.CreateDTOs;
+using SmartGarage.Service.DTOs.UpdateDTOs;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SmartGarage.Test.ServiceTests.UserServiceTest
+{
+    [TestClass]
+    public class UpdateUser_Should
+    {
+        [TestMethod]
+        public async Task UpdateUser_WhenParamsAreValid()
+        {
+            //Arrange
+            var options = Util.GetOptions(nameof(UpdateUser_WhenParamsAreValid));
+            var userToUpdate = new UpdateUserDTO();
+            userToUpdate.FirstName = "Pesho";
+            int id = 4;
+
+            using (var arrCtx = new SmartGarageContext(options))
+            {
+                arrCtx.SeedData();
+                await arrCtx.SaveChangesAsync();
+            }
+
+            //Act
+            using (var actCtx = new SmartGarageContext(options))
+            {
+                var sut = new UserService(actCtx);
+                var result = await sut.UpdateUserAsync(id, userToUpdate);
+                var userToCompare = await actCtx.Users.FindAsync(id);
+
+                //Assert
+                Assert.AreEqual(userToCompare.FirstName, userToUpdate.FirstName);
+                Assert.AreNotEqual(userToCompare.LastName, userToUpdate.LastName);
+
+            }
+
+        }
+        [TestMethod]
+        public async Task ReturnFalse_WhenUserNotExist()
+        {
+            //Arrange
+            var options = Util.GetOptions(nameof(ReturnFalse_WhenUserNotExist));
+            var userToUpdate = new UpdateUserDTO();
+            userToUpdate.FirstName = "Pesho";
+            int id = 4;
+
+            using (var arrCtx = new SmartGarageContext(options))
+            {
+                arrCtx.SeedData();
+                var userToDelete = await arrCtx.Users.FindAsync(id);
+                userToDelete.IsDeleted = true;
+            await arrCtx.SaveChangesAsync();
+            }
+
+            //Act
+            using (var actCtx = new SmartGarageContext(options))
+            {
+                var sut = new UserService(actCtx);
+                var result = await sut.UpdateUserAsync(id, userToUpdate);
+                var userToCompare = await actCtx.Users.FindAsync(id);
+
+                //Assert
+                Assert.IsFalse(result);          
+            }
+        }
+    }
+}

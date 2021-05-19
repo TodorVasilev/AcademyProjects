@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using SmartGarage.Contracts;
 using SmartGarage.Data.Models;
 using SmartGarage.Service.Contracts;
 using SmartGarage.Service.DTOs.CreateDTOs;
@@ -19,13 +20,16 @@ namespace SmartGarage.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<User> _signInManager;
         private readonly IUserService _userService;
+        private readonly IUserHelper _userHelper;
 
         public RegisterModel(
             SignInManager<User> signInManager,
-            IUserService userService)
+            IUserService userService,
+            IUserHelper userHelper)
         {
             _signInManager = signInManager;
             _userService = userService;
+            _userHelper = userHelper;
         }
 
         [BindProperty]
@@ -102,7 +106,7 @@ namespace SmartGarage.Areas.Identity.Pages.Account
                 };
                 try
                 {
-                    var result = await _userService.CreateUserAsync(userDTO);
+                    var result = await _userHelper.CreateUserAsync(userDTO);
 
                     foreach (var error in result.Errors)
                     {
