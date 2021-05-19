@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartGarage.Data;
-using SmartGarage.Service.Helpers;
 using SmartGarage.Data.Models;
-using SmartGarage.Service.QueryObjects;
 using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;
+using SmartGarage.Service.Helpers;
+using SmartGarage.Service.QueryObjects;
 using SmartGarage.Service.ServiceContracts;
 using SmartGarage.Service.ServiceHelpes;
 using System.Linq;
@@ -16,7 +16,6 @@ namespace SmartGarage.Service
     /// <summary>
     /// This class is responsible for CRUD operations performed on the vehicles.
     /// </summary>
-    /// <seealso cref="SmartGarage.Service.ServiceContracts.IVehicleService" />
     public class VehicleService : IVehicleService
     {
         public VehicleService(SmartGarageContext context)
@@ -26,6 +25,7 @@ namespace SmartGarage.Service
 
         public SmartGarageContext Context { get; }
 
+        //Creates new vehicle.
         public async Task<GetVehicleDTO> CreateAsync(CreateVehicleDTO vehicleInformation)
         {
             var vehicleToAdd = new Vehicle
@@ -49,8 +49,10 @@ namespace SmartGarage.Service
             return new GetVehicleDTO(vehicle);
         }
 
+        //Gets all vehicles possibly filtered by their name, based on some specified pagination information.
         public async Task<Pager<GetVehicleDTO>> GetAllAsync(PaginationQueryObject pagination, string name)
         {
+            //The amount of items to skip
             var skipPages = (pagination.Page - 1) * pagination.ItemsOnPage;
 
             var vehicles = Context.Vehicles
@@ -60,6 +62,7 @@ namespace SmartGarage.Service
                 .Where(v => !v.IsDeleted)
                 .AsQueryable();
 
+            //Returns null when there aren't any vehicles..
             if (vehicles.Count() == 0)
             {
                 return null;
@@ -85,16 +88,17 @@ namespace SmartGarage.Service
             return result;
         }
 
+        //Gets a vehicle with specific id.
         public async Task<GetVehicleDTO> GetAsync(int id)
         {
             var vehicle = await Context.Vehicles
                .Include(v => v.User)
                .Include(v => v.VehicleModel)
                .ThenInclude(vm => vm.Manufacturer)
-               .Where(v => !v.IsDeleted)
                .FirstOrDefaultAsync(v => v.Id == id);
 
-            if (vehicle == null)
+            //Returns null when there is not a vehicle with this id or when is deleted.
+            if (vehicle == null || vehicle.IsDeleted)
             {
                 return null;
             }
@@ -102,6 +106,7 @@ namespace SmartGarage.Service
             return new GetVehicleDTO(vehicle);
         }
 
+        //Deletes a vehicle with specific id using soft delete.
         public async Task<bool> RemoveAsync(int id)
         {
             var vehicle = await Context.Vehicles
@@ -110,7 +115,8 @@ namespace SmartGarage.Service
               .ThenInclude(vm => vm.Manufacturer)
               .FirstOrDefaultAsync(v => v.Id == id);
 
-            if (vehicle == null)
+            //Returns false when there is not a vehicle with this id or when is deleted.
+            if (vehicle == null || vehicle.IsDeleted)
             {
                 return false;
             }
@@ -123,7 +129,8 @@ namespace SmartGarage.Service
             return true;
         }
 
-        public async Task<GetVehicleDTO> UpdateAsync(UpdateVehicleDTO updateInformation, int id)
+        //Updates a vehicle with specific id.
+        public async Task<bool> UpdateAsync(UpdateVehicleDTO updateInformation, int id)
         {
             var vehicle = await Context.Vehicles
               .Include(v => v.User)
@@ -131,17 +138,13 @@ namespace SmartGarage.Service
               .ThenInclude(vm => vm.Manufacturer)
               .FirstOrDefaultAsync(v => v.Id == id);
 
-            if (vehicle == null)
+            //Returns null when there is not a vehicle with this id or when is deleted.
+            if (vehicle == null || vehicle.IsDeleted)
             {
-                return null;
+                return false;
             }
 
-            vehicle.UpdateVehicle(updateInformation);
-
-            Context.Update(vehicle);
-            await Context.SaveChangesAsync();
-
-            return new GetVehicleDTO(vehicle);
+            return true;
         }
     }
 }

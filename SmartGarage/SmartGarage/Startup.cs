@@ -106,8 +106,12 @@ namespace SmartGarage
                         ValidateAudience = false
                     };
                 });
-
-            services.AddTransient<IEmailsService, GmailSmtpEmailsService>();
+            
+            services.AddScoped<IEmailsService, GmailSmtpEmailsService>();
+            services.AddScoped<IVehicleService, VehicleService>();
+            services.AddScoped<IServiceService, ServiceService>();
+            services.AddScoped<IVehicleModelService, VehicleModelService>();
+            services.AddScoped<IManufacturerService, ManufacturerService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -12,10 +12,10 @@ namespace SmartGarage.Test.ServiceTests.ServiceServiceTests
     public class RemoveService_Should
     {
         [TestMethod]
-        public async Task ReturnTrue_When_ServiceExists()
+        public async Task ReturnTrue_When_ServiceIsDeleted()
         {
             //Arrange
-            var options = Util.GetOptions(nameof(ReturnTrue_When_ServiceExists));
+            var options = Util.GetOptions(nameof(ReturnTrue_When_ServiceIsDeleted));
             var serviceId = 1;
 
             using (var arrCtx = new SmartGarageContext(options))

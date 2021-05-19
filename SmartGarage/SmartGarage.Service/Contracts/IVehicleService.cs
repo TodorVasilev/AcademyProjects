@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace SmartGarage.Service.ServiceContracts
 {
-    interface IVehicleService
+    public interface IVehicleService
     {
         Task<bool> RemoveAsync(int id);
 
         Task<GetVehicleDTO> CreateAsync(CreateVehicleDTO vehicleInformation);
 
-        Task<GetVehicleDTO> UpdateAsync(UpdateVehicleDTO updateInformation, int id);
+        Task<bool> UpdateAsync(UpdateVehicleDTO updateInformation, int id);
 
         Task<GetVehicleDTO> GetAsync(int id);
 

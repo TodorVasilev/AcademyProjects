@@ -1,18 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartGarage.Data;
-using SmartGarage.Service.Helpers;
 using SmartGarage.Data.Models;
-using SmartGarage.Service.QueryObjects;
 using SmartGarage.Service.Contracts;
 using SmartGarage.Service.DTOs.Shared;
-using System;
-using System.Collections.Generic;
+using SmartGarage.Service.Helpers;
+using SmartGarage.Service.QueryObjects;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Service
 {
+    /// <summary>
+    /// This class is responsible for CRUD operations performed on the manufacturers.
+    /// </summary>
     public class ManufacturerService : IManufacturerService
     {
         public ManufacturerService(SmartGarageContext context)
@@ -22,6 +22,7 @@ namespace SmartGarage.Service
 
         public SmartGarageContext Context { get; }
 
+        //Creates new manufacturer
         public async Task<ManufacturerDTO> CreateAsync(ManufacturerDTO manufacturerInformation)
         {
             var manufacturer = new Manufacturer
@@ -35,16 +36,14 @@ namespace SmartGarage.Service
             return new ManufacturerDTO(manufacturer);
         }
 
+        //Gets all manufacturers based on some specified pagination information.
         public async Task<Pager<ManufacturerDTO>> GetAllAsync(PaginationQueryObject pagination)
         {
+            //The amount of items to skip
             var skipPages = (pagination.Page - 1) * pagination.ItemsOnPage;
 
-            var manufacturers = Context.Manufacturers;
-
-            if (manufacturers.Count() == 0)
-            {
-                return null;
-            }
+            var manufacturers = Context.Manufacturers
+                .AsQueryable();
 
             var count = manufacturers.Count();
 
@@ -61,11 +60,13 @@ namespace SmartGarage.Service
             return result;
         }
 
+        //Gets manufacturer with specific id.
         public async Task<ManufacturerDTO> GetAsync(int id)
         {
             var vehicle = await Context.Manufacturers
               .FirstOrDefaultAsync(v => v.Id == id);
 
+            //Returns null when there is not a manufacturer with this id.
             if (vehicle == null)
             {
                 return null;
@@ -74,11 +75,13 @@ namespace SmartGarage.Service
             return new ManufacturerDTO(vehicle);
         }
 
+        //Updates manufacturer with specific id.
         public async Task<ManufacturerDTO> UpdateAsync(ManufacturerDTO updateInformation, int id)
         {
             var manufacturer = await Context.Manufacturers
              .FirstOrDefaultAsync(v => v.Id == id);
 
+            //Returns null when there is not a manufacturer with this id.
             if (manufacturer == null)
             {
                 return null;

@@ -10,15 +10,9 @@ namespace SmartGarage.Service
     public class GmailSmtpEmailsService : IEmailsService
     {
         private const string fromEmail = "DummyEmail1886@gmail.com";
-        private readonly string password = "A123123123a";
+        private const string password = "A123123123a";
 
-        //public async Task ReSendRegistrationEmail(string email)
-        //{
-        //        var message = new MailMessage(FROM_EMAIL, email, "New confirmation email from Life Mode", $"{url}/auth/confirmEmail/{email}&{token}");
-        //        message.IsBodyHtml = true;
-        //        await _smtpClient.SendMailAsync(message);
-        //}
-
+        //Sends an E-mail to the user with random generated password.
         public async Task SendRegistrationEmail(string email, string userPassword)
         {
             using (MailMessage mail = new MailMessage())
@@ -37,7 +31,6 @@ namespace SmartGarage.Service
                     await smtp.SendMailAsync(mail);
                 }
             }
-            //message.AlternateViews.Add(GetEmbeddedImage("./Images/logo_transparent.png", template, token));
         }
 
         private AlternateView GetEmbeddedImage(String filePath, string template)

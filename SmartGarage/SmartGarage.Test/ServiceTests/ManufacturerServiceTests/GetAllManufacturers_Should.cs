@@ -55,7 +55,8 @@ namespace SmartGarage.Test.ServiceTests.ManufacturerServiceTests
                 var result = await sut.GetAllAsync(pagination);
 
                 //Assert
-                Assert.IsNull(result);
+                Assert.AreEqual(result.ItemsOnPage, 0);
+                Assert.AreEqual(result.Count, 0);
             }
         }
     }

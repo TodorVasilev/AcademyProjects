@@ -45,8 +45,7 @@ namespace SmartGarage.Test.ServiceTests.VehicleServiceTests
                 var result = await sut.UpdateAsync(updateInfo, vehicleId);
 
                 //Assert
-                Assert.AreEqual(result.Colour, "Transparent");
-                Assert.IsInstanceOfType(result, typeof(GetVehicleDTO));
+                Assert.IsTrue(result);
             }
         }
 
@@ -77,7 +76,7 @@ namespace SmartGarage.Test.ServiceTests.VehicleServiceTests
                 var result = await sut.UpdateAsync(updateInfo, vehicleId);
 
                 //Assert
-                Assert.IsNull(result);
+                Assert.IsFalse(result);
             }
         }
     }

@@ -20,7 +20,7 @@ namespace SmartGarage.Test.ServiceTests.ManufacturerModelServiceTests
                 Name = "BMW"
             };
             var manufacturerDTO = new ManufacturerDTO(manufacturerToAdd);
-
+            
             using (var arrCtx = new SmartGarageContext(options))
             {
                 arrCtx.SeedData();

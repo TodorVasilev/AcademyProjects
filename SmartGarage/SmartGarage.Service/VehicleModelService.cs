@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SmartGarage.Data;
-using SmartGarage.Service.Helpers;
 using SmartGarage.Data.Models;
-using SmartGarage.Service.QueryObjects;
 using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.SharedDTOs;
+using SmartGarage.Service.Helpers;
+using SmartGarage.Service.QueryObjects;
 using SmartGarage.Service.ServiceContracts;
 using SmartGarage.Service.ServiceHelpes;
 using System.Linq;
@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace SmartGarage.Service
 {
+    /// <summary>
+    /// This class is responsible for CRUD operations performed on the vehicles models.
+    /// </summary>
     public class VehicleModelService : IVehicleModelService
     {
         public VehicleModelService(SmartGarageContext context)
@@ -21,6 +24,7 @@ namespace SmartGarage.Service
 
         public SmartGarageContext Context { get; }
 
+        //Creates new vehicle model.
         public async Task<GetVehicleModelDTO> CreateAsync(VehicleModelDTO vehicleModelInformation)
         {
             var vehicleModelToAdd = new VehicleModel
@@ -41,8 +45,10 @@ namespace SmartGarage.Service
             return new GetVehicleModelDTO(vehicleModel);
         }
 
+        //Gets all vehicle models, based on some specified pagination information.
         public async Task<Pager<GetVehicleModelDTO>> GetAllAsync(PaginationQueryObject pagination)
         {
+            //The amount of items to skip
             var skipPages = (pagination.Page - 1) * pagination.ItemsOnPage;
 
             var vehicleModels = Context.VehicleModels
@@ -50,6 +56,7 @@ namespace SmartGarage.Service
                 .Include(vm => vm.VehicleType)
                 .AsQueryable();
 
+            //Returns null when there aren't any vehicle models.
             if (vehicleModels.Count() == 0)
             {
                 return null;
@@ -70,6 +77,7 @@ namespace SmartGarage.Service
             return result;
         }
 
+        //Gets a vehicle model with specific id.
         public async Task<GetVehicleModelDTO> GetAsync(int id)
         {
             var vehicleModels = await Context.VehicleModels
@@ -77,6 +85,7 @@ namespace SmartGarage.Service
                .Include(vm => vm.VehicleType)
                .FirstOrDefaultAsync(v => v.Id == id);
 
+            //Returns null when there is not a vehicle model with this id.
             if (vehicleModels == null)
             {
                 return null;
@@ -85,6 +94,7 @@ namespace SmartGarage.Service
             return new GetVehicleModelDTO(vehicleModels);
         }
 
+        //Updates a vehicle model with specific id.
         public async Task<GetVehicleModelDTO> UpdateAsync(VehicleModelDTO updateInformation, int id)
         {
             var vehicleModel = await Context.VehicleModels
@@ -92,11 +102,13 @@ namespace SmartGarage.Service
              .Include(vm => vm.VehicleType)
              .FirstOrDefaultAsync(v => v.Id == id);
 
+
+            //Returns null when there is not a vehicle model with this id.
             if (vehicleModel == null)
             {
                 return null;
             }
-            
+
             vehicleModel.UpdateVehicleModel(updateInformation);
 
             Context.Update(vehicleModel);

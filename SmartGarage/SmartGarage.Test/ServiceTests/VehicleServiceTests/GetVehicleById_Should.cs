@@ -38,7 +38,8 @@ namespace SmartGarage.Test.ServiceTests.VehicleServiceTests
 
                 //Assert
                 Assert.AreEqual(vehicle.Colour, result.Colour);
-                Assert.AreEqual(vehicle.UserId, result.UserId);
+                Assert.AreEqual(vehicle.NumberPlate, result.NumberPlate);
+                Assert.AreEqual(vehicle.VIN, result.VIN);
                 Assert.IsInstanceOfType(result, typeof(GetVehicleDTO));
             }
         }
