@@ -3,10 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SmartGarage.Data;
 using SmartGarage.Data.Models;
 using SmartGarage.Service;
-using SmartGarage.Service.DTOs.Shared;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using SmartGarage.Service.DTOs.GetDTOs;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Test.ServiceTests.ManufacturerServiceTests
@@ -38,7 +35,7 @@ namespace SmartGarage.Test.ServiceTests.ManufacturerServiceTests
 
                 //Assert
                 Assert.AreEqual(manufacturer.Name, result.Name);
-                Assert.IsInstanceOfType(result, typeof(ManufacturerDTO));
+                Assert.IsInstanceOfType(result, typeof(GetManufacturerDTO));
             }
         }
 
