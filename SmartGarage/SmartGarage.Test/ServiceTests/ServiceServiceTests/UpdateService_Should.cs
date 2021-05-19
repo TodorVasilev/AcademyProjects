@@ -12,10 +12,10 @@ namespace SmartGarage.Test.ServiceTests.ServiceServiceTests
     public class UpdateService_Should
     {
         [TestMethod]
-        public async Task UpdateService_When_ServiceExist()
+        public async Task ReturnTrue_When_ServiceExist()
         {
             //Arrange
-            var options = Util.GetOptions(nameof(UpdateService_When_ServiceExist));
+            var options = Util.GetOptions(nameof(ReturnTrue_When_ServiceExist));
             var updateInfo = new UpdateServiceDTO
             {
                 Price = 1.99
@@ -41,8 +41,7 @@ namespace SmartGarage.Test.ServiceTests.ServiceServiceTests
                 var result = await sut.UpdateAsync(updateInfo, vehicleId);
 
                 //Assert
-                Assert.AreEqual(result.Price, 1.99);
-                Assert.IsInstanceOfType(result, typeof(GetServiceDTO));
+                Assert.IsTrue(result);
             }
         }
 
@@ -73,7 +72,7 @@ namespace SmartGarage.Test.ServiceTests.ServiceServiceTests
                 var result = await sut.UpdateAsync(updateInfo, vehicleId);
 
                 //Assert
-                Assert.IsNull(result);
+                Assert.IsFalse(result);
             }
         }
     }

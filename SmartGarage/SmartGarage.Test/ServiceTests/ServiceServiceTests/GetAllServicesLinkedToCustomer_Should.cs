@@ -22,11 +22,7 @@ namespace SmartGarage.Test.ServiceTests.ServiceServiceTests
             var options = Util.GetOptions(nameof(ReturnAllServicesLinkedToCustomer));
             var pagination = new PaginationQueryObject();
             var filterObject = new CustomerServicesFilterQueryObject();
-            var user = new User
-            {
-                Id = 1,
-                UserName = "TheVeryFirstCustomer"
-            };
+            var userId = 3;
             var count = 0;
 
             using (var arrCtx = new SmartGarageContext(options))
@@ -34,7 +30,7 @@ namespace SmartGarage.Test.ServiceTests.ServiceServiceTests
                 arrCtx.SeedData();
                 await arrCtx.SaveChangesAsync();
                 count = arrCtx.ServiceOrders
-                    .Where(so => so.Order.Vehicle.User.UserName == user.UserName)
+                    .Where(so => so.Order.Vehicle.User.Id == userId)
                     .Count();
             }
 
@@ -42,7 +38,7 @@ namespace SmartGarage.Test.ServiceTests.ServiceServiceTests
             using (var actCtx = new SmartGarageContext(options))
             {
                 var sut = new ServiceService(actCtx);
-                var result = await sut.GetAllLinkedToCustomerAsync(pagination, filterObject, user);
+                var result = await sut.GetAllLinkedToCustomerAsync(pagination, filterObject, userId);
 
                 //Assert
                 Assert.AreEqual(count, result.Count);
@@ -57,13 +53,13 @@ namespace SmartGarage.Test.ServiceTests.ServiceServiceTests
             var options = Util.GetOptions(nameof(ReturnNull_When_ThereAreNoServicesLinkedToUser));
             var pagination = new PaginationQueryObject();
             var filterObject = new CustomerServicesFilterQueryObject();
-            var user = new User();
+            var userId = 1;
 
             //Act
             using (var actCtx = new SmartGarageContext(options))
             {
                 var sut = new ServiceService(actCtx);
-                var result = await sut.GetAllLinkedToCustomerAsync(pagination, filterObject, user);
+                var result = await sut.GetAllLinkedToCustomerAsync(pagination, filterObject, userId);
 
                 //Assert
                 Assert.IsNull(result);

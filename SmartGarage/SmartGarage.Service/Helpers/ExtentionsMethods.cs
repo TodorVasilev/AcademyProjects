@@ -56,7 +56,7 @@ namespace SmartGarage.Service.ServiceHelpes
         {
             if (filterObject.Name != default)
             {
-                services = services.Where(s => s.Name == filterObject.Name);
+                services = services.Where(s => s.Name.Contains(filterObject.Name));
             }
             if (filterObject.Price != default)
             {
@@ -68,7 +68,7 @@ namespace SmartGarage.Service.ServiceHelpes
 
         public static Data.Models.Service UpdateService(this Data.Models.Service service, UpdateServiceDTO updateInformation)
         {
-            if(updateInformation.Name != default)
+            if (updateInformation.Name != default)
             {
                 service.Name = updateInformation.Name;
             }

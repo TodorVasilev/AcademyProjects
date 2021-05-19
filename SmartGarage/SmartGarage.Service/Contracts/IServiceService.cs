@@ -16,9 +16,9 @@ namespace SmartGarage.Service.Contracts
 
         Task<GetServiceDTO> CreateAsync(CreateServiceDTO serviceInformation);
 
-        Task<GetServiceDTO> UpdateAsync(UpdateServiceDTO updateInformation, int id);
+        Task<bool> UpdateAsync(UpdateServiceDTO updateInformation, int id);
 
-        Task<Pager<GetServiceDTO>> GetAllLinkedToCustomerAsync(PaginationQueryObject pagination, CustomerServicesFilterQueryObject filterObject, User user);
+        Task<Pager<GetServiceDTO>> GetAllLinkedToCustomerAsync(PaginationQueryObject pagination, CustomerServicesFilterQueryObject filterObject, int userId);
 
         Task<bool> RemoveAsync(int id);
     }

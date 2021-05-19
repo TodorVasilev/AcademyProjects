@@ -5,7 +5,7 @@ using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;
 using System.Threading.Tasks;
 
-namespace SmartGarage.Service.ServiceContracts
+namespace SmartGarage.Service.Contracts
 {
     public interface IVehicleService
     {
