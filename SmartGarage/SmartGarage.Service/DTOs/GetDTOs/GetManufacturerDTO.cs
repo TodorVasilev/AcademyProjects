@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace SmartGarage.Service.DTOs.GetDTOs
 {
@@ -11,10 +12,14 @@ namespace SmartGarage.Service.DTOs.GetDTOs
         {
             this.Id = manufacturer.Id;
             this.Name = manufacturer.Name;
+            this.Models = manufacturer.Models;
         }
 
         public int Id { get; }
 
         public string Name { get; }
+
+        [JsonIgnore]
+        public IReadOnlyCollection<VehicleModel> Models { get; }
     }
 }

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SmartGarage.Data.Models;
 using SmartGarage.Service.Contracts;
 using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;
@@ -14,11 +13,11 @@ namespace SmartGarage.Api_Controllers
     [ApiController]
     [Route("api/[controller]")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class ServiceController : ControllerBase
+    public class ServiceApiController : ControllerBase
     {
         private readonly IServiceService service;
 
-        public ServiceController(IServiceService service)
+        public ServiceApiController(IServiceService service)
         {
             this.service = service;
         }
@@ -56,7 +55,7 @@ namespace SmartGarage.Api_Controllers
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Get([FromQuery] PaginationQueryObject pagination, [FromQuery]CustomerServicesFilterQueryObject filterObject, int userID)
+        public async Task<IActionResult> Get([FromQuery] PaginationQueryObject pagination, [FromQuery] CustomerServicesFilterQueryObject filterObject, int userID)
         {
             var services = await service.GetAllLinkedToCustomerAsync(pagination, filterObject, userID);
 
