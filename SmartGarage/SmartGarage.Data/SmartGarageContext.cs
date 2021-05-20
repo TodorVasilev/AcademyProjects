@@ -186,6 +186,18 @@ namespace SmartGarage.Data
                 {
                     UserId = 3,
                     RoleId = 3
+                },
+
+                new IdentityUserRole<int>
+                {
+                    UserId = 4,
+                    RoleId = 3
+                },
+
+                new IdentityUserRole<int>
+                {
+                    UserId = 5,
+                    RoleId = 3
                 }
             };
 

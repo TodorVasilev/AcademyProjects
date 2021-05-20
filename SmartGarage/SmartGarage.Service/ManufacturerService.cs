@@ -61,10 +61,19 @@ namespace SmartGarage.Service
             return result;
         }
 
+        public IQueryable<GetManufacturerDTO> GetManufacturers()
+        {
+            var manufacturers = Context.Manufacturers
+                .AsQueryable();
+
+            return manufacturers.Select(m => new GetManufacturerDTO(m)).AsQueryable();
+        }
+
         //Gets manufacturer with specific id.
         public async Task<GetManufacturerDTO> GetAsync(int id)
         {
             var manufacturer = await Context.Manufacturers
+              .Include(m => m.Models)
               .FirstOrDefaultAsync(v => v.Id == id);
 
             //Returns null when there is not a manufacturer with this id.

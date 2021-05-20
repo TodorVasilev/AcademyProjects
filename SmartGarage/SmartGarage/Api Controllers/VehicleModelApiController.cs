@@ -13,11 +13,11 @@ namespace SmartGarage.Api_Controllers
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     [Route("api/[controller]")]
-    public class VehicleModelController : ControllerBase
+    public class VehicleModelApiController : ControllerBase
     {
         private readonly IVehicleModelService service;
 
-        public VehicleModelController(IVehicleModelService service)
+        public VehicleModelApiController(IVehicleModelService service)
         {
             this.service = service;
         }

@@ -3,6 +3,7 @@ using SmartGarage.Service.QueryObjects;
 using SmartGarage.Service.DTOs.Shared;
 using System.Threading.Tasks;
 using SmartGarage.Service.DTOs.GetDTOs;
+using System.Linq;
 
 namespace SmartGarage.Service.Contracts
 {
@@ -11,6 +12,8 @@ namespace SmartGarage.Service.Contracts
         Task<GetManufacturerDTO> CreateAsync(ManufacturerDTO manufacturerInformation);
 
         Task<bool> UpdateAsync(ManufacturerDTO updateInformation, int id);
+
+        IQueryable<GetManufacturerDTO> GetManufacturers();
 
         Task<GetManufacturerDTO> GetAsync(int id);
 
