@@ -6,6 +6,7 @@ using SmartGarage.Service.DTOs.UpdateDTOs;
 using SmartGarage.Service.Helpers;
 using SmartGarage.Service.QueryObjects;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -85,10 +86,8 @@ namespace SmartGarage.Service
             return false;
         }
 
-        public async Task<Pager<GetUserDTO>> GetAllCustomerAsync(PaginationQueryObject pagination, UserSevicesFillterQueryObject filter)
+        public async Task<List<GetUserDTO>> GetAllCustomerAsync(UserSevicesFillterQueryObject filter)
         {
-            var skipPages = (pagination.Page - 1) * pagination.ItemsOnPage;
-
             var users = this.context.Users
                 .Where(u => !u.IsDeleted && u.CurrentRole == "CUSTOMER")
                     .Include(u => u.Vehicles)
@@ -144,18 +143,11 @@ namespace SmartGarage.Service
                 return null;
             }
 
-            var count = users.Count();
-
-            var userModelsDTO = await users.Skip(skipPages)
-                .Take(pagination.ItemsOnPage)
+            var userModelsDTO = await users
                 .Select(x => new GetUserDTO(x))
                 .ToListAsync();
-            Pager<GetUserDTO> result = new Pager<GetUserDTO>(userModelsDTO, pagination)
-            {
-                Count = count
-            };
 
-            return result;
+            return userModelsDTO;
         }
 
         public async Task<bool> Delete(int id)

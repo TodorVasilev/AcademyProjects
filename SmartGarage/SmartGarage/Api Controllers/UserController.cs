@@ -8,7 +8,9 @@ using SmartGarage.Data.Models;
 using SmartGarage.Service.Contracts;
 using SmartGarage.Service.DTOs;
 using SmartGarage.Service.DTOs.CreateDTOs;
+using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;
+using SmartGarage.Service.Helpers;
 using SmartGarage.Service.QueryObjects;
 using System.Threading.Tasks;
 
@@ -63,7 +65,7 @@ namespace SmartGarage.Api_Controllers
 
         {
             try
-            { 
+            {
                 var operationResult = await this.userHelper.CreateUserAsync(createUserDTO);
                 if (operationResult.Succeeded)
                 {
@@ -75,7 +77,7 @@ namespace SmartGarage.Api_Controllers
             catch (System.Exception)
             {
 
-                return BadRequest(new { massage = "There is such an email."}) ;
+                return BadRequest(new { massage = "There is such an email." });
             }
         }
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -126,14 +128,9 @@ namespace SmartGarage.Api_Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize(Roles = "Admin,Employee")]
         [HttpGet("")]
-        public async Task<IActionResult> GetAllUserAsync([FromQuery] PaginationQueryObject pagination, [FromQuery] UserSevicesFillterQueryObject filter)
+        public async Task<IActionResult> GetAllUserAsync([FromQuery] UserSevicesFillterQueryObject filter, int pageNumber = 1, int pageSize = 1)
         {
-            var result = await this.userService.GetAllCustomerAsync(pagination, filter);
-            if (result == null)
-            {
-                return NotFound();
-            }
-            return Ok(result);
+            return Ok(PaginatedList<GetUserDTO>.CreateAsync(await userService.GetAllCustomerAsync(filter), pageNumber, pageSize));
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
