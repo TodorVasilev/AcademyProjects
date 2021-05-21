@@ -39,8 +39,8 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
                 Assert.AreEqual(userToCompare.FirstName, userToUpdate.FirstName);
                 Assert.AreNotEqual(userToCompare.LastName, userToUpdate.LastName);
             }
-
         }
+
         [TestMethod]
         public async Task ReturnFalse_WhenUserNotExist()
         {
@@ -101,7 +101,6 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
                 //Assert
                 Assert.AreEqual(userToCompare.CurrentRole, userBeforeUpdate.CurrentRole);               
             }
-
         }
     }
 }
