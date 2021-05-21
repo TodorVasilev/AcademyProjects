@@ -93,7 +93,7 @@ namespace SmartGarage.Helpers
                 Address = createUserDTO.Address,
                 UserName = createUserDTO.UserName,
                 Email = createUserDTO.Email,
-                CurrentRole = "Customer"
+                CurrentRole = "CUSTOMER"
             };
             var passwordLength = 12;
             var password = CreatePassword(passwordLength); 

@@ -6,7 +6,6 @@ using SmartGarage.Service.DTOs.UpdateDTOs;
 using SmartGarage.Service.Helpers;
 using SmartGarage.Service.QueryObjects;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,7 +23,6 @@ namespace SmartGarage.Service
             this.context = context;
             this.userManagerWrapper = userManagerWrapper;
         }
-
 
         public async Task<bool> UpdateUserAsync(int id, UpdateUserDTO updateUserDTO)
         {
@@ -87,15 +85,12 @@ namespace SmartGarage.Service
             return false;
         }
 
-
-
-
-        public async Task<Pager<GetUserDTO>> GetAllAsync(PaginationQueryObject pagination, UserSevicesFillterQueryObject filter)
+        public async Task<Pager<GetUserDTO>> GetAllCustomerAsync(PaginationQueryObject pagination, UserSevicesFillterQueryObject filter)
         {
             var skipPages = (pagination.Page - 1) * pagination.ItemsOnPage;
 
             var users = this.context.Users
-                .Where(u => !u.IsDeleted && u.CurrentRole == "Customer")
+                .Where(u => !u.IsDeleted && u.CurrentRole == "CUSTOMER")
                     .Include(u => u.Vehicles)
                          .ThenInclude(v => v.Orders)
                     .Include(u => u.Vehicles)
@@ -107,10 +102,12 @@ namespace SmartGarage.Service
             {
                 users = users.Where(u => u.FirstName.ToUpper().Contains(filter.Name.ToUpper()) || u.LastName.ToUpper().Contains(filter.Name.ToUpper()));
             }
+
             if (filter.Email != null)
             {
                 users = users.Where(u => u.Email.ToUpper().Contains(filter.Email.ToUpper()));
             }
+
             if (filter.PhoneNumber != null)
             {
                 users = users.Where(u => u.PhoneNumber.Contains(filter.PhoneNumber));
@@ -122,6 +119,7 @@ namespace SmartGarage.Service
                 .Where(v => !v.IsDeleted)
                 .Any(u => u.VehicleModel.Manufacturer.Name.ToUpper().Contains(filter.Vehicle.ToUpper())));
             }
+
             if (filter.StartDate != default)
             {
                 users = users.Where(u => u.Vehicles
@@ -130,6 +128,7 @@ namespace SmartGarage.Service
                     .Where(o => o.IsDeleted)
                     .Any(o => o.ArrivalDate.Date == filter.StartDate.Date || o.FinishDate == filter.StartDate.Date)));
             }
+
             if (filter.EndDate != default)
             {
                 users = users.Where(u => u.Vehicles
@@ -138,6 +137,7 @@ namespace SmartGarage.Service
                     .Where(o => o.IsDeleted)
                     .Any(o => o.ArrivalDate.Date == filter.EndDate.Date || o.FinishDate == filter.EndDate.Date)));
             }
+
             //Returns null when there is not a service with this id.
             if (users.Count() == 0)
             {
@@ -156,6 +156,22 @@ namespace SmartGarage.Service
             };
 
             return result;
+        }
+
+        public async Task<bool> Delete(int id)
+        {
+            var user = await this.context.Users.FindAsync(id);
+
+            if (user == null)
+            {
+                return false;
+            }
+
+            user.IsDeleted = true;
+            this.context.Update(user);
+            await this.context.SaveChangesAsync();
+
+            return true;
         }
     }
 }

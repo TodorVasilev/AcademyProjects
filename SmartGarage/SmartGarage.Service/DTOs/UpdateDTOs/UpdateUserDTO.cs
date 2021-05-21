@@ -36,9 +36,6 @@ namespace SmartGarage.Service.DTOs.UpdateDTOs
         [Display(Name = "Address")]
         public string Address { get; set; }
 
-        [Display(Name = "Role")]
-        public string Role { get; set; }
-
         [EmailAddress]
         [Display(Name = "E-mail")]
         public string Email { get; set; }

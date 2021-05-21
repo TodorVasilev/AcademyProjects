@@ -62,7 +62,7 @@ namespace SmartGarage.Api_Controllers
         public async Task<IActionResult> RegisterUserAsync([FromBody] CreateUserDTO createUserDTO)
 
         {
-           var operationResult = await this.userHelper.CreateUserAsync(createUserDTO);
+            var operationResult = await this.userHelper.CreateUserAsync(createUserDTO);
             if (operationResult.Succeeded)
             {
                 return Ok(new { message = "User created!" });
@@ -77,7 +77,7 @@ namespace SmartGarage.Api_Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUserAsync(int id, [FromBody] UpdateUserDTO updateUserDTO)
 
-        {            
+        {
             var operationResult = await this.userService.UpdateUserAsync(id, updateUserDTO);
             if (operationResult)
             {
@@ -96,13 +96,13 @@ namespace SmartGarage.Api_Controllers
         {
             try
             {
-            var operationResult = await this.userService.UpdateAdminAsync(id, role);
+                var operationResult = await this.userService.UpdateAdminAsync(id, role);
 
-            if (operationResult)
-            {
-                return Ok(new { message = "User updated!" });
-            }
-            return BadRequest(new { message = "Unable to update user!" });
+                if (operationResult)
+                {
+                    return Ok(new { message = "User updated!" });
+                }
+                return BadRequest(new { message = "Unable to update user!" });
             }
             catch (System.Exception)
             {
@@ -119,12 +119,29 @@ namespace SmartGarage.Api_Controllers
         [HttpGet("")]
         public async Task<IActionResult> GetAllUserAsync([FromQuery] PaginationQueryObject pagination, [FromQuery] UserSevicesFillterQueryObject filter)
         {
-           var result = await this.userService.GetAllAsync(pagination, filter);
-            if (result==null)
+            var result = await this.userService.GetAllCustomerAsync(pagination, filter);
+            if (result == null)
             {
                 return NotFound();
             }
-            return  Ok(result);
+            return Ok(result);
+        }
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize(Roles = "Admin,Employee")]
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var isDelete = await this.userService.Delete(id);
+            if (isDelete == false)
+            {
+                return NotFound();
+            }
+
+            return Ok("User is delete.");
         }
     }
 }

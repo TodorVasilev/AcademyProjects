@@ -8,7 +8,8 @@ namespace SmartGarage.Service.Contracts
 {
     public interface IUserService
     {
-        Task<Pager<GetUserDTO>> GetAllAsync(PaginationQueryObject pagination, UserSevicesFillterQueryObject filter);
+        Task<bool> Delete(int id);
+        Task<Pager<GetUserDTO>> GetAllCustomerAsync(PaginationQueryObject pagination, UserSevicesFillterQueryObject filter);
         Task<bool> UpdateAdminAsync(int id, string role);
         Task<bool> UpdateUserAsync(int id, UpdateUserDTO updateUserDTO);
     }
