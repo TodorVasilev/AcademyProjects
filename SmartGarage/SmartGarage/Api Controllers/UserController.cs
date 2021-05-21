@@ -62,12 +62,21 @@ namespace SmartGarage.Api_Controllers
         public async Task<IActionResult> RegisterUserAsync([FromBody] CreateUserDTO createUserDTO)
 
         {
-            var operationResult = await this.userHelper.CreateUserAsync(createUserDTO);
-            if (operationResult.Succeeded)
-            {
-                return Ok(new { message = "User created!" });
+            try
+            { 
+                var operationResult = await this.userHelper.CreateUserAsync(createUserDTO);
+                if (operationResult.Succeeded)
+                {
+                    return Ok(new { message = "User created!" });
+                }
+                return BadRequest(new { message = "Unable to create user!" });
             }
-            return BadRequest(new { message = "Unable to create user!" });
+
+            catch (System.Exception)
+            {
+
+                return BadRequest(new { massage = "There is such an email."}) ;
+            }
         }
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

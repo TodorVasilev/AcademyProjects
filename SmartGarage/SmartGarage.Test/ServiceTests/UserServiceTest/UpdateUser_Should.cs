@@ -18,6 +18,7 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
             var options = Util.GetOptions(nameof(UpdateUser_WhenParamsAreValid));
             var userToUpdate = new UpdateUserDTO();
             userToUpdate.FirstName = "Pesho";
+            userToUpdate.Age = 45;
             int id = 4;
             var userManagerFake = new Mock<IUserManagerWrapper>();
 
@@ -68,6 +69,39 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
                 //Assert
                 Assert.IsFalse(result);
             }
+        }
+
+        [TestMethod]
+        public async Task UpdateUser_Not_ChangeRole()
+        {
+            //Arrange
+            var options = Util.GetOptions(nameof(UpdateUser_Not_ChangeRole));
+            var userToUpdate = new UpdateUserDTO();
+            userToUpdate.FirstName = "Pesho";
+            userToUpdate.Age = 45;
+            int id = 4;
+            var userManagerFake = new Mock<IUserManagerWrapper>();
+
+            using (var arrCtx = new SmartGarageContext(options))
+            {
+                arrCtx.SeedData();
+
+                await arrCtx.SaveChangesAsync();
+            }
+
+            //Act
+            using (var actCtx = new SmartGarageContext(options))
+            {
+                var sut = new UserService(actCtx, userManagerFake.Object);
+                var userBeforeUpdate = await actCtx.Users.FindAsync(id);
+
+                var result = await sut.UpdateUserAsync(id, userToUpdate);
+                var userToCompare = await actCtx.Users.FindAsync(id);
+
+                //Assert
+                Assert.AreEqual(userToCompare.CurrentRole, userBeforeUpdate.CurrentRole);               
+            }
+
         }
     }
 }

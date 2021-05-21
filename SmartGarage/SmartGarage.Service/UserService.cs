@@ -77,7 +77,7 @@ namespace SmartGarage.Service
             var userRole = (await this.userManagerWrapper.GetRolesAsync(userToUpdate)).FirstOrDefault();
             if (userRole != role)
             {
-                await this.userManagerWrapper.RemoveFromRoleAsync(userToUpdate, oldRole);
+               _= await this.userManagerWrapper.RemoveFromRoleAsync(userToUpdate, oldRole);
                 await this.userManagerWrapper.AddToRoleAsync(userToUpdate, role);
 
                 return true;
@@ -162,7 +162,7 @@ namespace SmartGarage.Service
         {
             var user = await this.context.Users.FindAsync(id);
 
-            if (user == null)
+            if (user == null || user.IsDeleted==true)
             {
                 return false;
             }
