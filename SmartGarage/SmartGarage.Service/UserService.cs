@@ -1,42 +1,34 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.EntityFrameworkCore;
 using SmartGarage.Data;
-using SmartGarage.Data.Models;
+using SmartGarage.Service.Contracts;
+using SmartGarage.Service.DTOs.GetDTOs;
+using SmartGarage.Service.DTOs.UpdateDTOs;
 using SmartGarage.Service.Helpers;
+using SmartGarage.Service.QueryObjects;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using System.IdentityModel.Tokens.Jwt;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
-using Microsoft.EntityFrameworkCore;
-using SmartGarage.Service.DTOs;
 using System.Linq;
-using SmartGarage.Service.Contracts;
-using SmartGarage.Service.DTOs.CreateDTOs;
-using SmartGarage.Service.ServiceContracts;
-using Microsoft.AspNetCore.WebUtilities;
-using SmartGarage.Service.DTOs.UpdateDTOs;
+using System.Threading.Tasks;
 
 namespace SmartGarage.Service
 
 {
     public class UserService : IUserService
     {
-        private readonly SmartGarageContext smartGarageContext;
+        private readonly SmartGarageContext context;
+        private readonly IUserManagerWrapper userManagerWrapper;
 
-
-        public UserService(SmartGarageContext smartGarageContext)
+        public UserService(SmartGarageContext context,
+            IUserManagerWrapper userManagerWrapper)
         {
-            this.smartGarageContext = smartGarageContext;
+            this.context = context;
+            this.userManagerWrapper = userManagerWrapper;
         }
 
 
         public async Task<bool> UpdateUserAsync(int id, UpdateUserDTO updateUserDTO)
         {
-            var userToUpdate = await this.smartGarageContext.Users.FindAsync(id);
+            var userToUpdate = await this.context.Users.FindAsync(id);
 
             if (userToUpdate == null || userToUpdate.IsDeleted == true)
             {
@@ -57,14 +49,113 @@ namespace SmartGarage.Service
             userToUpdate.Email = updateUserDTO.Email ?? userToUpdate.Email;
             userToUpdate.NormalizedEmail = (updateUserDTO.Email ?? userToUpdate.NormalizedEmail).ToUpper();
 
-            this.smartGarageContext.Update(userToUpdate);
+            this.context.Update(userToUpdate);
 
-            await this.smartGarageContext.SaveChangesAsync();
+            await this.context.SaveChangesAsync();
             return true;
+        }
+
+        public async Task<bool> UpdateAdminAsync(int id, string role)
+        {
+            role = role.ToUpper();
+            var isRoleExist = this.context.Roles.Any(x => x.NormalizedName == role);
+            if (isRoleExist == false)
+            {
+                throw new ArgumentException("Role does not exist.");
+            }
+
+            var userToUpdate = await this.context.Users.FindAsync(id);
+            var oldRole = userToUpdate.CurrentRole;
+            if (userToUpdate == null || userToUpdate.IsDeleted == true)
+            {
+                return false;
+            }
+
+            userToUpdate.CurrentRole = role ?? userToUpdate.CurrentRole;
+            this.context.Update(userToUpdate);
+
+            await this.context.SaveChangesAsync();
+
+            var userRole = (await this.userManagerWrapper.GetRolesAsync(userToUpdate)).FirstOrDefault();
+            if (userRole != role)
+            {
+                await this.userManagerWrapper.RemoveFromRoleAsync(userToUpdate, oldRole);
+                await this.userManagerWrapper.AddToRoleAsync(userToUpdate, role);
+
+                return true;
+            }
+            return false;
         }
 
 
 
 
+        public async Task<Pager<GetUserDTO>> GetAllAsync(PaginationQueryObject pagination, UserSevicesFillterQueryObject filter)
+        {
+            var skipPages = (pagination.Page - 1) * pagination.ItemsOnPage;
+
+            var users = this.context.Users
+                .Where(u => !u.IsDeleted && u.CurrentRole == "Customer")
+                    .Include(u => u.Vehicles)
+                         .ThenInclude(v => v.Orders)
+                    .Include(u => u.Vehicles)
+                          .ThenInclude(v => v.VehicleModel)
+                                 .ThenInclude(m => m.Manufacturer)
+                            .AsQueryable();
+
+            if (filter.Name != null)
+            {
+                users = users.Where(u => u.FirstName.ToUpper().Contains(filter.Name.ToUpper()) || u.LastName.ToUpper().Contains(filter.Name.ToUpper()));
+            }
+            if (filter.Email != null)
+            {
+                users = users.Where(u => u.Email.ToUpper().Contains(filter.Email.ToUpper()));
+            }
+            if (filter.PhoneNumber != null)
+            {
+                users = users.Where(u => u.PhoneNumber.Contains(filter.PhoneNumber));
+            }
+
+            if (filter.Vehicle != null)
+            {
+                users = users.Where(u => u.Vehicles
+                .Where(v => !v.IsDeleted)
+                .Any(u => u.VehicleModel.Manufacturer.Name.ToUpper().Contains(filter.Vehicle.ToUpper())));
+            }
+            if (filter.StartDate != default)
+            {
+                users = users.Where(u => u.Vehicles
+                    .Where(v => !v.IsDeleted)
+                    .Any(u => u.Orders
+                    .Where(o => o.IsDeleted)
+                    .Any(o => o.ArrivalDate.Date == filter.StartDate.Date || o.FinishDate == filter.StartDate.Date)));
+            }
+            if (filter.EndDate != default)
+            {
+                users = users.Where(u => u.Vehicles
+                    .Where(v => !v.IsDeleted)
+                    .Any(u => u.Orders
+                    .Where(o => o.IsDeleted)
+                    .Any(o => o.ArrivalDate.Date == filter.EndDate.Date || o.FinishDate == filter.EndDate.Date)));
+            }
+            //Returns null when there is not a service with this id.
+            if (users.Count() == 0)
+            {
+                return null;
+            }
+
+            var count = users.Count();
+
+            var userModelsDTO = await users.Skip(skipPages)
+                .Take(pagination.ItemsOnPage)
+                .Select(x => new GetUserDTO(x))
+                .ToListAsync();
+            Pager<GetUserDTO> result = new Pager<GetUserDTO>(userModelsDTO, pagination)
+            {
+                Count = count
+            };
+
+            return result;
+        }
     }
 }

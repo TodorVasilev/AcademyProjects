@@ -4,15 +4,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace SmartGarage.Service.DTOs.CreateDTOs
+namespace SmartGarage.Service.DTOs.GetDTOs
 {
-    public class CreateUserDTO
+    public class GetUserDTO
     {
-        public CreateUserDTO()
-        {
-
-        }
-        public CreateUserDTO(User user)
+        public GetUserDTO(User user)
         {
             this.UserName = user.UserName;
             this.FirstName = user.FirstName;
@@ -23,7 +19,7 @@ namespace SmartGarage.Service.DTOs.CreateDTOs
             this.Address = user.Address;
             this.Email = user.Email;
         }
-       
+
         [Required]
         [MinLength(2), MaxLength(20)]
         [Display(Name = "User name")]
@@ -63,4 +59,3 @@ namespace SmartGarage.Service.DTOs.CreateDTOs
         public string Email { get; set; }
     }
 }
-

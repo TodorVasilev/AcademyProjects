@@ -1,12 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using SmartGarage.Data;
-using SmartGarage.Data.Models;
 using SmartGarage.Service;
-using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using SmartGarage.Service.Helpers;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Test.ServiceTests.UserServiceTest
@@ -22,6 +19,7 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
             var userToUpdate = new UpdateUserDTO();
             userToUpdate.FirstName = "Pesho";
             int id = 4;
+            var userManagerFake = new Mock<IUserManagerWrapper>();
 
             using (var arrCtx = new SmartGarageContext(options))
             {
@@ -32,14 +30,13 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
             //Act
             using (var actCtx = new SmartGarageContext(options))
             {
-                var sut = new UserService(actCtx);
+                var sut = new UserService(actCtx, userManagerFake.Object);
                 var result = await sut.UpdateUserAsync(id, userToUpdate);
                 var userToCompare = await actCtx.Users.FindAsync(id);
 
                 //Assert
                 Assert.AreEqual(userToCompare.FirstName, userToUpdate.FirstName);
                 Assert.AreNotEqual(userToCompare.LastName, userToUpdate.LastName);
-
             }
 
         }
@@ -51,24 +48,25 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
             var userToUpdate = new UpdateUserDTO();
             userToUpdate.FirstName = "Pesho";
             int id = 4;
+            var userManagerFake = new Mock<IUserManagerWrapper>();
 
             using (var arrCtx = new SmartGarageContext(options))
             {
                 arrCtx.SeedData();
                 var userToDelete = await arrCtx.Users.FindAsync(id);
                 userToDelete.IsDeleted = true;
-            await arrCtx.SaveChangesAsync();
+                await arrCtx.SaveChangesAsync();
             }
 
             //Act
             using (var actCtx = new SmartGarageContext(options))
             {
-                var sut = new UserService(actCtx);
+                var sut = new UserService(actCtx, userManagerFake.Object);
                 var result = await sut.UpdateUserAsync(id, userToUpdate);
                 var userToCompare = await actCtx.Users.FindAsync(id);
 
                 //Assert
-                Assert.IsFalse(result);          
+                Assert.IsFalse(result);
             }
         }
     }

@@ -5,7 +5,7 @@ namespace SmartGarage.Service.DTOs.UpdateDTOs
 {
     public class UpdateUserDTO
     {
-     
+
         [MinLength(2), MaxLength(20)]
         [Display(Name = "User name")]
         public string UserName { get; set; }
@@ -15,7 +15,7 @@ namespace SmartGarage.Service.DTOs.UpdateDTOs
         [Display(Name = "First name")]
         public string FirstName { get; set; }
 
- 
+
         [MinLength(2), MaxLength(20)]
         [Display(Name = "Family name")]
         public string LastName { get; set; }
@@ -36,7 +36,9 @@ namespace SmartGarage.Service.DTOs.UpdateDTOs
         [Display(Name = "Address")]
         public string Address { get; set; }
 
-     
+        [Display(Name = "Role")]
+        public string Role { get; set; }
+
         [EmailAddress]
         [Display(Name = "E-mail")]
         public string Email { get; set; }

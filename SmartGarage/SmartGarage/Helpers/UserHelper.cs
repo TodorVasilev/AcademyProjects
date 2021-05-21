@@ -10,6 +10,7 @@ using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.Helpers;
 using SmartGarage.Service.ServiceContracts;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -27,14 +28,14 @@ namespace SmartGarage.Helpers
         private readonly IEmailsService emailSender;
 
 
-        public UserHelper(SmartGarageContext smartGarageContext,
+        public UserHelper(SmartGarageContext context,
             UserManager<User> userManager,
             IOptions<AppSettings> appSettings,
             IEmailsService emailSender,
             SignInManager<User> signInManager
             )
         {
-            this.smartGarageContext = smartGarageContext;
+            this.smartGarageContext = context;
             this.userManager = userManager;
             this.appSettings = appSettings;
             this.emailSender = emailSender;
@@ -74,7 +75,7 @@ namespace SmartGarage.Helpers
 
                     result.Token = tokenHandler.WriteToken(token);
 
-                    return result;
+                    return result;                                      
                 }
             }
             return null;
@@ -91,18 +92,18 @@ namespace SmartGarage.Helpers
                 DrivingLicenseNumber = createUserDTO.DrivingLicenseNumber,
                 Address = createUserDTO.Address,
                 UserName = createUserDTO.UserName,
-                Email = createUserDTO.Email
+                Email = createUserDTO.Email,
+                CurrentRole = "Customer"
             };
             var passwordLength = 12;
-            var password = CreatePassword(passwordLength); // дали е колнато
+            var password = CreatePassword(passwordLength); 
 
-            var result = await userManager.CreateAsync(user, password); // дали е колнато
-
-
+            var result = await userManager.CreateAsync(user, password);
+        
             if (result.Succeeded)
             {
                 await userManager.AddToRoleAsync(user, "Customer");
-
+                
                 await emailSender.SendRegistrationEmail(createUserDTO.Email, password);
             }
             return result;

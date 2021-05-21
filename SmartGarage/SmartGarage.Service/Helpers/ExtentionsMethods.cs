@@ -1,4 +1,5 @@
-﻿using SmartGarage.Data.Models;
+﻿using Microsoft.EntityFrameworkCore.Query;
+using SmartGarage.Data.Models;
 using SmartGarage.Service.DTOs.SharedDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;
 using SmartGarage.Service.QueryObjects;
@@ -91,6 +92,11 @@ namespace SmartGarage.Service.ServiceHelpes
             }
 
             return serviceOrders;
+        }
+
+        public static IIncludableQueryable<User,Vehicle> FillterUser(this IIncludableQueryable<User, Vehicle> users, UserSevicesFillterQueryObject filterObject)
+        {
+            return users;
         }
 
     }

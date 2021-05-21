@@ -66,6 +66,7 @@ namespace SmartGarage.Data
                    Email = "admin@gmail.com",
                    NormalizedEmail = "ADMIN@GMAIL.COM",
                    DrivingLicenseNumber = "93302193",
+                   CurrentRole= "Admin",
                    SecurityStamp = Guid.NewGuid().ToString(),
                },
 
@@ -81,6 +82,7 @@ namespace SmartGarage.Data
                    Email = "employee@gmail.com",
                    NormalizedEmail = "EMPLOYEE@GMAIL.COM",
                    DrivingLicenseNumber = "3241219",
+                   CurrentRole= "Employee",
                    SecurityStamp = Guid.NewGuid().ToString(),
                },
 
@@ -96,6 +98,7 @@ namespace SmartGarage.Data
                     Email = "firstcustomer@gmail.com",
                     NormalizedEmail = "FIRSTCUSTOMER@GMAIL.COM",
                      DrivingLicenseNumber = "13302343",
+                     CurrentRole= "Customer",
                     SecurityStamp = Guid.NewGuid().ToString(),
                 },
 
@@ -111,6 +114,7 @@ namespace SmartGarage.Data
                     Email = "ivangeorgiev14@gmail.com",
                     NormalizedEmail = "IVANGEORGIEV14@GMAIL.COM",
                     DrivingLicenseNumber = "73322193",
+                    CurrentRole= "Customer",
                     SecurityStamp = Guid.NewGuid().ToString(),
                 },
 
@@ -126,6 +130,7 @@ namespace SmartGarage.Data
                     Email = "californication@gmail.com",
                     NormalizedEmail = "CALIFORNICATION@GMAIL.COM",
                     DrivingLicenseNumber = "91304433",
+                    CurrentRole= "Customer",
                     SecurityStamp = Guid.NewGuid().ToString(),
                 }
             };
@@ -186,6 +191,16 @@ namespace SmartGarage.Data
                 {
                     UserId = 3,
                     RoleId = 3
+                },
+               new IdentityUserRole<int>
+                {
+                    UserId = 4,
+                    RoleId = 3
+                },
+               new IdentityUserRole<int>
+                {
+                    UserId = 5,
+                    RoleId = 3
                 }
             };
 
@@ -195,7 +210,7 @@ namespace SmartGarage.Data
             {
                 Id = 1,
                 Name = "Insomnia",
-                Address = "bil.Graf Ignatiev 0"
+                Address = "bul.Graf Ignatiev 0"
             };
 
             builder.Entity<Garage>().HasData(garage);

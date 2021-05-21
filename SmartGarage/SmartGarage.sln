@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartGarage.Data", "SmartGa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartGarage.Service", "SmartGarage.Service\SmartGarage.Service.csproj", "{021E68DD-17C8-4160-A5E6-B0454B3513E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartGarage.Test", "SmartGarage.Test\SmartGarage.Test.csproj", "{BE9B9495-FA59-4667-BE7E-E6F252ED2371}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartGarage.Test", "SmartGarage.Test\SmartGarage.Test.csproj", "{BE9B9495-FA59-4667-BE7E-E6F252ED2371}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
