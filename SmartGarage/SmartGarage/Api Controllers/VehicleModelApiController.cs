@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.SharedDTOs;
+using SmartGarage.Service.Helpers;
 using SmartGarage.Service.QueryObjects;
 using SmartGarage.Service.ServiceContracts;
 using System;
@@ -25,22 +27,16 @@ namespace SmartGarage.Api_Controllers
         /// <summary>
         /// Gets all vehicle models based on some specified pagination information.
         /// </summary>
-        /// <param name="pagination">The pagination information.</param>
+        /// <param name="pageSize">The page size.</param>
+        /// <param name="pageNumber">The page number.</param>
         /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Get([FromQuery] PaginationQueryObject pagination)
+        public async Task<IActionResult> Get([FromQuery] int pageSize = 5, [FromQuery] int pageNumber = 1)
         {
-            var vehicleModels = await service.GetAllAsync(pagination);
-
-            if (vehicleModels.ItemsOnPage == 0)
-            {
-                return NotFound();
-            }
-
-            return Ok(vehicleModels);
+            return Ok(PaginatedList<GetVehicleModelDTO>.CreateAsync(await service.GetAll(), pageNumber, pageSize));
         }
 
         /// <summary>

@@ -17,7 +17,6 @@ namespace SmartGarage.Test.ServiceTests.VehicleServiceTests
             //Arrange
             var options = Util.GetOptions(nameof(ReturnAllVehicles_When_NoUserNameIsGiven));
             string customerName = null;
-            var pagination = new PaginationQueryObject();
             var count = 0;
 
             using (var arrCtx = new SmartGarageContext(options))
@@ -31,11 +30,11 @@ namespace SmartGarage.Test.ServiceTests.VehicleServiceTests
             using (var actCtx = new SmartGarageContext(options))
             {
                 var sut = new VehicleService(actCtx);
-                var result = await sut.GetAllAsync(pagination, customerName);
+                var result = sut.GetAll(customerName);
 
                 //Assert
-                Assert.AreEqual(count, result.Count);
-                Assert.IsInstanceOfType(result.ItemsColection[0], typeof(GetVehicleDTO));
+                Assert.AreEqual(count, result.Result.Count);
+                Assert.IsInstanceOfType(result.Result[0], typeof(GetVehicleDTO));
             }
         }
 
@@ -45,7 +44,6 @@ namespace SmartGarage.Test.ServiceTests.VehicleServiceTests
             //Arrange
             var options = Util.GetOptions(nameof(ReturnAllVehicles_Which_BelongToSpecificCustomer));
             string customeUserrName = "LoveToAct";
-            var pagination = new PaginationQueryObject();
             var count = 0;
 
             using (var arrCtx = new SmartGarageContext(options))
@@ -62,11 +60,11 @@ namespace SmartGarage.Test.ServiceTests.VehicleServiceTests
             using (var actCtx = new SmartGarageContext(options))
             {
                 var sut = new VehicleService(actCtx);
-                var result = await sut.GetAllAsync(pagination, customeUserrName);
+                var result = await sut.GetAll(customeUserrName);
 
                 //Assert
-                Assert.AreEqual(count, result.Count);
-                Assert.IsInstanceOfType(result.ItemsColection[0], typeof(GetVehicleDTO));
+                Assert.AreEqual(count, result.Count());
+                Assert.IsInstanceOfType(result.First(), typeof(GetVehicleDTO));
             }
         }
 
@@ -76,13 +74,12 @@ namespace SmartGarage.Test.ServiceTests.VehicleServiceTests
             //Arrange
             var options = Util.GetOptions(nameof(ReturnNull_When_ThereAreNoVehicles));
             string customeUserrName = "LoveToAct";
-            var pagination = new PaginationQueryObject();
 
             //Act
             using (var actCtx = new SmartGarageContext(options))
             {
                 var sut = new VehicleService(actCtx);
-                var result = await sut.GetAllAsync(pagination, customeUserrName);
+                var result = await sut.GetAll(customeUserrName);
 
                 //Assert
                 Assert.IsNull(result);

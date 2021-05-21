@@ -8,6 +8,7 @@ using SmartGarage.Service.DTOs.UpdateDTOs;
 using SmartGarage.Service.Helpers;
 using SmartGarage.Service.QueryObjects;
 using SmartGarage.Service.ServiceHelpes;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,12 +19,12 @@ namespace SmartGarage.Service
     /// </summary>
     public class VehicleService : IVehicleService
     {
+        private readonly SmartGarageContext context;
+
         public VehicleService(SmartGarageContext context)
         {
-            this.Context = context;
+            this.context = context;
         }
-
-        public SmartGarageContext Context { get; }
 
         //Creates new vehicle.
         public async Task<GetVehicleDTO> CreateAsync(CreateVehicleDTO vehicleInformation)
@@ -37,10 +38,10 @@ namespace SmartGarage.Service
                 Colour = vehicleInformation.Colour
             };
 
-            await Context.Vehicles.AddAsync(vehicleToAdd);
-            await Context.SaveChangesAsync();
+            await context.Vehicles.AddAsync(vehicleToAdd);
+            await context.SaveChangesAsync();
 
-            var vehicle = await Context.Vehicles
+            var vehicle = await context.Vehicles
                 .Include(v => v.User)
                 .Include(v => v.VehicleModel)
                 .ThenInclude(vm => vm.Manufacturer)
@@ -50,17 +51,13 @@ namespace SmartGarage.Service
         }
 
         //Gets all vehicles possibly filtered by their name, based on some specified pagination information.
-        public async Task<Pager<GetVehicleDTO>> GetAllAsync(PaginationQueryObject pagination, string name)
+        public async Task<List<GetVehicleDTO>> GetAll(string name)
         {
-            //The amount of items to skip
-            var skipPages = (pagination.Page - 1) * pagination.ItemsOnPage;
-
-            var vehicles = Context.Vehicles
+            var vehicles = context.Vehicles
                 .Include(v => v.User)
                 .Include(v => v.VehicleModel)
                 .ThenInclude(vm => vm.Manufacturer)
-                .Where(v => !v.IsDeleted)
-                .AsQueryable();
+                .Where(v => !v.IsDeleted);
 
             //Returns null when there aren't any vehicles..
             if (vehicles.Count() == 0)
@@ -73,25 +70,14 @@ namespace SmartGarage.Service
                 vehicles = vehicles.Where(v => v.User.UserName == name);
             }
 
-            var count = vehicles.Count();
-
-            var vehiclesDTO = await vehicles.Skip(skipPages)
-                .Take(pagination.ItemsOnPage)
-                .Select(x => new GetVehicleDTO(x))
+            return await vehicles.Select(x => new GetVehicleDTO(x))
                 .ToListAsync();
-
-            Pager<GetVehicleDTO> result = new Pager<GetVehicleDTO>(vehiclesDTO, pagination)
-            {
-                Count = count
-            };
-
-            return result;
         }
 
         //Gets a vehicle with specific id.
         public async Task<GetVehicleDTO> GetAsync(int id)
         {
-            var vehicle = await Context.Vehicles
+            var vehicle = await context.Vehicles
                .Include(v => v.User)
                .Include(v => v.VehicleModel)
                .ThenInclude(vm => vm.Manufacturer)
@@ -109,7 +95,7 @@ namespace SmartGarage.Service
         //Deletes a vehicle with specific id using soft delete.
         public async Task<bool> RemoveAsync(int id)
         {
-            var vehicle = await Context.Vehicles
+            var vehicle = await context.Vehicles
               .Include(v => v.User)
               .Include(v => v.VehicleModel)
               .ThenInclude(vm => vm.Manufacturer)
@@ -123,8 +109,8 @@ namespace SmartGarage.Service
 
             vehicle.IsDeleted = true;
 
-            Context.Update(vehicle);
-            await Context.SaveChangesAsync();
+            context.Update(vehicle);
+            await context.SaveChangesAsync();
 
             return true;
         }
@@ -132,7 +118,7 @@ namespace SmartGarage.Service
         //Updates a vehicle with specific id.
         public async Task<bool> UpdateAsync(UpdateVehicleDTO updateInformation, int id)
         {
-            var vehicle = await Context.Vehicles
+            var vehicle = await context.Vehicles
               .Include(v => v.User)
               .Include(v => v.VehicleModel)
               .ThenInclude(vm => vm.Manufacturer)
@@ -146,8 +132,8 @@ namespace SmartGarage.Service
 
             vehicle.UpdateVehicle(updateInformation);
 
-            Context.Update(vehicle);
-            await Context.SaveChangesAsync();
+            context.Update(vehicle);
+            await context.SaveChangesAsync();
 
             return true;
         }

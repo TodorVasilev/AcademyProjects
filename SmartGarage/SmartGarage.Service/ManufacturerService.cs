@@ -6,6 +6,7 @@ using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.Shared;
 using SmartGarage.Service.Helpers;
 using SmartGarage.Service.QueryObjects;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,12 +17,12 @@ namespace SmartGarage.Service
     /// </summary>
     public class ManufacturerService : IManufacturerService
     {
+        private readonly SmartGarageContext context;
+
         public ManufacturerService(SmartGarageContext context)
         {
-            Context = context;
+            this.context = context;
         }
-
-        public SmartGarageContext Context { get; }
 
         //Creates new manufacturer
         public async Task<GetManufacturerDTO> CreateAsync(ManufacturerDTO manufacturerInformation)
@@ -31,48 +32,26 @@ namespace SmartGarage.Service
                 Name = manufacturerInformation.Name
             };
 
-            await Context.Manufacturers.AddAsync(manufacturer);
-            await Context.SaveChangesAsync();
+            await context.Manufacturers.AddAsync(manufacturer);
+            await context.SaveChangesAsync();
 
             return new GetManufacturerDTO(manufacturer);
         }
 
         //Gets all manufacturers based on some specified pagination information.
-        public async Task<Pager<GetManufacturerDTO>> GetAllAsync(PaginationQueryObject pagination)
+        public async Task<List<GetManufacturerDTO>> GetAll()
         {
-            //The amount of items to skip
-            var skipPages = (pagination.Page - 1) * pagination.ItemsOnPage;
-
-            var manufacturers = Context.Manufacturers
+            var manufacturers = context.Manufacturers
                 .AsQueryable();
 
-            var count = manufacturers.Count();
-
-            var manufacturersDTO = await manufacturers.Skip(skipPages)
-                .Take(pagination.ItemsOnPage)
-                .Select(x => new GetManufacturerDTO(x))
+            return await manufacturers.Select(m => new GetManufacturerDTO(m))
                 .ToListAsync();
-
-            Pager<GetManufacturerDTO> result = new Pager<GetManufacturerDTO>(manufacturersDTO, pagination)
-            {
-                Count = count
-            };
-
-            return result;
-        }
-
-        public IQueryable<GetManufacturerDTO> GetManufacturers()
-        {
-            var manufacturers = Context.Manufacturers
-                .AsQueryable();
-
-            return manufacturers.Select(m => new GetManufacturerDTO(m)).AsQueryable();
         }
 
         //Gets manufacturer with specific id.
         public async Task<GetManufacturerDTO> GetAsync(int id)
         {
-            var manufacturer = await Context.Manufacturers
+            var manufacturer = await context.Manufacturers
               .Include(m => m.Models)
               .FirstOrDefaultAsync(v => v.Id == id);
 
@@ -88,7 +67,7 @@ namespace SmartGarage.Service
         //Updates manufacturer with specific id.
         public async Task<bool> UpdateAsync(ManufacturerDTO updateInformation, int id)
         {
-            var manufacturer = await Context.Manufacturers
+            var manufacturer = await context.Manufacturers
              .FirstOrDefaultAsync(v => v.Id == id);
 
             //Returns null when there is not a manufacturer with this id.
@@ -99,8 +78,8 @@ namespace SmartGarage.Service
 
             manufacturer.Name = updateInformation.Name;
 
-            Context.Update(manufacturer);
-            await Context.SaveChangesAsync();
+            context.Update(manufacturer);
+            await context.SaveChangesAsync();
 
             return true;
         }

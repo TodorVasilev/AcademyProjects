@@ -20,6 +20,6 @@ namespace SmartGarage.Service.DTOs.GetDTOs
         public string Name { get; }
 
         [JsonIgnore]
-        public IReadOnlyCollection<VehicleModel> Models { get; }
+        public List<VehicleModel> Models { get; }
     }
 }

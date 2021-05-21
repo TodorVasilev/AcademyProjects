@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using SmartGarage.Data;
 using SmartGarage.Data.Models;
-using SmartGarage.Helpers;
 using SmartGarage.Service.Contracts;
 using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.Shared;
-using SmartGarage.Service.QueryObjects;
-using System.Linq;
+using SmartGarage.Service.Helpers;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Controllers
@@ -15,7 +12,6 @@ namespace SmartGarage.Controllers
     public class ManufacturerController : Controller
     {
         private readonly IManufacturerService service;
-
 
         public ManufacturerController(IManufacturerService service)
         {
@@ -27,7 +23,7 @@ namespace SmartGarage.Controllers
         public async Task<IActionResult> Index(int pageNumber = 1)
         {
             var pageSize = 5;
-            return View(await PaginatedList<GetManufacturerDTO>.CreateAsync(service.GetManufacturers(), pageNumber, pageSize));
+            return View(PaginatedList<GetManufacturerDTO>.CreateAsync(await service.GetAll(), pageNumber, pageSize));
         }
 
         public async Task<IActionResult> Details(int id)
@@ -86,7 +82,7 @@ namespace SmartGarage.Controllers
                 await service.CreateAsync(manufacturer);
                 return RedirectToAction(nameof(Index));
             }
-            
+
             return View(manufacturer);
         }
     }

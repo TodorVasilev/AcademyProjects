@@ -19,7 +19,6 @@ namespace SmartGarage.Test.ServiceTests.VehicleModelServiceTests
         {
             //Arrange
             var options = Util.GetOptions(nameof(ReturnAllVehicleModels));
-            var pagination = new PaginationQueryObject();
             var count = 0;
 
             using (var arrCtx = new SmartGarageContext(options))
@@ -33,11 +32,11 @@ namespace SmartGarage.Test.ServiceTests.VehicleModelServiceTests
             using (var actCtx = new SmartGarageContext(options))
             {
                 var sut = new VehicleModelService(actCtx);
-                var result = await sut.GetAllAsync(pagination);
+                var result = await sut.GetAll();
 
                 //Assert
-                Assert.AreEqual(count, result.Count);
-                Assert.IsInstanceOfType(result.ItemsColection[0], typeof(GetVehicleModelDTO));
+                Assert.AreEqual(count, result.Count());
+                Assert.IsInstanceOfType(result.First(), typeof(GetVehicleModelDTO));
             }
         }
 
@@ -46,13 +45,12 @@ namespace SmartGarage.Test.ServiceTests.VehicleModelServiceTests
         {
             //Arrange
             var options = Util.GetOptions(nameof(ReturnNull_When_ThereAreNoVehicleModels));
-            var pagination = new PaginationQueryObject();
 
             //Act
             using (var actCtx = new SmartGarageContext(options))
             {
                 var sut = new VehicleModelService(actCtx);
-                var result = await sut.GetAllAsync(pagination);
+                var result = await sut.GetAll();
 
                 //Assert
                 Assert.IsNull(result);

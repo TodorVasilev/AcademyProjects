@@ -9,6 +9,8 @@ using SmartGarage.Service.QueryObjects;
 using SmartGarage.Service.Contracts;
 using System.Threading.Tasks;
 using System;
+using SmartGarage.Service.DTOs.GetDTOs;
+using SmartGarage.Service.Helpers;
 
 namespace SmartGarage.Api_Controllers
 {
@@ -27,23 +29,17 @@ namespace SmartGarage.Api_Controllers
         /// <summary>
         /// Gets all vehicles possibly filtered by name, based on some specified pagination information.
         /// </summary>
-        /// <param name="pagination">The pagination information.</param>
         /// <param name="name">The name of the vehicle.</param>
+        /// <param name="pageSize">The page size.</param>
+        /// <param name="pageNumber">The page number.</param>
         /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Get([FromQuery] PaginationQueryObject pagination, string name)
+        public async Task<IActionResult> Get([FromQuery]string name, [FromQuery] int pageSize = 5, [FromQuery] int pageNumber = 1)
         {
-            var vehicles = await service.GetAllAsync(pagination, name);
-
-            if (vehicles.ItemsOnPage == 0)
-            {
-                return NotFound();
-            }
-
-            return Ok(vehicles);
+            return Ok(PaginatedList<GetVehicleDTO>.CreateAsync(await service.GetAll(name), pageNumber, pageSize));
         }
 
         /// <summary>

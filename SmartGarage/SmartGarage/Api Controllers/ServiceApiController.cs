@@ -4,7 +4,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SmartGarage.Service.Contracts;
 using SmartGarage.Service.DTOs.CreateDTOs;
+using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;
+using SmartGarage.Service.Helpers;
 using SmartGarage.Service.QueryObjects;
 using System.Threading.Tasks;
 
@@ -25,29 +27,22 @@ namespace SmartGarage.Api_Controllers
         /// <summary>
         /// Gets all services possibly filtered by some criteria, based on some specified pagination information.
         /// </summary>
-        /// <param name="pagination">The pagination information.</param>
         /// <param name="filterObject">The filter information.</param>
+        /// <param name="pageSize">The page size.</param>
+        /// <param name="pageNumber">The page number.</param>
         /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Get([FromQuery] PaginationQueryObject pagination, ServiceFilterQueryObject filterObject)
+        public async Task<IActionResult> Get([FromQuery] ServiceFilterQueryObject filterObject, [FromQuery] int pageSize = 5, [FromQuery] int pageNumber = 1)
         {
-            var services = await service.GetAllAsync(pagination, filterObject);
-
-            if (services == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(services);
+            return Ok(PaginatedList<GetServiceDTO>.CreateAsync(await service.GetAll(filterObject), pageNumber, pageSize));
         }
 
         /// <summary>
         ///Gets all services linked to user, possibly filtered by some criteria and based on some specified pagination information.
         /// </summary>
-        /// <param name="pagination">The pagination information.</param>
         /// <param name="filterObject">The filter information.</param>
         /// <param name="userID">The user identifier.</param>
         /// <returns></returns>
@@ -55,16 +50,11 @@ namespace SmartGarage.Api_Controllers
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Get([FromQuery] PaginationQueryObject pagination, [FromQuery] CustomerServicesFilterQueryObject filterObject, int userID)
+        public async Task<IActionResult> Get([FromQuery] CustomerServicesFilterQueryObject filterObject, int userID)
         {
-            var services = await service.GetAllLinkedToCustomerAsync(pagination, filterObject, userID);
-
-            if (services == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(services);
+            var pageNumber = 1;
+            var pageSize = 5;
+            return Ok(PaginatedList<GetServiceDTO>.CreateAsync(await service.GetAllLinkedToCustomer(filterObject, userID), pageNumber, pageSize));
         }
 
         /// <summary>

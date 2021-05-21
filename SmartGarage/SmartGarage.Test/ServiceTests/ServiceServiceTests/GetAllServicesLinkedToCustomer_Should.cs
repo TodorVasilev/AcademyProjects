@@ -38,11 +38,11 @@ namespace SmartGarage.Test.ServiceTests.ServiceServiceTests
             using (var actCtx = new SmartGarageContext(options))
             {
                 var sut = new ServiceService(actCtx);
-                var result = await sut.GetAllLinkedToCustomerAsync(pagination, filterObject, userId);
+                var result = await sut.GetAllLinkedToCustomer(filterObject, userId);
 
                 //Assert
-                Assert.AreEqual(count, result.Count);
-                Assert.IsInstanceOfType(result.ItemsColection[0], typeof(GetServiceDTO));
+                Assert.AreEqual(count, result.Count());
+                Assert.IsInstanceOfType(result.First(), typeof(GetServiceDTO));
             }
         }
 
@@ -59,7 +59,7 @@ namespace SmartGarage.Test.ServiceTests.ServiceServiceTests
             using (var actCtx = new SmartGarageContext(options))
             {
                 var sut = new ServiceService(actCtx);
-                var result = await sut.GetAllLinkedToCustomerAsync(pagination, filterObject, userId);
+                var result = await sut.GetAllLinkedToCustomer(filterObject, userId);
 
                 //Assert
                 Assert.IsNull(result);
