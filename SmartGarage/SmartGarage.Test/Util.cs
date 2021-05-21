@@ -33,6 +33,7 @@ namespace SmartGarage.Test
                    Email = "admin@gmail.com",
                    NormalizedEmail = "ADMIN@GMAIL.COM",
                    DrivingLicenseNumber = "93302193",
+                    CurrentRole="ADMIN",
                    SecurityStamp = Guid.NewGuid().ToString(),
                },
 
@@ -47,7 +48,8 @@ namespace SmartGarage.Test
                    Age = 28,
                    Email = "employee@gmail.com",
                    NormalizedEmail = "EMPLOYEE@GMAIL.COM",
-                   DrivingLicenseNumber = "3241219",
+                   DrivingLicenseNumber = "3241219",  
+                   CurrentRole="EMPLOYEE",
                    SecurityStamp = Guid.NewGuid().ToString(),
                },
 
@@ -63,6 +65,8 @@ namespace SmartGarage.Test
                     Email = "firstcustomer@gmail.com",
                     NormalizedEmail = "FIRSTCUSTOMER@GMAIL.COM",
                      DrivingLicenseNumber = "13302343",
+                     CurrentRole="CUSTOMER",
+                     PhoneNumber="087123456",
                     SecurityStamp = Guid.NewGuid().ToString(),
                 },
 
@@ -78,6 +82,7 @@ namespace SmartGarage.Test
                     Email = "ivangeorgiev14@gmail.com",
                     NormalizedEmail = "IVANGEORGIEV14@GMAIL.COM",
                     DrivingLicenseNumber = "73322193",
+                      CurrentRole="CUSTOMER",
                     SecurityStamp = Guid.NewGuid().ToString(),
                 },
 
@@ -93,6 +98,7 @@ namespace SmartGarage.Test
                     Email = "californication@gmail.com",
                     NormalizedEmail = "CALIFORNICATION@GMAIL.COM",
                     DrivingLicenseNumber = "91304433",
+                      CurrentRole="CUSTOMER",
                     SecurityStamp = Guid.NewGuid().ToString(),
                 }
             };
@@ -142,6 +148,16 @@ namespace SmartGarage.Test
                 new IdentityUserRole<int>
                 {
                     UserId = 3,
+                    RoleId = 3
+                },
+                    new IdentityUserRole<int>
+                {
+                    UserId = 4,
+                    RoleId = 3
+                },
+                        new IdentityUserRole<int>
+                {
+                    UserId = 5,
                     RoleId = 3
                 }
             };
@@ -464,7 +480,7 @@ namespace SmartGarage.Test
                     GarageId = 1,
                     VehicleId = 3,
                     OrderStatusId = 1,
-                    ArrivalDate = DateTime.Now.AddDays(2),
+                    //ArrivalDate = DateTime.Now.AddDays(2),
                     FinishDate = DateTime.Now.AddDays(5),
                 },
             };

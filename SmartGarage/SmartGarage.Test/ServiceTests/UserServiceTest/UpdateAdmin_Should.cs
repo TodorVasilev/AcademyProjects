@@ -11,48 +11,41 @@ using System.Threading.Tasks;
 
 namespace SmartGarage.Test.ServiceTests.UserServiceTest
 {
-    //[TestClass]
-    //public class UpdateAdmin_Should
-    //{
+    [TestClass]
+    public class UpdateAdmin_Should
+    {
 
-    ////    [TestMethod]
-    ////    public async Task UpdateAdmin_WhenParamsAreValid()
-    ////    {
-    ////        //Arrange
-    ////        var options = Util.GetOptions(nameof(UpdateAdmin_WhenParamsAreValid));
-    ////        var role = "Employee";
-    //        int id = 4;
-    //        var userManagerFake = new Mock<IUserManagerWrapper>(); 
-            
-    //        using (var arrCtx = new SmartGarageContext(options))
-    //        {
-    //            arrCtx.SeedData();
-    //            await arrCtx.SaveChangesAsync();
+        //[TestMethod]
+        //public async Task UpdateAdmin_WhenParamsAreValid()
+        //{
+        //    //Arrange
+        //    var options = Util.GetOptions(nameof(UpdateAdmin_WhenParamsAreValid));
+        //    var role = "Employee";
+        //    int id = 4;
+        //    var userManagerFake = new Mock<IUserManagerWrapper>();
+
+        //    using (var arrCtx = new SmartGarageContext(options))
+        //    {
+        //        arrCtx.SeedData();
+        //        await arrCtx.SaveChangesAsync();
 
 
-    //            var userFake = await arrCtx.Users.FindAsync(2);
-    //        userManagerFake.Setup(x => x.GetRolesAsync(new User())).Returns();
-    //        }
-           
-    //        //Act
-    //        using (var actCtx = new SmartGarageContext(options))
-    //        {
-    //            var sut = new UserService(actCtx, userManagerFake.Object);
-    //            var result = await sut.UpdateAdminAsync(id, role);
-    //            var userToCompare = await actCtx.Users.FindAsync(id);
+        //    //    var userFake = await arrCtx.Users.FindAsync(2);
+        //      //  userManagerFake.Setup(x => x.GetRolesAsync(It.IsAny<User>())).Callback());
+        //    }
 
-    //            //Assert
-    //            Assert.AreEqual(userToCompare.CurrentRole, role);
+        //    //Act
+        //    using (var actCtx = new SmartGarageContext(options))
+        //    {
+        //        var sut = new UserService(actCtx, userManagerFake.Object);
+        //        var result = await sut.UpdateAdminAsync(id, role);
+        //        var userToCompare = await actCtx.Users.FindAsync(id);
 
-    //        }
+        //        //Assert
+        //        Assert.AreEqual(userToCompare.CurrentRole, role);
 
-    //    }
+        //   }
 
-    //    private Task<IList<string>> List<T>()
-    //    {
-    //        string maina = "maina";
-    //        ;
-    //        return pesho;
-    //    }
-    //}
+     //   }    
+    }
 }

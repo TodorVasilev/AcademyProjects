@@ -8,6 +8,10 @@ namespace SmartGarage.Service.DTOs.GetDTOs
 {
     public class GetUserDTO
     {
+        public GetUserDTO()
+        {
+
+        }
         public GetUserDTO(User user)
         {
             this.Id = user.Id;

@@ -78,7 +78,7 @@ namespace SmartGarage.Service
             var userRole = (await this.userManagerWrapper.GetRolesAsync(userToUpdate)).FirstOrDefault();
             if (userRole != role)
             {
-               _= await this.userManagerWrapper.RemoveFromRoleAsync(userToUpdate, oldRole);
+                await this.userManagerWrapper.RemoveFromRoleAsync(userToUpdate, oldRole);
                 await this.userManagerWrapper.AddToRoleAsync(userToUpdate, role);
 
                 return true;
@@ -86,7 +86,7 @@ namespace SmartGarage.Service
             return false;
         }
 
-        public async Task<List<GetUserDTO>> GetAllCustomerAsync(UserSevicesFillterQueryObject filter)
+        public async Task<List<GetUserDTO>> GetAllCustomerAsync(UserSevicesFilterQueryObject filter)
         {
             var users = this.context.Users
                 .Where(u => !u.IsDeleted && u.CurrentRole == "CUSTOMER")
@@ -125,7 +125,7 @@ namespace SmartGarage.Service
                     .Where(v => !v.IsDeleted)
                     .Any(u => u.Orders
                     .Where(o => o.IsDeleted)
-                    .Any(o => o.ArrivalDate.Date == filter.StartDate.Date || o.FinishDate == filter.StartDate.Date)));
+                     .Any(o => o.ArrivalDate.Date == filter.StartDate.Date || o.FinishDate == filter.StartDate.Date)));
             }
 
             if (filter.EndDate != default)
@@ -154,7 +154,7 @@ namespace SmartGarage.Service
         {
             var user = await this.context.Users.FindAsync(id);
 
-            if (user == null || user.IsDeleted==true)
+            if (user == null || user.IsDeleted == true)
             {
                 return false;
             }

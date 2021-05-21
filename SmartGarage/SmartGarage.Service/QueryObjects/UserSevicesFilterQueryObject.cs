@@ -2,7 +2,7 @@
 
 namespace SmartGarage.Service.QueryObjects
 {
-    public class UserSevicesFillterQueryObject
+    public class UserSevicesFilterQueryObject
     {
         public string Name { get; set; }
 
