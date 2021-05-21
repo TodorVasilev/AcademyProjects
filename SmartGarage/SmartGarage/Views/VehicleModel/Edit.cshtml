@@ -1,7 +1,5 @@
-﻿@model GetManufacturerDTO
+﻿@model VehicleModelEditViewModel
 
-<h4>Manufacturer</h4>
-<hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
@@ -13,6 +11,16 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="VehicleTypeId" class="control-label"></label>
+                <input asp-for="VehicleTypeId" class="form-control" />
+                <span asp-validation-for="VehicleTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ManufacturerId" class="control-label"></label>
+                <input asp-for="ManufacturerId" class="form-control" />
+                <span asp-validation-for="ManufacturerId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
@@ -22,7 +30,3 @@
 <div>
     <a asp-action="Index">Back to list</a>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

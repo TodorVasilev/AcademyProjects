@@ -88,7 +88,6 @@ namespace SmartGarage.Service
              .Include(vm => vm.VehicleType)
              .FirstOrDefaultAsync(v => v.Id == id);
 
-
             //Returns null when there is not a vehicle model with this id.
             if (vehicleModel == null)
             {
@@ -97,7 +96,6 @@ namespace SmartGarage.Service
 
             vehicleModel.UpdateVehicleModel(updateInformation);
 
-            context.Update(vehicleModel);
             await context.SaveChangesAsync();
 
             return true;

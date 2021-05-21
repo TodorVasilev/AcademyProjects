@@ -61,7 +61,12 @@ namespace SmartGarage.Controllers
 
             if (ModelState.IsValid)
             {
-                await service.UpdateAsync(new ManufacturerDTO { Name = manufacturer.Name }, id);
+                var updateInformaniton = new ManufacturerDTO
+                {
+                    Name = manufacturer.Name
+                };
+
+                await service.UpdateAsync(updateInformaniton, id);
                 return RedirectToAction(nameof(Index));
             }
 

@@ -10,12 +10,19 @@ namespace SmartGarage.Service.Helpers
     public class PaginatedList<T>
     {
         public int Count { get; private set; }
+
         public int PageIndex { get; private set; }
+
         public int TotalPages { get; private set; }
+
+        [JsonIgnore]
+        public int PageSize { get; private set; }
+
         public IEnumerable<T> ItemsCollection { get; set; }
 
         public PaginatedList(IEnumerable<T> items, int count, int pageIndex, int pageSize)
         {
+            this.PageSize = pageSize;
             this.Count = count;
             this.PageIndex = pageIndex;
             this.TotalPages = (int)Math.Ceiling(count / (double)pageSize);
