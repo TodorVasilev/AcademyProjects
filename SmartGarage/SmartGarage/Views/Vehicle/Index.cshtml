@@ -3,6 +3,12 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<form asp-controller="Vehicle" asp-action="Index">
+    <p>
+        Customer name: <input type="text" name="name" />
+        <input type="submit" value="Filter" />
+    </p>
+</form>
 <table class="table">
     <thead>
         <tr class="active">
@@ -13,7 +19,7 @@
                 <p>Vehicle</p>
             </th>
             <th>
-                <p>Owner</p>
+                <p>Owner (UserName)</p>
             </th>
             <th>
                 <p>Details</p>
@@ -39,7 +45,7 @@
                             @count
                         </th>
                         <td>@item.VehicleModel (@item.Colour)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Owner)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Owner) (@item.OwnerUserName)</td>
                         <td><a asp-action="Details" asp-route-id="@item.Id">Details</a></td>
                         <td><a asp-action="Edit" asp-route-id="@item.Id">Edit</a></td>
                         <td><a asp-action="Delete" asp-route-id="@item.Id">Delete</a></td>
@@ -52,7 +58,7 @@
                             @count
                         </th>
                         <td>@item.VehicleModel (@item.Colour)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Owner)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Owner) (@item.OwnerUserName)</td>
                         <td><a asp-action="Details" asp-route-id="@item.Id">Details</a></td>
                         <td><a asp-action="Edit" asp-route-id="@item.Id">Edit</a></td>
                         <td><a asp-action="Delete" asp-route-id="@item.Id">Delete</a></td>

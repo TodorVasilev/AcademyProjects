@@ -65,7 +65,7 @@ namespace SmartGarage.Service
 
             if (name != default)
             {
-                vehicles = vehicles.Where(v => v.User.UserName == name);
+                vehicles = vehicles.Where(v => v.User.UserName.Contains(name));
             }
 
             return await vehicles.Select(x => new GetVehicleDTO(x))

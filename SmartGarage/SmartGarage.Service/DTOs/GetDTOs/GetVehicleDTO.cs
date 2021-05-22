@@ -19,10 +19,13 @@ namespace SmartGarage.Service.DTOs.GetDTOs
             this.Colour = vehicle.Colour;
             this.VehicleModelId = vehicle.Id;
             this.UserId = vehicle.UserId;
+            this.OwnerUserName = vehicle.User.UserName;
         }
 
         [Required]
         public int Id { get; }
+
+        public string OwnerUserName { get; }
 
         [JsonIgnore]
         [Required]
