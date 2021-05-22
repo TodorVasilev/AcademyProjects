@@ -1,0 +1,39 @@
+﻿@model GetVehicleDTO
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <h4>Vehicle</h4>
+    <hr />
+    <h5>
+        @Model.VehicleModel
+    </h5>
+    <table class="table">
+        <thead>
+            <tr class="active">
+                <th scope="row">Owner</th>
+                <th>Colour</th>
+                <th>VIN</th>
+                <th>Number plate</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="table-active">
+                <td>@Model.Owner</td>
+                <td style="width: 230px">@Model.Colour</td>
+                <td>@Model.VIN</td>
+                <td>@Model.NumberPlate</td>
+                <td> <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a></td>
+                <td> <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div>
+    <a class="btn btn-primary" asp-action="Index">Back to list</a>
+</div>

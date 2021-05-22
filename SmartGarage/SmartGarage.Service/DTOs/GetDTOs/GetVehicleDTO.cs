@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace SmartGarage.Service.DTOs.GetDTOs
 {
@@ -16,13 +17,23 @@ namespace SmartGarage.Service.DTOs.GetDTOs
             this.NumberPlate = vehicle.NumberPlate;
             this.VIN = vehicle.VIN;
             this.Colour = vehicle.Colour;
+            this.VehicleModelId = vehicle.Id;
+            this.UserId = vehicle.UserId;
         }
 
         [Required]
         public int Id { get; }
 
+        [JsonIgnore]
+        [Required]
+        public int UserId { get; }
+
         [Required]
         public string Owner { get; }
+
+        [JsonIgnore]
+        [Required]
+        public int VehicleModelId { get; }
 
         [Required]
         public string VehicleModel { get; }

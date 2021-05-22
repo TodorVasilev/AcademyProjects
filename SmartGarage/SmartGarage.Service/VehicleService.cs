@@ -5,8 +5,6 @@ using SmartGarage.Service.Contracts;
 using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;
-using SmartGarage.Service.Helpers;
-using SmartGarage.Service.QueryObjects;
 using SmartGarage.Service.ServiceHelpes;
 using System.Collections.Generic;
 using System.Linq;

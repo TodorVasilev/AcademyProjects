@@ -1,4 +1,4 @@
-﻿@model PaginatedList<GetVehicleModelDTO>
+﻿@model PaginatedList<GetVehicleDTO>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -7,19 +7,22 @@
     <thead>
         <tr class="active">
             <th scope="row">
-                <p style="width: 75px">#</p>
+                <p style="width: 50px">#</p>
             </th>
             <th>
-                <p>Name</p>
+                <p>Vehicle</p>
             </th>
             <th>
-                <p>Manufacturer</p>
+                <p>Owner</p>
             </th>
             <th>
-                <p>Vehicle type</p>
+                <p>Details</p>
             </th>
             <th>
                 <p>Edit</p>
+            </th>
+            <th>
+                <p>Delete</p>
             </th>
         </tr>
     </thead>
@@ -35,12 +38,11 @@
                         <th scope="row">
                             @count
                         </th>
-                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                        <td>@Html.DisplayFor(modelItem => item.ManafacturerName)</td>
-                        <td>@Html.DisplayFor(modelItem => item.VehicleType)</td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                        </td>
+                        <td>@item.VehicleModel (@item.Colour)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Owner)</td>
+                        <td><a asp-action="Details" asp-route-id="@item.Id">Details</a></td>
+                        <td><a asp-action="Edit" asp-route-id="@item.Id">Edit</a></td>
+                        <td><a asp-action="Delete" asp-route-id="@item.Id">Delete</a></td>
                     </tr>
                 }
                 else
@@ -49,12 +51,11 @@
                         <th scope="row">
                             @count
                         </th>
-                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                        <td>@Html.DisplayFor(modelItem => item.ManafacturerName)</td>
-                        <td>@Html.DisplayFor(modelItem => item.VehicleType)</td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                        </td>
+                        <td>@item.VehicleModel (@item.Colour)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Owner)</td>
+                        <td><a asp-action="Details" asp-route-id="@item.Id">Details</a></td>
+                        <td><a asp-action="Edit" asp-route-id="@item.Id">Edit</a></td>
+                        <td><a asp-action="Delete" asp-route-id="@item.Id">Delete</a></td>
                     </tr>
                 }
                 count++;
@@ -67,7 +68,6 @@
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
-
 <nav aria-label="...">
     <ul class="pagination">
         @if (Model.PageIndex > 4 && Model.PageIndex + 3 < Model.TotalPages)
@@ -187,3 +187,5 @@
         }
     </ul>
 </nav>
+
+

@@ -104,6 +104,7 @@ namespace SmartGarage.Areas.Identity.Pages.Account
                     Address = Input.Address,
                     Email = Input.Email
                 };
+
                 try
                 {
                     var result = await _userHelper.CreateUserAsync(userDTO);
@@ -119,7 +120,6 @@ namespace SmartGarage.Areas.Identity.Pages.Account
                 {
                     return RedirectToPage("./Login");
                 }
-
             }
 
             // If we got this far, something failed, redisplay form
