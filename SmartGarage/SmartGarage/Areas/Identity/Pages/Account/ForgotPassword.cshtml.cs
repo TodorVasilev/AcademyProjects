@@ -63,6 +63,11 @@ namespace SmartGarage.Areas.Identity.Pages.Account
                     "Reset Password",
                     $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
+                if (user.CurrentRole != "Customer")
+                {
+                    return Redirect("/Home/Index");
+                }
+
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }
 

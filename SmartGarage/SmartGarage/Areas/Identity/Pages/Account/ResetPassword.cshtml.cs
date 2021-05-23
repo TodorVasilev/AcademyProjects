@@ -14,10 +14,12 @@ namespace SmartGarage.Areas.Identity.Pages.Account
     public class ResetPasswordModel : PageModel
     {
         private readonly UserManager<User> _userManager;
+        private readonly SignInManager<User> signInManager;
 
-        public ResetPasswordModel(UserManager<User> userManager)
+        public ResetPasswordModel(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
+            this.signInManager = signInManager;
         }
 
         [BindProperty]
@@ -44,6 +46,10 @@ namespace SmartGarage.Areas.Identity.Pages.Account
 
         public IActionResult OnGet(string code = null)
         {
+           // var user = await _userManager.GetUserAsync(HttpContext.User);
+           // var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+           // code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+
             if (code == null)
             {
                 return BadRequest("A code must be supplied for password reset.");
