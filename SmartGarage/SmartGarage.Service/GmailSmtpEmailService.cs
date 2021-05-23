@@ -30,5 +30,25 @@ namespace SmartGarage.Service
                 }
             }
         }
+
+        public async Task ForgotenPassword(string email, string subject, string url)
+        {
+            using (MailMessage mail = new MailMessage())
+            {
+                mail.From = new MailAddress(fromEmail);
+                mail.To.Add(email);
+                mail.Subject = subject;
+                mail.Body = url;
+                mail.IsBodyHtml = true;
+
+                using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    smtp.Credentials = new NetworkCredential(fromEmail, password);
+                    smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    smtp.EnableSsl = true;
+                    await smtp.SendMailAsync(mail);
+                }
+            }
+        }
     }
 }

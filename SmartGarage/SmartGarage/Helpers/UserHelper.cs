@@ -10,7 +10,6 @@ using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.Helpers;
 using SmartGarage.Service.ServiceContracts;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -75,7 +74,7 @@ namespace SmartGarage.Helpers
 
                     result.Token = tokenHandler.WriteToken(token);
 
-                    return result;                                      
+                    return result;
                 }
             }
             return null;
@@ -96,18 +95,19 @@ namespace SmartGarage.Helpers
                 CurrentRole = "CUSTOMER"
             };
             var passwordLength = 12;
-            var password = CreatePassword(passwordLength); 
+            var password = CreatePassword(passwordLength);
 
             var result = await userManager.CreateAsync(user, password);
-        
+
             if (result.Succeeded)
             {
                 await userManager.AddToRoleAsync(user, "Customer");
-                
+
                 await emailSender.SendRegistrationEmail(createUserDTO.Email, password);
             }
             return result;
         }
+
         private string CreatePassword(int length)
         {
             const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
