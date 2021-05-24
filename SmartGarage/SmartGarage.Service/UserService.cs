@@ -5,6 +5,7 @@ using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;
 using SmartGarage.Service.Helpers;
 using SmartGarage.Service.QueryObjects;
+using SmartGarage.Service.ServiceHelpes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -86,7 +87,7 @@ namespace SmartGarage.Service
             return false;
         }
 
-        public async Task<List<GetUserDTO>> GetAllCustomerAsync(UserSevicesFilterQueryObject filter)
+        public async Task<List<GetUserDTO>> GetAllCustomerAsync(UserSevicesFilterQueryObject filter, UserOrderQueryObject order )
         {
             var users = this.context.Users
                 .Where(u => !u.IsDeleted && u.CurrentRole == "CUSTOMER")
@@ -125,7 +126,7 @@ namespace SmartGarage.Service
                     .Where(v => !v.IsDeleted)
                     .Any(u => u.Orders
                     .Where(o => o.IsDeleted)
-                     .Any(o => o.ArrivalDate.Date == filter.StartDate.Date || o.FinishDate == filter.StartDate.Date)));
+                     .Any(o => o.ArrivalDate.Date.CompareTo(filter.StartDate.Date)>=0 )));
             }
 
             if (filter.EndDate != default)
@@ -134,7 +135,7 @@ namespace SmartGarage.Service
                     .Where(v => !v.IsDeleted)
                     .Any(u => u.Orders
                     .Where(o => o.IsDeleted)
-                    .Any(o => o.ArrivalDate.Date == filter.EndDate.Date || o.FinishDate == filter.EndDate.Date)));
+                    .Any(o => o.FinishDate.Value.CompareTo(filter.EndDate.Date)<=0)));
             }
 
             //Returns null when there is not a service with this id.
@@ -142,6 +143,8 @@ namespace SmartGarage.Service
             {
                 return null;
             }
+            //order the users  
+            users = users.SortBy(order.OrderByName, order.OrderByDate);       
 
             var userModelsDTO = await users
                 .Select(x => new GetUserDTO(x))

@@ -93,6 +93,20 @@ namespace SmartGarage.Service.ServiceHelpes
 
             return serviceOrders;
         }
-               
+
+        public static IQueryable<User> SortBy(this IQueryable<User> customerToOrder, string CustomerName, string OrderDate)
+        {
+            customerToOrder = (CustomerName, OrderDate) switch
+            {
+                ("asc", "desc") => customerToOrder.OrderBy(u => u.FirstName).ThenByDescending(u => u.Vehicles.SelectMany(v=>v.Orders.Select(o=>o.ArrivalDate))),
+                (null, "desc") => customerToOrder.OrderBy(u => u.FirstName).ThenByDescending(u => u.Vehicles.SelectMany(v => v.Orders.Select(o => o.ArrivalDate))),
+                ("desc", null) => customerToOrder.OrderByDescending(u => u.FirstName).ThenBy(u => u.Vehicles.SelectMany(v => v.Orders.Select(o => o.ArrivalDate))),
+                ("desc", "asc") => customerToOrder.OrderByDescending(u => u.FirstName).ThenBy(u => u.Vehicles.SelectMany(v => v.Orders.Select(o => o.ArrivalDate))),
+                ("desc", "desc") => customerToOrder.OrderByDescending(u => u.FirstName).ThenByDescending(u => u.Vehicles.SelectMany(v => v.Orders.Select(o => o.ArrivalDate))),
+                _ => customerToOrder.OrderBy(u => u.FirstName).ThenBy(u => u.Vehicles.SelectMany(v => v.Orders.Select(o => o.ArrivalDate)))
+            };
+                return customerToOrder;
+        }
+
     }
 }
