@@ -480,7 +480,7 @@ namespace SmartGarage.Test
                     GarageId = 1,
                     VehicleId = 3,
                     OrderStatusId = 1,
-                    //ArrivalDate = DateTime.Now.AddDays(2),
+                    ArrivalDate = DateTime.Now.AddDays(2),
                     FinishDate = DateTime.Now.AddDays(5),
                 },
             };

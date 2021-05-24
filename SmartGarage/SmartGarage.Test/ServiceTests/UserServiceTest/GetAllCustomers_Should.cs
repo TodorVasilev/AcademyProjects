@@ -181,31 +181,32 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
             }
         }
 
-        //[TestMethod]
-        //public async Task Return_CorrectByStartDate()
-        //{
-        //    //Arrange
-        //    var options = Util.GetOptions(nameof(Return_CorrectByVehicleBrand));
-        //    var userManagerFake = new Mock<IUserManagerWrapper>();
-        //    var filter = new UserSevicesFilterQueryObject();
-        //    filter.StartDate = DateTime.Now.AddDays(1).Date;
-        //    var date = DateTime.Now.AddDays(2).Date.ToString();
+        [TestMethod]
+        public async Task Return_CorrectByStartDate()
+        {
+            //Arrange
+            var options = Util.GetOptions(nameof(Return_CorrectByStartDate));
+            var userManagerFake = new Mock<IUserManagerWrapper>();
+            var filter = new UserSevicesFilterQueryObject();
+            var order = new UserOrderQueryObject();
+            filter.StartDate = DateTime.Now.AddDays(2);
+         
 
-        //    using (var arrCtx = new SmartGarageContext(options))
-        //    {
-        //        arrCtx.SeedData();
-        //        await arrCtx.SaveChangesAsync();
-        //    }
+            using (var arrCtx = new SmartGarageContext(options))
+            {
+                arrCtx.SeedData();
+                await arrCtx.SaveChangesAsync();
+            }
 
-        //    //Act
-        //    using (var actCtx = new SmartGarageContext(options))
-        //    {
-        //        var sut = new UserService(actCtx, userManagerFake.Object);
-        //        var result = await sut.GetAllCustomerAsync(filter);
+            //Act
+            using (var actCtx = new SmartGarageContext(options))
+            {
+                var sut = new UserService(actCtx, userManagerFake.Object);
+                var result = await sut.GetAllCustomerAsync(filter, order);
 
-        //        //Assert
-        //        Assert.AreEqual(result.Count, 1);
-        //    }
-        //}
+                //Assert
+                Assert.AreEqual(1, result.Count);
+            }
+        }
     }
 }

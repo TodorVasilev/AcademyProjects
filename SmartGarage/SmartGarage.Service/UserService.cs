@@ -84,6 +84,7 @@ namespace SmartGarage.Service
 
                 return true;
             }
+
             return false;
         }
 
@@ -122,20 +123,14 @@ namespace SmartGarage.Service
 
             if (filter.StartDate != default)
             {
-                users = users.Where(u => u.Vehicles
-                    .Where(v => !v.IsDeleted)
-                    .Any(u => u.Orders
-                    .Where(o => o.IsDeleted)
-                     .Any(o => o.ArrivalDate.Date.CompareTo(filter.StartDate.Date)>=0 )));
+                users = users.Where(u =>!u.IsDeleted && u.Vehicles.Any(v =>!v.IsDeleted && v.Orders
+                    .Any(o =>DateTime.Compare(o.ArrivalDate.Date, filter.StartDate.Date)>=0 )));
             }
 
             if (filter.EndDate != default)
             {
-                users = users.Where(u => u.Vehicles
-                    .Where(v => !v.IsDeleted)
-                    .Any(u => u.Orders
-                    .Where(o => o.IsDeleted)
-                    .Any(o => o.FinishDate.Value.CompareTo(filter.EndDate.Date)<=0)));
+                users = users.Where(u => !u.IsDeleted && u.Vehicles.Any(v => !v.IsDeleted && v.Orders
+                       .Any(o => DateTime.Compare(o.ArrivalDate.Date, filter.EndDate.Date) <= 0))); ;
             }
 
             //Returns null when there is not a service with this id.
@@ -144,14 +139,13 @@ namespace SmartGarage.Service
                 return null;
             }
             //order the users  
-            var test = users.ToList();
-            test = test.SortBy(order.OrderByName, order.OrderByDate);
+            var usersList = await users.ToListAsync();
+            usersList = usersList.SortBy(order.OrderByName, order.OrderByDate);
 
-            var userModelsDTO = test
+            var userModelsDTO = usersList
                 .Select(x => new GetUserDTO(x))
                 .ToList();
         
-
             return userModelsDTO;
         }
 
