@@ -105,7 +105,7 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
             var options = Util.GetOptions(nameof(Return_CorrectByEmail));
             var userManagerFake = new Mock<IUserManagerWrapper>();
             var filter = new UserSevicesFilterQueryObject();
-            var order = new UserOrderQueryObject();
+            var order = new UserOrderQueryObject();            
             filter.Email = "Ivan";
 
 

@@ -144,12 +144,13 @@ namespace SmartGarage.Service
                 return null;
             }
             //order the users  
-            users = users.SortBy(order.OrderByName, order.OrderByDate);
+            var test = users.ToList();
+            test = test.SortBy(order.OrderByName, order.OrderByDate);
 
-           
-            var userModelsDTO = await users
+            var userModelsDTO = test
                 .Select(x => new GetUserDTO(x))
-                .ToListAsync();
+                .ToList();
+        
 
             return userModelsDTO;
         }
