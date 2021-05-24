@@ -29,7 +29,7 @@ namespace SmartGarage.Api_Controllers
         [HttpGet("id")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetByIdAsync(int id)
         {
             var order = await this.service.GetAsync(id);
             if (order == null)
@@ -38,5 +38,19 @@ namespace SmartGarage.Api_Controllers
             }
             return Ok(order);
         }
+
+        [HttpDelete("id")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> DeleteAsync(int id)
+        {
+            var isDelete = await this.service.DeleteAsync(id);
+            if (isDelete == false)
+            {
+                return NotFound();
+            }
+            return Ok();
+        }
+
     }
 }

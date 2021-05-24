@@ -33,5 +33,17 @@ namespace SmartGarage.Service
             }
             return new GetOrderDTO(order);
         }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            var order = await context.Orders.FindAsync(id);
+            if (order == null || order.IsDeleted == true)
+            {
+                return false;
+            }
+            order.IsDeleted = true;
+            this.context.SaveChanges();
+            return true;
+        }
     }
 }
