@@ -9,5 +9,6 @@ namespace SmartGarage.Service.Contracts
     public interface IOrderService
     {
         Task<List<GetOrderDTO>> GetAll();
+        Task<GetOrderDTO> GetAsync(int id);
     }
 }
