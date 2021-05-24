@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SmartGarage.Service.Contracts;
 using SmartGarage.Service.DTOs.GetDTOs;
+using SmartGarage.Service.DTOs.UpdateDTOs;
 using SmartGarage.Service.Helpers;
 using System.Threading.Tasks;
 
@@ -50,6 +51,20 @@ namespace SmartGarage.Api_Controllers
                 return NotFound();
             }
             return Ok();
+        }
+
+        [HttpPost
+            ("id")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> UpdateAsync(int id, [FromBody] UpdateOrderDTO updateOrder)
+        {
+            var isUpdated = await this.service.UpdateAsync(id,updateOrder);
+            if (isUpdated == false)
+            {
+                return NotFound();
+            }
+            return Ok("Order is updated!");
         }
 
     }
