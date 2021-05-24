@@ -117,6 +117,7 @@ namespace SmartGarage
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserHelper, UserHelper>();
             services.AddScoped<ICurrencyService, CurrencyService>();
+            services.AddScoped<IOrderService,OrderService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
