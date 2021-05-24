@@ -3,6 +3,7 @@ using SmartGarage.Data.Models;
 using SmartGarage.Service.DTOs.SharedDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;
 using SmartGarage.Service.QueryObjects;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SmartGarage.Service.ServiceHelpes
@@ -98,12 +99,12 @@ namespace SmartGarage.Service.ServiceHelpes
         {
             customerToOrder = (CustomerName, OrderDate) switch
             {
-                ("asc", "desc") => customerToOrder.OrderBy(u => u.FirstName).ThenByDescending(u => u.Vehicles.SelectMany(v=>v.Orders.Select(o=>o.ArrivalDate))),
-                (null, "desc") => customerToOrder.OrderBy(u => u.FirstName).ThenByDescending(u => u.Vehicles.SelectMany(v => v.Orders.Select(o => o.ArrivalDate))),
-                ("desc", null) => customerToOrder.OrderByDescending(u => u.FirstName).ThenBy(u => u.Vehicles.SelectMany(v => v.Orders.Select(o => o.ArrivalDate))),
-                ("desc", "asc") => customerToOrder.OrderByDescending(u => u.FirstName).ThenBy(u => u.Vehicles.SelectMany(v => v.Orders.Select(o => o.ArrivalDate))),
-                ("desc", "desc") => customerToOrder.OrderByDescending(u => u.FirstName).ThenByDescending(u => u.Vehicles.SelectMany(v => v.Orders.Select(o => o.ArrivalDate))),
-                _ => customerToOrder.OrderBy(u => u.FirstName).ThenBy(u => u.Vehicles.SelectMany(v => v.Orders.Select(o => o.ArrivalDate)))
+                ("asc", "desc") => customerToOrder.OrderBy(u => u.FirstName).ThenByDescending(u => u.Vehicles.SelectMany(v=>v.Orders.GroupBy(o=>o.ArrivalDate))),
+                (null, "desc") => customerToOrder.OrderBy(u => u.FirstName).ThenByDescending(u => u.Vehicles.SelectMany(v => v.Orders.GroupBy(o => o.ArrivalDate))),
+                ("desc", null) => customerToOrder.OrderByDescending(u => u.FirstName).ThenBy(u => u.Vehicles.SelectMany(v => v.Orders.GroupBy(o => o.ArrivalDate))),
+                ("desc", "asc") => customerToOrder.OrderByDescending(u => u.FirstName).ThenBy(u => u.Vehicles.SelectMany(v => v.Orders.GroupBy(o => o.ArrivalDate))),
+                ("desc", "desc") => customerToOrder.OrderByDescending(u => u.FirstName).ThenByDescending(u => u.Vehicles.SelectMany(v => v.Orders.GroupBy(o => o.ArrivalDate))),
+                _ => customerToOrder.OrderBy(u => u.FirstName).ThenBy(u => u.Vehicles.SelectMany(v => v.Orders.GroupBy(o => o.ArrivalDate)))
             };
                 return customerToOrder;
         }

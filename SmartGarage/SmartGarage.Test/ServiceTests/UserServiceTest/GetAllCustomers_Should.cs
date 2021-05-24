@@ -22,7 +22,7 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
             var options = Util.GetOptions(nameof(Return_OnlyCustomer));
             var userManagerFake = new Mock<IUserManagerWrapper>();
             var filter = new UserSevicesFilterQueryObject();
-           
+            var order = new UserOrderQueryObject();
 
             using (var arrCtx = new SmartGarageContext(options))
             {
@@ -34,7 +34,7 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
             using (var actCtx = new SmartGarageContext(options))
             {
                 var sut = new UserService(actCtx, userManagerFake.Object);
-                var result = await sut.GetAllCustomerAsync(filter);
+                var result = await sut.GetAllCustomerAsync(filter, order);
 
                 //Assert
                 Assert.AreEqual(result.Count, 3);              
@@ -48,6 +48,7 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
             var options = Util.GetOptions(nameof(ReturnNull_When_No_Customer));
             var userManagerFake = new Mock<IUserManagerWrapper>();
             var filter = new UserSevicesFilterQueryObject();
+            var order = new UserOrderQueryObject();
             filter.Name = "krum";
 
 
@@ -61,7 +62,7 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
             using (var actCtx = new SmartGarageContext(options))
             {
                 var sut = new UserService(actCtx, userManagerFake.Object);
-                var result = await sut.GetAllCustomerAsync(filter);
+                var result = await sut.GetAllCustomerAsync(filter,order);
 
                 //Assert
                 Assert.AreEqual(result, null);
@@ -76,6 +77,7 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
             var options = Util.GetOptions(nameof(Return_CorrectByName));
             var userManagerFake = new Mock<IUserManagerWrapper>();
             var filter = new UserSevicesFilterQueryObject();
+            var order = new UserOrderQueryObject();
             filter.Name = "Ivan";
 
 
@@ -89,7 +91,7 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
             using (var actCtx = new SmartGarageContext(options))
             {
                 var sut = new UserService(actCtx, userManagerFake.Object);
-                var result = await sut.GetAllCustomerAsync(filter);
+                var result = await sut.GetAllCustomerAsync(filter, order);
 
                 //Assert
                 Assert.AreEqual(result.Count,1);
@@ -103,6 +105,7 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
             var options = Util.GetOptions(nameof(Return_CorrectByEmail));
             var userManagerFake = new Mock<IUserManagerWrapper>();
             var filter = new UserSevicesFilterQueryObject();
+            var order = new UserOrderQueryObject();
             filter.Email = "Ivan";
 
 
@@ -116,7 +119,7 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
             using (var actCtx = new SmartGarageContext(options))
             {
                 var sut = new UserService(actCtx, userManagerFake.Object);
-                var result = await sut.GetAllCustomerAsync(filter);
+                var result = await sut.GetAllCustomerAsync(filter,order);
 
                 //Assert
                 Assert.AreEqual(result.Count, 1);
@@ -129,6 +132,7 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
             var options = Util.GetOptions(nameof(Return_CorrectByPhone));
             var userManagerFake = new Mock<IUserManagerWrapper>();
             var filter = new UserSevicesFilterQueryObject();
+            var order = new UserOrderQueryObject();
             filter.PhoneNumber = "087123456";
 
 
@@ -142,7 +146,7 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
             using (var actCtx = new SmartGarageContext(options))
             {
                 var sut = new UserService(actCtx, userManagerFake.Object);
-                var result = await sut.GetAllCustomerAsync(filter);
+                var result = await sut.GetAllCustomerAsync(filter,order);
 
                 //Assert
                 Assert.AreEqual(result.Count, 1);
@@ -156,6 +160,7 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
             var options = Util.GetOptions(nameof(Return_CorrectByVehicleBrand));
             var userManagerFake = new Mock<IUserManagerWrapper>();
             var filter = new UserSevicesFilterQueryObject();
+            var order = new UserOrderQueryObject();
             filter.Vehicle = "Tesla";
 
 
@@ -169,7 +174,7 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
             using (var actCtx = new SmartGarageContext(options))
             {
                 var sut = new UserService(actCtx, userManagerFake.Object);
-                var result = await sut.GetAllCustomerAsync(filter);
+                var result = await sut.GetAllCustomerAsync(filter,order);
 
                 //Assert
                 Assert.AreEqual(result.Count, 1);

@@ -144,8 +144,9 @@ namespace SmartGarage.Service
                 return null;
             }
             //order the users  
-            users = users.SortBy(order.OrderByName, order.OrderByDate);       
+            users = users.SortBy(order.OrderByName, order.OrderByDate);
 
+           
             var userModelsDTO = await users
                 .Select(x => new GetUserDTO(x))
                 .ToListAsync();

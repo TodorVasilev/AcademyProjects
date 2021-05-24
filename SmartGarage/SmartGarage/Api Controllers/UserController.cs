@@ -128,14 +128,14 @@ namespace SmartGarage.Api_Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [Authorize(Roles = "Admin,Employee")]
         [HttpGet("")]
-        public async Task<IActionResult> GetAllUserAsync([FromQuery] UserSevicesFilterQueryObject filter, int pageNumber = 1, int pageSize = 5)
+        public async Task<IActionResult> GetAllUserAsync([FromQuery] UserSevicesFilterQueryObject filter, [FromQuery] UserOrderQueryObject order, int pageNumber = 1, int pageSize = 5)
         {
-            var customers = PaginatedList<GetUserDTO>.CreateAsync(await userService.GetAllCustomerAsync(filter), pageNumber, pageSize);
+            var customers = PaginatedList<GetUserDTO>.CreateAsync(await userService.GetAllCustomerAsync(filter, order), pageNumber, pageSize);
             if (customers.Count==0)
             {
                 return NoContent();
             }
-            return Ok(PaginatedList<GetUserDTO>.CreateAsync(await userService.GetAllCustomerAsync(filter), pageNumber, pageSize));
+            return Ok(PaginatedList<GetUserDTO>.CreateAsync(await userService.GetAllCustomerAsync(filter, order), pageNumber, pageSize));
         }
 
         [ProducesResponseType(StatusCodes.Status200OK)]
