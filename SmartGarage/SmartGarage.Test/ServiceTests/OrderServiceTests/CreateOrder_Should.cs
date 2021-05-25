@@ -43,6 +43,7 @@ namespace SmartGarage.Test.ServiceTests.OrderServiceTests
                 Assert.IsInstanceOfType(result, typeof(GetOrderDTO));
             }
         }
+
         [TestMethod]
         public async Task ReturnNull_When_NoInput()
         {
