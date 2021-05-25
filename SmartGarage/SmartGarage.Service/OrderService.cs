@@ -78,19 +78,27 @@ namespace SmartGarage.Service
             return true;
         }
 
-        public async Task<bool> CreateAsync(CreateOrderDTO order)
+        public async Task<GetOrderDTO> CreateAsync(CreateOrderDTO order)
         {
+            if (order.GarageId == 0
+                || order.ArrivalDate == default
+                || order.OrderStatusId == 0
+                || order.VehicleId == 0)
+            {
+                return null;
+            }
+
             var newOrder = new Order
             {
-                ArrivalDate = order.ArrivalDate,
                 GarageId = order.GarageId,
+                ArrivalDate = order.ArrivalDate,
                 OrderStatusId = order.OrderStatusId,
                 VehicleId = order.VehicleId
             };
 
             await this.context.AddAsync(newOrder);
             this.context.SaveChanges();
-            return true;
+            return new GetOrderDTO(newOrder);
         }
 
         public async Task<bool> AddService(List<ServiceOrder> serviceOrder)

@@ -73,13 +73,11 @@ namespace SmartGarage.Api_Controllers
         public async Task<IActionResult> CreateAsync( [FromBody]  CreateOrderDTO createOrder)
         {
             var isUpdated = await this.service.CreateAsync(createOrder);
-            if (isUpdated == false)
+            if (isUpdated == null)
             {
-                return NotFound();
+                return BadRequest("Enter correct input data.");
             }
-            return Ok("Order is updated!");
+            return Ok("Order is created!");
         }
-
-
     }
 }
