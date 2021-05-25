@@ -3,7 +3,7 @@ using Moq;
 using SmartGarage.Data;
 using SmartGarage.Data.Models;
 using SmartGarage.Service;
-using SmartGarage.Service.Helpers;
+using SmartGarage.Service.Contracts;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

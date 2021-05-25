@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using SmartGarage.Data.Models;
+using SmartGarage.Service.Contracts;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

@@ -2,7 +2,7 @@
 using Moq;
 using SmartGarage.Data;
 using SmartGarage.Service;
-using SmartGarage.Service.Helpers;
+using SmartGarage.Service.Contracts;
 using SmartGarage.Service.QueryObjects;
 using System;
 using System.Threading.Tasks;

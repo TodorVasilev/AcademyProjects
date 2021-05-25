@@ -2,8 +2,8 @@
 using Moq;
 using SmartGarage.Data;
 using SmartGarage.Service;
+using SmartGarage.Service.Contracts;
 using SmartGarage.Service.DTOs.UpdateDTOs;
-using SmartGarage.Service.Helpers;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Test.ServiceTests.UserServiceTest

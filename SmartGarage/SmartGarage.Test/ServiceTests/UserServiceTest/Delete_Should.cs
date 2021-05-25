@@ -2,7 +2,7 @@
 using Moq;
 using SmartGarage.Data;
 using SmartGarage.Service;
-using SmartGarage.Service.Helpers;
+using SmartGarage.Service.Contracts;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Test.ServiceTests.UserServiceTest
