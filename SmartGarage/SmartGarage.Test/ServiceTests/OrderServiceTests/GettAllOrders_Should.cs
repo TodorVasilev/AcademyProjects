@@ -16,10 +16,10 @@ namespace SmartGarage.Test.ServiceTests.OrderServiceTests
     public class GettAllOrders_Should
     {
         [TestMethod]
-        public async Task GetAllOrders_Withouth_DeletedOne()
+        public async Task GetAllOrders_Withouth_Deleted()
         {
             //Arrange
-            var options = Util.GetOptions(nameof(GetAllOrders_Withouth_DeletedOne));
+            var options = Util.GetOptions(nameof(GetAllOrders_Withouth_Deleted));
             var orderToAdd = new Order
             {
                 Id=3,
