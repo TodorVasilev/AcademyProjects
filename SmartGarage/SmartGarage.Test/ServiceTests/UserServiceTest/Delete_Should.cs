@@ -3,9 +3,6 @@ using Moq;
 using SmartGarage.Data;
 using SmartGarage.Service;
 using SmartGarage.Service.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Test.ServiceTests.UserServiceTest

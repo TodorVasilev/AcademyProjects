@@ -3,8 +3,6 @@ using SmartGarage.Data;
 using SmartGarage.Data.Models;
 using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.SharedDTOs;
-using SmartGarage.Service.Helpers;
-using SmartGarage.Service.QueryObjects;
 using SmartGarage.Service.ServiceContracts;
 using SmartGarage.Service.ServiceHelpes;
 using System.Collections.Generic;

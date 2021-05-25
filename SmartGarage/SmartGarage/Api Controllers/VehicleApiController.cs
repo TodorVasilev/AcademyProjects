@@ -2,15 +2,13 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using SmartGarage.Data.Models;
-using SmartGarage.Service.DTOs.CreateDTOs;
-using SmartGarage.Service.DTOs.UpdateDTOs;
-using SmartGarage.Service.QueryObjects;
 using SmartGarage.Service.Contracts;
-using System.Threading.Tasks;
-using System;
+using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.GetDTOs;
+using SmartGarage.Service.DTOs.UpdateDTOs;
 using SmartGarage.Service.Helpers;
+using System;
+using System.Threading.Tasks;
 
 namespace SmartGarage.Api_Controllers
 {
@@ -37,7 +35,7 @@ namespace SmartGarage.Api_Controllers
         [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Get([FromQuery]string name, [FromQuery] int pageSize = 5, [FromQuery] int pageNumber = 1)
+        public async Task<IActionResult> Get([FromQuery] string name, [FromQuery] int pageSize = 5, [FromQuery] int pageNumber = 1)
         {
             return Ok(PaginatedList<GetVehicleDTO>.CreateAsync(await service.GetAll(name), pageNumber, pageSize));
         }

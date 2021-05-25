@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System.Collections.Generic;
 
 namespace SmartGarage.Service.DTOs
 {
@@ -22,7 +21,7 @@ namespace SmartGarage.Service.DTOs
 
         [JsonProperty("GBP")]
         public decimal GBP { get; set; }
-        
+
     }
 
 }

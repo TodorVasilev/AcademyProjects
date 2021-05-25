@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Query;
-using SmartGarage.Data.Models;
+﻿using SmartGarage.Data.Models;
 using SmartGarage.Service.DTOs.SharedDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;
 using SmartGarage.Service.QueryObjects;
@@ -100,12 +99,12 @@ namespace SmartGarage.Service.ServiceHelpes
             customerToOrder = (CustomerName, OrderDate) switch
             {
                 ("asc", null) => customerToOrder.OrderBy(u => u.FirstName).ToList(),
-                ("desc",null) => customerToOrder.OrderByDescending(u => u.FirstName).ToList(),
+                ("desc", null) => customerToOrder.OrderByDescending(u => u.FirstName).ToList(),
                 (null, "asc") => customerToOrder.OrderBy(u => u.Vehicles.SelectMany(v => v.Orders.Select(o => o.ArrivalDate))).ToList(),
                 (null, "desc") => customerToOrder.OrderByDescending(u => u.Vehicles.SelectMany(v => v.Orders.Select(o => o.ArrivalDate))).ToList(),
                 _ => customerToOrder.OrderBy(u => u.FirstName).ToList()
             };
-                return customerToOrder;
+            return customerToOrder;
         }
 
     }

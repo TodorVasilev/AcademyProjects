@@ -1,12 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SmartGarage.Data;
-using SmartGarage.Data.Models;
 using SmartGarage.Service;
 using SmartGarage.Service.DTOs.Shared;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Test.ServiceTests.ManufacturerServiceTests

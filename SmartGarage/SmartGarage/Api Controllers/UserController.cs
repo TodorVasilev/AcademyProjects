@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SmartGarage.Contracts;
-using SmartGarage.Data.Models;
 using SmartGarage.Service.Contracts;
 using SmartGarage.Service.DTOs;
 using SmartGarage.Service.DTOs.CreateDTOs;
@@ -131,7 +129,7 @@ namespace SmartGarage.Api_Controllers
         public async Task<IActionResult> GetAllUserAsync([FromQuery] UserSevicesFilterQueryObject filter, [FromQuery] UserOrderQueryObject order, int pageNumber = 1, int pageSize = 5)
         {
             var customers = PaginatedList<GetUserDTO>.CreateAsync(await userService.GetAllCustomerAsync(filter, order), pageNumber, pageSize);
-            if (customers.Count==0)
+            if (customers.Count == 0)
             {
                 return NoContent();
             }

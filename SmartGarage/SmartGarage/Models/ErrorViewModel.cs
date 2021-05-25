@@ -1,5 +1,3 @@
-using System;
-
 namespace SmartGarage.Models
 {
     public class ErrorViewModel

@@ -1,12 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SmartGarage.Data;
-using SmartGarage.Service.QueryObjects;
 using SmartGarage.Service;
 using SmartGarage.Service.DTOs.GetDTOs;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Test.ServiceTests.VehicleModelServiceTests

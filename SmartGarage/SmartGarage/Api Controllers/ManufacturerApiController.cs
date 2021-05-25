@@ -6,7 +6,6 @@ using SmartGarage.Service.Contracts;
 using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.Shared;
 using SmartGarage.Service.Helpers;
-using SmartGarage.Service.QueryObjects;
 using System;
 using System.Threading.Tasks;
 

@@ -2,12 +2,9 @@
 using Moq;
 using SmartGarage.Data;
 using SmartGarage.Service;
-using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.Helpers;
 using SmartGarage.Service.QueryObjects;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Test.ServiceTests.UserServiceTest
@@ -37,7 +34,7 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
                 var result = await sut.GetAllCustomerAsync(filter, order);
 
                 //Assert
-                Assert.AreEqual(result.Count, 3);              
+                Assert.AreEqual(result.Count, 3);
             }
         }
 
@@ -62,7 +59,7 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
             using (var actCtx = new SmartGarageContext(options))
             {
                 var sut = new UserService(actCtx, userManagerFake.Object);
-                var result = await sut.GetAllCustomerAsync(filter,order);
+                var result = await sut.GetAllCustomerAsync(filter, order);
 
                 //Assert
                 Assert.AreEqual(result, null);
@@ -94,7 +91,7 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
                 var result = await sut.GetAllCustomerAsync(filter, order);
 
                 //Assert
-                Assert.AreEqual(result.Count,1);
+                Assert.AreEqual(result.Count, 1);
             }
         }
 
@@ -105,7 +102,7 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
             var options = Util.GetOptions(nameof(Return_CorrectByEmail));
             var userManagerFake = new Mock<IUserManagerWrapper>();
             var filter = new UserSevicesFilterQueryObject();
-            var order = new UserOrderQueryObject();            
+            var order = new UserOrderQueryObject();
             filter.Email = "Ivan";
 
 
@@ -119,7 +116,7 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
             using (var actCtx = new SmartGarageContext(options))
             {
                 var sut = new UserService(actCtx, userManagerFake.Object);
-                var result = await sut.GetAllCustomerAsync(filter,order);
+                var result = await sut.GetAllCustomerAsync(filter, order);
 
                 //Assert
                 Assert.AreEqual(result.Count, 1);
@@ -146,7 +143,7 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
             using (var actCtx = new SmartGarageContext(options))
             {
                 var sut = new UserService(actCtx, userManagerFake.Object);
-                var result = await sut.GetAllCustomerAsync(filter,order);
+                var result = await sut.GetAllCustomerAsync(filter, order);
 
                 //Assert
                 Assert.AreEqual(result.Count, 1);
@@ -174,7 +171,7 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
             using (var actCtx = new SmartGarageContext(options))
             {
                 var sut = new UserService(actCtx, userManagerFake.Object);
-                var result = await sut.GetAllCustomerAsync(filter,order);
+                var result = await sut.GetAllCustomerAsync(filter, order);
 
                 //Assert
                 Assert.AreEqual(result.Count, 1);
@@ -190,7 +187,7 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
             var filter = new UserSevicesFilterQueryObject();
             var order = new UserOrderQueryObject();
             filter.StartDate = DateTime.Now.AddDays(2);
-         
+
 
             using (var arrCtx = new SmartGarageContext(options))
             {

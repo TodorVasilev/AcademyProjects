@@ -99,7 +99,7 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
                 var userToCompare = await actCtx.Users.FindAsync(id);
 
                 //Assert
-                Assert.AreEqual(userToCompare.CurrentRole, userBeforeUpdate.CurrentRole);               
+                Assert.AreEqual(userToCompare.CurrentRole, userBeforeUpdate.CurrentRole);
             }
         }
     }

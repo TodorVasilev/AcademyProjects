@@ -1,10 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SmartGarage.Data;
 using SmartGarage.Service;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Test.ServiceTests.OrderServiceTests
@@ -60,7 +57,7 @@ namespace SmartGarage.Test.ServiceTests.OrderServiceTests
                 {
                     var sut = new OrderService(actCtx);
                     var result = await sut.DeleteAsync(3);
-                    
+
                     //Assert
                     Assert.IsFalse(result);
                 }
@@ -78,7 +75,7 @@ namespace SmartGarage.Test.ServiceTests.OrderServiceTests
                     arrCtx.SeedData();
                     await arrCtx.SaveChangesAsync();
                     var order = arrCtx.Orders.FirstOrDefault(o => o.Id == 2);
-                    order.IsDeleted =true;
+                    order.IsDeleted = true;
                     await arrCtx.SaveChangesAsync();
                 }
 

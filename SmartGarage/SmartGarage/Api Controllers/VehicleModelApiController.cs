@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.SharedDTOs;
 using SmartGarage.Service.Helpers;
-using SmartGarage.Service.QueryObjects;
 using SmartGarage.Service.ServiceContracts;
 using System;
 using System.Threading.Tasks;

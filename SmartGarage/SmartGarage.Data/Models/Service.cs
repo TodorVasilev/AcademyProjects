@@ -1,6 +1,7 @@
 ﻿using SmartGarage.Data.Contracts;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SmartGarage.Data.Models
 {
@@ -13,7 +14,8 @@ namespace SmartGarage.Data.Models
         public string Name { get; set; }
 
         [Required]
-        public double Price { get; set; }
+        [Column(TypeName = "decimal(19,2)")]
+        public decimal Price { get; set; }
 
         public List<ServiceOrder> ServiceOrder { get; set; } = new List<ServiceOrder>();
 

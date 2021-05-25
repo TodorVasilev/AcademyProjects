@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SmartGarage.Service.DTOs
 {
-   public class LoginDTO
+    public class LoginDTO
     {
         [Required]
         public string Username { get; set; }

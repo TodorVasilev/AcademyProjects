@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace SmartGarage.Service.QueryObjects
+﻿namespace SmartGarage.Service.QueryObjects
 {
     public class UserOrderQueryObject
     {

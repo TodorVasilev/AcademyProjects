@@ -1,6 +1,4 @@
-﻿using SmartGarage.Data.Models;
-
-namespace SmartGarage.Service.DTOs.Shared
+﻿namespace SmartGarage.Service.DTOs.Shared
 {
     public class ManufacturerDTO
     {

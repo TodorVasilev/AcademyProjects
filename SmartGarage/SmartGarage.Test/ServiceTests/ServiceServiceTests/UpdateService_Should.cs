@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SmartGarage.Data;
 using SmartGarage.Service;
-using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;
 using System.Threading.Tasks;
 
@@ -18,7 +17,7 @@ namespace SmartGarage.Test.ServiceTests.ServiceServiceTests
             var options = Util.GetOptions(nameof(ReturnTrue_When_ServiceExist));
             var updateInfo = new UpdateServiceDTO
             {
-                Price = 1.99
+                Price = 1.99M
             };
             var vehicleId = 1;
 
@@ -52,7 +51,7 @@ namespace SmartGarage.Test.ServiceTests.ServiceServiceTests
             var options = Util.GetOptions(nameof(ReturnNull_When_ServiceDoesNotExist));
             var updateInfo = new UpdateServiceDTO
             {
-                Price = 1.99
+                Price = 1.99M
             };
             var vehicleId = -1;
 

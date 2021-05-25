@@ -4,10 +4,8 @@ using SmartGarage.Service.Contracts;
 using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;
-using SmartGarage.Service.Helpers;
 using SmartGarage.Service.QueryObjects;
 using SmartGarage.Service.ServiceHelpes;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,7 +30,7 @@ namespace SmartGarage.Service
             var serviceToAdd = new Data.Models.Service
             {
                 Name = serviceInformation.Name,
-                Price = (double)serviceInformation.Price
+                Price = (decimal)serviceInformation.Price
             };
 
             await context.Services.AddAsync(serviceToAdd);

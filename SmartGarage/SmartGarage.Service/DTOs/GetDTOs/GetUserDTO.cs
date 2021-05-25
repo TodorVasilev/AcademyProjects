@@ -1,8 +1,5 @@
 ﻿using SmartGarage.Data.Models;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace SmartGarage.Service.DTOs.GetDTOs
 {
@@ -26,10 +23,10 @@ namespace SmartGarage.Service.DTOs.GetDTOs
         }
 
         public int Id { get; set; }
-             
+
         [Display(Name = "User name")]
         public string UserName { get; set; }
-              
+
         [Display(Name = "First name")]
         public string FirstName { get; set; }
 
@@ -42,7 +39,7 @@ namespace SmartGarage.Service.DTOs.GetDTOs
 
         [Display(Name = "Age")]
         public int Age { get; set; }
-              
+
         [Display(Name = "Driving license number")]
         public string DrivingLicenseNumber { get; set; }
 

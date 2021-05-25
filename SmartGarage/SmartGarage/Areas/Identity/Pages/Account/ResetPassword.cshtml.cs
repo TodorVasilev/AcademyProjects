@@ -46,9 +46,9 @@ namespace SmartGarage.Areas.Identity.Pages.Account
 
         public IActionResult OnGet(string code = null)
         {
-           // var user = await _userManager.GetUserAsync(HttpContext.User);
-           // var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-           // code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+            // var user = await _userManager.GetUserAsync(HttpContext.User);
+            // var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+            // code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
 
             if (code == null)
             {

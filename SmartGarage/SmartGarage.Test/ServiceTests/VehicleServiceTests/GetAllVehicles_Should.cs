@@ -2,7 +2,6 @@
 using SmartGarage.Data;
 using SmartGarage.Service;
 using SmartGarage.Service.DTOs.GetDTOs;
-using SmartGarage.Service.QueryObjects;
 using System.Linq;
 using System.Threading.Tasks;
 

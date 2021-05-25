@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SmartGarage.Data;
 using SmartGarage.Data.Models;
 using System;
@@ -48,7 +47,7 @@ namespace SmartGarage.Test
                    Age = 28,
                    Email = "employee@gmail.com",
                    NormalizedEmail = "EMPLOYEE@GMAIL.COM",
-                   DrivingLicenseNumber = "3241219",  
+                   DrivingLicenseNumber = "3241219",
                    CurrentRole="EMPLOYEE",
                    SecurityStamp = Guid.NewGuid().ToString(),
                },
@@ -243,42 +242,42 @@ namespace SmartGarage.Test
                 {
                     Id = 1,
                     Name = "Oil change",
-                    Price = 74.99
+                    Price = 74.99M
                 },
 
                 new Data.Models.Service
                 {
                     Id = 2,
                     Name = "Change all tires",
-                    Price = 24.99
+                    Price = 24.99M
                 },
 
                 new Data.Models.Service
                 {
                     Id = 3,
                     Name = "Change a tire",
-                    Price = 8.99
+                    Price = 8.99M
                 },
 
                 new Data.Models.Service
                 {
                     Id = 4,
                     Name = "Pads replacement",
-                    Price = 249.99
+                    Price = 249.99M
                 },
 
                 new Data.Models.Service
                 {
                     Id = 5,
                     Name = "Battery replacement",
-                    Price = 199.99
+                    Price = 199.99M
                 },
 
                 new Data.Models.Service
                 {
                     Id = 6,
                     Name = "Computer diagnostic",
-                    Price = 35.99
+                    Price = 35.99M
                 },
             };
 

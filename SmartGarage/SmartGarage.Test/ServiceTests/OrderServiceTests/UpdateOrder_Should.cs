@@ -82,7 +82,7 @@ namespace SmartGarage.Test.ServiceTests.OrderServiceTests
             var options = Util.GetOptions(nameof(Return_False_When_ParamsAreNull));
             var orderToUpdate = new UpdateOrderDTO
             {
-                
+
             };
 
             using (var arrCtx = new SmartGarageContext(options))

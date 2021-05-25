@@ -4,9 +4,7 @@ using SmartGarage.Data;
 using SmartGarage.Data.Models;
 using SmartGarage.Service;
 using SmartGarage.Service.Helpers;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Test.ServiceTests.UserServiceTest
@@ -23,14 +21,14 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
             var role = "EMPLOYEE";
             int id = 4;
             var userManagerMock = new Mock<IUserManagerWrapper>();
-            IList<string> list = new List<string>() {"Customer"};
+            IList<string> list = new List<string>() { "Customer" };
 
 
             using (var arrCtx = new SmartGarageContext(options))
             {
                 arrCtx.SeedData();
                 await arrCtx.SaveChangesAsync();
-                              
+
                 userManagerMock.Setup(x => x.GetRolesAsync(It.IsAny<User>())).Returns(Task.FromResult(list));
             }
 

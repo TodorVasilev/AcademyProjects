@@ -4,8 +4,6 @@ using SmartGarage.Service;
 using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.GetDTOs;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Test.ServiceTests.OrderServiceTests
@@ -51,7 +49,7 @@ namespace SmartGarage.Test.ServiceTests.OrderServiceTests
             var options = Util.GetOptions(nameof(ReturnNull_When_NoInput));
             var orderToAdd = new CreateOrderDTO()
             {
-               
+
             };
 
             using (var arrCtx = new SmartGarageContext(options))

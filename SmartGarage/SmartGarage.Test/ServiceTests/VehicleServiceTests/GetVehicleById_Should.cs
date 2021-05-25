@@ -4,9 +4,6 @@ using SmartGarage.Data;
 using SmartGarage.Data.Models;
 using SmartGarage.Service;
 using SmartGarage.Service.DTOs.GetDTOs;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Test.ServiceTests.VehicleServiceTests

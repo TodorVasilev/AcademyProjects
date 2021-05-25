@@ -1,10 +1,7 @@
-﻿using SmartGarage.Service.Helpers;
-using SmartGarage.Service.QueryObjects;
+﻿using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.Shared;
-using System.Threading.Tasks;
-using SmartGarage.Service.DTOs.GetDTOs;
-using System.Linq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SmartGarage.Service.Contracts
 {

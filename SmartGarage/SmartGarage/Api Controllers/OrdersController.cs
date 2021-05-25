@@ -59,7 +59,7 @@ namespace SmartGarage.Api_Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> UpdateAsync(int id, [FromBody] UpdateOrderDTO updateOrder)
         {
-            var isUpdated = await this.service.UpdateAsync(id,updateOrder);
+            var isUpdated = await this.service.UpdateAsync(id, updateOrder);
             if (isUpdated == false)
             {
                 return NotFound();
@@ -70,7 +70,7 @@ namespace SmartGarage.Api_Controllers
         [HttpPost("")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> CreateAsync( [FromBody]  CreateOrderDTO createOrder)
+        public async Task<IActionResult> CreateAsync([FromBody] CreateOrderDTO createOrder)
         {
             var isUpdated = await this.service.CreateAsync(createOrder);
             if (isUpdated == null)

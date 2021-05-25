@@ -2,9 +2,7 @@
 using SmartGarage.Service.Contracts;
 using SmartGarage.Service.DTOs;
 using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Service

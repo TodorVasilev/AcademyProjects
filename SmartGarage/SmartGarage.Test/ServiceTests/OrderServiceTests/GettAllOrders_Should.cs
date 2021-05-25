@@ -2,12 +2,9 @@
 using SmartGarage.Data;
 using SmartGarage.Data.Models;
 using SmartGarage.Service;
-using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.GetDTOs;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Test.ServiceTests.OrderServiceTests
@@ -22,7 +19,7 @@ namespace SmartGarage.Test.ServiceTests.OrderServiceTests
             var options = Util.GetOptions(nameof(GetAllOrders_Withouth_Deleted));
             var orderToAdd = new Order
             {
-                Id=3,
+                Id = 3,
                 ArrivalDate = DateTime.Now,
                 GarageId = 1,
                 OrderStatusId = 1,

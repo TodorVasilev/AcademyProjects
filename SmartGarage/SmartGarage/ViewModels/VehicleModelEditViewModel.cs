@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace SmartGarage.ViewModels
+﻿namespace SmartGarage.ViewModels
 {
     public class VehicleModelEditViewModel
     {
