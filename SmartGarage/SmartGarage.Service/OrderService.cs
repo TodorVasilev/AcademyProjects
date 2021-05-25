@@ -2,9 +2,9 @@
 using SmartGarage.Data;
 using SmartGarage.Data.Models;
 using SmartGarage.Service.Contracts;
+using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -57,24 +57,39 @@ namespace SmartGarage.Service
             {
                 return false;
             }
-            if (updateOrder.GarageId!=0)
+            if (updateOrder.GarageId != 0)
             {
                 orderToUpdate.GarageId = updateOrder.GarageId;
             }
-            if (updateOrder.OrderStatusId!=0)
+            if (updateOrder.OrderStatusId != 0)
             {
                 orderToUpdate.OrderStatusId = updateOrder.OrderStatusId;
             }
-            if (updateOrder.FinishDate.Value>=orderToUpdate.ArrivalDate.Date && updateOrder.FinishDate.Value!=null)
+            if (updateOrder.FinishDate.Value >= orderToUpdate.ArrivalDate.Date && updateOrder.FinishDate.Value != null)
             {
                 orderToUpdate.FinishDate = updateOrder.FinishDate;
             }
-            if (updateOrder.VehicleId!=0)
+            if (updateOrder.VehicleId != 0)
             {
                 orderToUpdate.VehicleId = updateOrder.VehicleId;
             }
-            
-           await this.context.SaveChangesAsync();
+
+            await this.context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<bool> CreateAsync(CreateOrderDTO order)
+        {
+            var newOrder = new Order
+            {
+                ArrivalDate = order.ArrivalDate,
+                GarageId = order.GarageId,
+                OrderStatusId = order.OrderStatusId,
+                VehicleId = order.VehicleId
+            };
+
+            await this.context.AddAsync(newOrder);
+            this.context.SaveChanges();
             return true;
         }
 

@@ -15,6 +15,7 @@ namespace SmartGarage.Service.DTOs.GetDTOs
             this.VehicleId = order.VehicleId;
             this.ArrivalDate = order.ArrivalDate;
             this.FinishDate = order.FinishDate;
+            
         }
         public int Id { get; set; }
 
