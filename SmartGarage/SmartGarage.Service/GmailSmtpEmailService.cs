@@ -31,6 +31,27 @@ namespace SmartGarage.Service
             }
         }
 
+        public async Task SendPDF(string email)
+        {
+            using (MailMessage mail = new MailMessage())
+            {
+                mail.From = new MailAddress(fromEmail);
+                mail.To.Add(email);
+                mail.Subject = "New confirmation email with a login password";
+                mail.Body = "PDF";
+                mail.IsBodyHtml = true;
+
+                using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    smtp.Credentials = new NetworkCredential(fromEmail, password);
+                    smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    smtp.EnableSsl = true;
+                    mail.Attachments.Add(new Attachment(await new PdfService().GeneratePdf(), "TopPDF.pdf"));
+                    await smtp.SendMailAsync(mail);
+                }
+            }
+        }
+
         public async Task ForgotenPassword(string email, string subject, string url)
         {
             using (MailMessage mail = new MailMessage())

@@ -61,7 +61,7 @@ namespace SmartGarage.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Vehicle updateInformation)
+        public async Task<IActionResult> Edit(int id, VehicleEditViewModel updateInformation)
         {
             if (id != updateInformation.Id)
             {
