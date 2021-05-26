@@ -39,7 +39,7 @@ namespace SmartGarage.Service
                 .ThenInclude(so => so.Service)
                 .FirstOrDefaultAsync(o => o.Id == id);
 
-            if (order == null)
+            if (order == null || order.IsDeleted==true)
             {
                 return null;
             }
@@ -107,6 +107,7 @@ namespace SmartGarage.Service
 
             await this.context.AddAsync(newOrder);
             this.context.SaveChanges();
+        
             return new GetOrderDTO(newOrder);
         }
 

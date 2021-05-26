@@ -15,7 +15,7 @@ namespace SmartGarage.Service.DTOs.GetDTOs
             this.OrderStatusId = order.OrderStatusId;
             this.VehicleId = order.VehicleId;
             this.ArrivalDate = order.ArrivalDate.Date;
-            this.FinishDate = order.FinishDate.Value;
+            this.FinishDate = order.FinishDate;
             this.ServicesDTO = order.ServiceOrder.Where(o => o.OrderId == order.Id).Select(o => new GetServiceDTO(o.Service)).ToList();
 
         }
