@@ -109,12 +109,14 @@ namespace SmartGarage.Areas.Identity.Pages.Account
                 {
                     var result = await _userHelper.CreateUserAsync(userDTO);
 
+                    TempData["Success"] = "Customer was registered.";
+
                     foreach (var error in result.Errors)
                     {
                         ModelState.AddModelError(string.Empty, error.Description);
                     }
 
-                    return RedirectToPage("./Login");
+                    return RedirectToPage("./Register");
                 }
                 catch (Exception)
                 {

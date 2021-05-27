@@ -41,8 +41,14 @@ namespace SmartGarage.Areas.Identity.Pages.Account
                 var user = await _userManager.FindByEmailAsync(Input.Email);
                 if (user == null) // || !(await _userManager.IsEmailConfirmedAsync(user))
                 {
+                    TempData["Error"] = "There is not such an E-mail";
                     // Don't reveal that the user does not exist or is not confirmed
-                    return RedirectToPage("./ForgotPasswordConfirmation");
+                    return RedirectToPage("./ForgotPassword");
+                }
+
+                if (user != null)
+                {
+                    TempData["Success"] = $"The password reset link was send to {user.Email}";
                 }
 
                 // For more information on how to enable account confirmation and password reset please 
@@ -60,14 +66,8 @@ namespace SmartGarage.Areas.Identity.Pages.Account
                     "Reset Password",
                     $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
-                if (user.CurrentRole != "Customer")
-                {
-                    return Redirect("/Home/Index");
-                }
-
-                return RedirectToPage("./ForgotPasswordConfirmation");
+                return RedirectToPage("./ForgotPassword");
             }
-
             return Page();
         }
     }

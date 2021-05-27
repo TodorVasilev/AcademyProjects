@@ -36,7 +36,7 @@ namespace SmartGarage
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<SmartGarageContext>(options =>
-           options.UseSqlServer(
+            options.UseSqlServer(
                Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<User, Role>(options =>

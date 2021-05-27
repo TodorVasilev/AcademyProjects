@@ -11,7 +11,9 @@ namespace SmartGarage.Service.QueryObjects
         public string Email { get; set; }
 
         public string Vehicle { get; set; }
+
         public DateTime StartDate { get; set; }
+
         public DateTime EndDate { get; set; }
 
     }

@@ -90,9 +90,9 @@ namespace SmartGarage.Areas.Identity.Pages.Account
 
             await _signInManager.RefreshSignInAsync(user);
             _logger.LogInformation("User changed their password successfully.");
-            StatusMessage = "Your password has been changed.";
+            TempData["Success"] = "Your password has been changed.";
 
-            return Redirect("/Home/Index");
+            return Redirect("./ChangePassword");
         }
     }
 }

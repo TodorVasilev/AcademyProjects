@@ -23,7 +23,13 @@ namespace SmartGarage.Controllers
         public async Task<IActionResult> Index(int pageNumber = 1)
         {
             var pageSize = 10;
-            return View(PaginatedList<GetManufacturerDTO>.CreateAsync(await service.GetAll(), pageNumber, pageSize));
+            var manufacturers = await service.GetAll();
+
+            if(manufacturers.Count == 0)
+            {
+                return Ok();
+            }
+            return View(PaginatedList<GetManufacturerDTO>.CreateAsync(manufacturers, pageNumber, pageSize));
         }
 
         public async Task<IActionResult> Details(int id)
