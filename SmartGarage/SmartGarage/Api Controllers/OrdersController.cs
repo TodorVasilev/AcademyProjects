@@ -1,30 +1,41 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SmartGarage.Data.Models;
 using SmartGarage.Service.Contracts;
 using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;
 using SmartGarage.Service.Helpers;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Api_Controllers
 {
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     [Route("api/[controller]")]
     public class OrdersController : ControllerBase
     {
         private readonly IOrderService service;
+        private readonly UserManager<User> userManager;
 
-        public OrdersController(IOrderService service)
+        public OrdersController(IOrderService service, UserManager<User> userManager)
         {
             this.service = service;
+            this.userManager = userManager;
         }
 
         [HttpGet()]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [AllowAnonymous]
         public async Task<IActionResult> Get([FromQuery] int pageSize = 5, [FromQuery] int pageNumber = 1)
         {
+            var user = await userManager.FindByNameAsync(User.Identity.Name);
+
             return Ok(PaginatedList<GetOrderDTO>.CreateAsync(await service.GetAll(), pageNumber, pageSize));
         }
 

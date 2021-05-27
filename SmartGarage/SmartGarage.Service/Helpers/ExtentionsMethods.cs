@@ -55,11 +55,15 @@ namespace SmartGarage.Service.ServiceHelpes
 
         public static IQueryable<Data.Models.Service> FilterServices(this IQueryable<Data.Models.Service> services, ServiceFilterQueryObject filterObject)
         {
-            if (filterObject.Name != default)
+            if (filterObject==null)
+            {
+                return services;
+            }
+            if (filterObject.Name != null)
             {
                 services = services.Where(s => s.Name.Contains(filterObject.Name));
             }
-            if (filterObject.Price != default)
+            if (filterObject.Price != null)
             {
                 services = services.Where(s => s.Price == filterObject.Price);
             }
@@ -82,9 +86,13 @@ namespace SmartGarage.Service.ServiceHelpes
         }
         public static IQueryable<ServiceOrder> FilterCustomerServices(this IQueryable<ServiceOrder> serviceOrders, CustomerServicesFilterQueryObject filterObject)
         {
-            if (filterObject.VehicleId != default)
+            if (filterObject==null)
             {
-                serviceOrders = serviceOrders.Where(so => so.Order.Vehicle.Id == filterObject.VehicleId);
+                return serviceOrders;
+            }
+            if (filterObject.NumberPlate != default)
+            {
+                serviceOrders = serviceOrders.Where(so => so.Order.Vehicle.NumberPlate.Contains(filterObject.NumberPlate));
             }
             if (filterObject.VisitDate != default)
             {

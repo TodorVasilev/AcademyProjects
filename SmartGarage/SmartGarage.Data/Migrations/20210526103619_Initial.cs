@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace SmartGarage.Data.Migrations
 {
@@ -352,9 +352,9 @@ namespace SmartGarage.Data.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { 3, "759a21e0-e531-4b37-a33c-eddd57d092af", "Customer", "CUSTOMER" },
-                    { 2, "1b777d12-9255-4b59-ad54-3f163c61e0e8", "Employee", "EMPLOYEE" },
-                    { 1, "ec453011-4fd1-4918-bac0-b5d05969b4fa", "Admin", "ADMIN" }
+                    { 3, "d1adbd15-1dbc-4f72-a9bb-4b4609f987cf", "Customer", "CUSTOMER" },
+                    { 2, "59fcd461-b54a-4c29-b79d-49323c00e164", "Employee", "EMPLOYEE" },
+                    { 1, "62bc0c26-1440-40ef-90c2-b5681e21b856", "Admin", "ADMIN" }
                 });
 
             migrationBuilder.InsertData(
@@ -362,11 +362,11 @@ namespace SmartGarage.Data.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "Address", "Age", "ConcurrencyStamp", "CurrentRole", "DrivingLicenseNumber", "Email", "EmailConfirmed", "FirstName", "IsDeleted", "LastName", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { 1, 0, "Sofia, Bulgaria", 37, "d6aeb78b-9107-4429-8930-0aacf6e7e4e7", "ADMIN", "93302193", "admin@gmail.com", false, "Admin", false, "Admin", false, null, "ADMIN@GMAIL.COM", "ADMINADMIN", "AQAAAAEAACcQAAAAEEhiJKHpg7F95HBuZ+bXGR67IKD1DRWVRYuxMCFJ5czHpY9Km0SyNoZcO3Cl+g1rjw==", null, false, "f5835126-3f27-44d5-b158-6ffa6f11eb8b", false, "AdminAdmin" },
-                    { 3, 0, "Sofia, Bulgaria", 28, "aa2043c7-bc35-4a50-b535-83c5a7bbe324", "CUSTOMER", "13302343", "firstcustomer@gmail.com", false, "First", false, "Customer", false, null, "FIRSTCUSTOMER@GMAIL.COM", "THEVERYFIRSTCUSTOMER", "AQAAAAEAACcQAAAAEHRI69pmxHDiH9vngX9zFn2KCoslnW93nbQe+TrfMIDzBuOMpzEWH6TfytNIAa7Rlg==", null, false, "c2f51e0f-4574-43b1-bcf9-889197257c76", false, "TheVeryFirstCustomer" },
-                    { 4, 0, "Burgas, Bulgaria", 40, "8c48982d-c246-41c1-b785-6d21bdf90993", "CUSTOMER", "73322193", "ivangeorgiev14@gmail.com", false, "Ivan", false, "Georgiev", false, null, "IVANGEORGIEV14@GMAIL.COM", "IVANG", "AQAAAAEAACcQAAAAEIfIH8xTFTfrY3zF+BODJU4IazEVP5emqHVnj3Bzs99GEr6TVAw5F8EEA46WZgeOfw==", null, false, "c8a68a01-2336-4f36-99f3-5e91aa54f720", false, "IvanG" },
-                    { 5, 0, "Blagoevgrad, Bulgaria", 22, "51005079-0250-492c-aa8e-333fd9566056", "CUSTOMER", "91304433", "californication@gmail.com", false, "Todor", false, "Kolev", false, null, "CALIFORNICATION@GMAIL.COM", "LOVETOACT", "AQAAAAEAACcQAAAAEOW1lbNbpG60+jmPtI4Rm0aRA4G5LW3EgWmHRYvohRCeNexdk8IRUDO+niCHj+DJ3A==", null, false, "c3fe896d-0dc1-41ad-8c2d-5446a5b18d1f", false, "LoveToAct" },
-                    { 2, 0, "Sofia, Bulgaria", 28, "276494b5-1e2d-496b-8594-a3ea5d3920f6", "EMPLOYEE", "3241219", "petar@test.com", false, "Petar", false, "Petrov", false, null, "PETAR@TEST.COM", "PETARPETROV", "AQAAAAEAACcQAAAAEPFutue474zMANwbprYqBKxxnyRuISw880OvxxbDYAUa+mwcoGiRp84b0IJDAkATYg==", null, false, "f43827df-8045-40ab-8e56-aeaf99c7e750", false, "PetarPetrov" }
+                    { 1, 0, "Sofia, Bulgaria", 37, "93eaa674-a8e6-4b26-b3c5-363b7ce9de20", "ADMIN", "93302193", "smartgarage@gmail.com", false, "Smart", false, "Garage", false, null, "SMARTGARAGE@GMAIL.COM", "SMARTGARAGE", "AQAAAAEAACcQAAAAECWBxtrBGWS/JKedv6GYBVxLAl/EogzpC5zFMJLIggq6v+4veQ6vkDkT0U+niMRGiQ==", null, false, "a7dc362c-3f1a-4374-8c60-dbe8f40d0c74", false, "SmartGarage" },
+                    { 3, 0, "Sofia, Bulgaria", 28, "ef0d6b7e-11ff-47ab-b25e-2be61772c648", "CUSTOMER", "13302343", "firstcustomer@gmail.com", false, "First", false, "Customer", false, null, "FIRSTCUSTOMER@GMAIL.COM", "THEVERYFIRSTCUSTOMER", "AQAAAAEAACcQAAAAEP0pSvRBuglDScjI7G0XBNBVI66KwzNKL6mAJt7n8Jn3i2Ksj8sX1E9YGXNLttR6Iw==", null, false, "6f432f57-7cd9-4866-a7af-a32a24679b1c", false, "TheVeryFirstCustomer" },
+                    { 4, 0, "Burgas, Bulgaria", 40, "22e113f2-8053-4f8e-bf17-4c7cf88c672e", "CUSTOMER", "73322193", "ivangeorgiev14@gmail.com", false, "Ivan", false, "Georgiev", false, null, "IVANGEORGIEV14@GMAIL.COM", "IVANG", "AQAAAAEAACcQAAAAEFh5Rk070j/7VIJ6ednRDgVF/Q7uO+SlWGL3vMK0RRbFAs9jgIoRp28MQykKvYAIIA==", null, false, "38647bdd-af1b-4603-8d41-2420d44cb7e5", false, "IvanG" },
+                    { 5, 0, "Blagoevgrad, Bulgaria", 22, "426130b2-0548-4a6c-a330-1521f322174d", "CUSTOMER", "91304433", "californication@gmail.com", false, "Todor", false, "Kolev", false, null, "CALIFORNICATION@GMAIL.COM", "LOVETOACT", "AQAAAAEAACcQAAAAEGIcpW88F0HmktSsJSNo/Js1PKSCMz1pV9beimexJ9CqYYyQHrMk7feuyLUCaLSzWQ==", null, false, "9380daeb-f4f3-4799-b090-d674cf24a7e5", false, "LoveToAct" },
+                    { 2, 0, "Sofia, Bulgaria", 28, "6061f929-517c-43f4-9d5c-0ec86473f16d", "EMPLOYEE", "3241219", "petar@test.com", false, "Petar", false, "Petrov", false, null, "PETAR@TEST.COM", "PETARPETROV", "AQAAAAEAACcQAAAAEBxD9QPZt/oDuiExDBCdMIaD+ETqmcwOksh+1B9pVOCcmLy55wemzFEvGhZ/lAiXFA==", null, false, "d4571749-7690-4638-82d9-bc6b63d0298f", false, "PetarPetrov" }
                 });
 
             migrationBuilder.InsertData(
@@ -466,12 +466,12 @@ namespace SmartGarage.Data.Migrations
             migrationBuilder.InsertData(
                 table: "Orders",
                 columns: new[] { "Id", "ArrivalDate", "FinishDate", "GarageId", "IsDeleted", "OrderStatusId", "VehicleId" },
-                values: new object[] { 1, new DateTime(2021, 5, 26, 22, 22, 46, 343, DateTimeKind.Local).AddTicks(2674), new DateTime(2021, 5, 28, 22, 22, 46, 345, DateTimeKind.Local).AddTicks(3062), 1, false, 2, 1 });
+                values: new object[] { 1, new DateTime(2021, 5, 27, 13, 36, 19, 256, DateTimeKind.Local).AddTicks(2141), new DateTime(2021, 5, 29, 13, 36, 19, 258, DateTimeKind.Local).AddTicks(3042), 1, false, 2, 1 });
 
             migrationBuilder.InsertData(
                 table: "Orders",
                 columns: new[] { "Id", "ArrivalDate", "FinishDate", "GarageId", "IsDeleted", "OrderStatusId", "VehicleId" },
-                values: new object[] { 2, new DateTime(2021, 5, 27, 22, 22, 46, 345, DateTimeKind.Local).AddTicks(3488), new DateTime(2021, 5, 30, 22, 22, 46, 345, DateTimeKind.Local).AddTicks(3503), 1, false, 1, 3 });
+                values: new object[] { 2, new DateTime(2021, 5, 28, 13, 36, 19, 258, DateTimeKind.Local).AddTicks(3474), new DateTime(2021, 5, 31, 13, 36, 19, 258, DateTimeKind.Local).AddTicks(3489), 1, false, 1, 3 });
 
             migrationBuilder.InsertData(
                 table: "ServiceOrders",

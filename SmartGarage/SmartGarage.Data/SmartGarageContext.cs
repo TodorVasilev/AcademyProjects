@@ -57,14 +57,14 @@ namespace SmartGarage.Data
                new User
                {
                    Id = 1,
-                   FirstName = "Admin",
-                   LastName = "Admin",
-                   UserName = "AdminAdmin",
-                   NormalizedUserName = "ADMINADMIN",
+                   FirstName = "Smart",
+                   LastName = "Garage",
+                   UserName = "SmartGarage",
+                   NormalizedUserName = "SMARTGARAGE",
                    Address = "Sofia, Bulgaria",
                    Age = 37,
-                   Email = "admin@gmail.com",
-                   NormalizedEmail = "ADMIN@GMAIL.COM",
+                   Email = "smartgarage@gmail.com",
+                   NormalizedEmail = "SMARTGARAGE@GMAIL.COM",
                    DrivingLicenseNumber = "93302193",
                    CurrentRole= "ADMIN",
                    SecurityStamp = Guid.NewGuid().ToString(),
@@ -137,7 +137,7 @@ namespace SmartGarage.Data
 
             var passHasher = new PasswordHasher<User>();
 
-            users[0].PasswordHash = passHasher.HashPassword(users[0], "Admin123");
+            users[0].PasswordHash = passHasher.HashPassword(users[0], "SmartGarage123");
             users[1].PasswordHash = passHasher.HashPassword(users[1], "Petar123");
             users[2].PasswordHash = passHasher.HashPassword(users[2], "Customer123");
             users[3].PasswordHash = passHasher.HashPassword(users[3], "Ivan123");

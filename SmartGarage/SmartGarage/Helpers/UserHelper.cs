@@ -61,7 +61,7 @@ namespace SmartGarage.Helpers
                     {
                         Subject = new ClaimsIdentity(new Claim[]
                         {
-                            new Claim(ClaimTypes.Name, user.Id.ToString()),
+                            new Claim(ClaimTypes.Name, user.UserName),
                             new Claim(ClaimTypes.Role, userRole)
                         }),
                         Expires = DateTime.UtcNow.AddDays(7),
