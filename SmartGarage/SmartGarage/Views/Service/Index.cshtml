@@ -1,4 +1,6 @@
 ﻿@model PaginatedList<GetServiceDTO>
+
+
 @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
 {
     <a class="btn btn-primary" asp-action="Create" role="button">Create</a>
@@ -48,20 +50,23 @@
             {
                 if (count % 2 != 0)
                 {
-                    <tr class="table-active">
-                        <th scope="row">
-                            @count
-                        </th>
-                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Price)</td>
+				<tr class="table-active">
+					<th scope="row">
+						@count
+					</th>
+					<td>@Html.DisplayFor(modelItem => item.Name)</td>
+					<td>@Html.DisplayFor(modelItem => item.Price)</td>
 
-                     @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
-                            {
-                            <td>
-                                <a asp-action="Edit" asp-route-id="@item.ServiceId">Edit</a>
-                            </td>
-                            }
-                    </tr>
+					@if (User.IsInRole("Admin") || User.IsInRole("Employee"))
+					{
+						<td>
+							<a asp-action="Edit" asp-route-id="@item.ServiceId">Edit</a>
+						</td>
+						<td>
+							<a asp-action="Delete" asp-route-id="@item.ServiceId">Delete</a>
+						</td>
+					}
+				</tr>
                 }
                 else
                 {
@@ -76,6 +81,9 @@
                             <td>
                                 <a asp-action="Edit" asp-route-id="@item.ServiceId">Edit</a>
                             </td>
+                            	<td>
+							<a asp-action="Delete" asp-route-id="@item.ServiceId">Delete</a>
+						</td>
                             }
 
                         </tr>

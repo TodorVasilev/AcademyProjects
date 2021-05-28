@@ -83,16 +83,11 @@ namespace SmartGarage.Controllers
 			return View(serviceDTO);
 		}
 
-		[HttpPost]
+		[HttpPost("edit/{id}")]
 		[ValidateAntiForgeryToken]
 		[Authorize(Roles = "Admin,Employee")]
-		public async Task<IActionResult> Edit(int id, Data.Models.Service serviceModel)
+		public async Task<IActionResult> Edit(int id, ServiceEditViewModel serviceModel)
 		{
-			if (id != serviceModel.Id)
-			{
-				return NotFound();
-			}
-
 			if (ModelState.IsValid)
 			{
 				var updateInformation = new UpdateServiceDTO
@@ -114,7 +109,9 @@ namespace SmartGarage.Controllers
 
 			return View(serviceModel);
 		}
+
 		[Authorize(Roles = "Admin,Employee")]
+		[HttpGet("edit/{id}")]
 		public async Task<IActionResult> Edit(int id)
 		{
 			{
@@ -133,7 +130,16 @@ namespace SmartGarage.Controllers
 
 				return View(viewModel);
 			}
+		}
 
+		public async Task<IActionResult> Delete(int id)
+		{
+			var isDeleted = await service.RemoveAsync(id);
+			if (isDeleted == false)
+			{
+				return BadRequest();
+			}
+			return RedirectToAction(nameof(Index));
 		}
 
 	}
