@@ -3,6 +3,10 @@
 {
     <a class="btn btn-primary" asp-action="Create" role="button">Create</a>
 }
+@if (User.IsInRole("Customer"))
+{
+    <a class="btn btn-primary" asp-action="IndexCustomer" role="button">My Services</a>
+}
 
 <form asp-controller="Service" asp-action="Index">
     <div class="form-actions no-color">
@@ -50,12 +54,13 @@
                         </th>
                         <td>@Html.DisplayFor(modelItem => item.Name)</td>
                         <td>@Html.DisplayFor(modelItem => item.Price)</td>
-                        <td>
-                            <a asp-action="Details" asp-route-id="@item.ServiceId">Details</a>
-                        </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.ServiceId">Edit</a>
-                        </td>
+
+                     @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
+                            {
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.ServiceId">Edit</a>
+                            </td>
+                            }
                     </tr>
                 }
                 else
@@ -66,13 +71,14 @@
                         </th>
                         <td>@Html.DisplayFor(modelItem => item.Name)</td>
                         <td>@Html.DisplayFor(modelItem => item.Price)</td>
-                        <td>
-                            <a asp-action="Details" asp-route-id="@item.ServiceId">Details</a>
-                        </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.ServiceId">Edit</a>
-                        </td>
-                    </tr>
+                        @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
+                            {
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.ServiceId">Edit</a>
+                            </td>
+                            }
+
+                        </tr>
                 }
                 count++;
             }
