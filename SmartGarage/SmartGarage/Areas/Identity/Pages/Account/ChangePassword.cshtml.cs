@@ -92,7 +92,7 @@ namespace SmartGarage.Areas.Identity.Pages.Account
             _logger.LogInformation("User changed their password successfully.");
             TempData["Success"] = "Your password has been changed.";
 
-            return Redirect("./ChangePassword");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

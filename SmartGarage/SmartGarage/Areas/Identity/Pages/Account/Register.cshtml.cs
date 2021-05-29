@@ -116,7 +116,7 @@ namespace SmartGarage.Areas.Identity.Pages.Account
                         ModelState.AddModelError(string.Empty, error.Description);
                     }
 
-                    return RedirectToPage("./Register");
+                    return RedirectToAction("Index", "Home");
                 }
                 catch (Exception)
                 {

@@ -71,13 +71,14 @@ namespace SmartGarage.Areas.Identity.Pages.Account
             if (user == null)
             {
                 // Don't reveal that the user does not exist
-                return RedirectToPage("./ResetPasswordConfirmation");
+                return RedirectToPage("./ResetPassword");
             }
 
             var result = await _userManager.ResetPasswordAsync(user, Input.Code, Input.Password);
             if (result.Succeeded)
             {
-                return RedirectToPage("./ResetPasswordConfirmation");
+                TempData["Success"] = "Password was succefully reset.";
+                return RedirectToPage("./Login");
             }
 
             foreach (var error in result.Errors)
