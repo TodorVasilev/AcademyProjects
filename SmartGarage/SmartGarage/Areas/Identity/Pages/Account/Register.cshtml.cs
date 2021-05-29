@@ -120,7 +120,8 @@ namespace SmartGarage.Areas.Identity.Pages.Account
                 }
                 catch (Exception)
                 {
-                    return RedirectToPage("./Login");
+                    TempData["Error"] = "User with this E-mail already exists.";
+                    return RedirectToPage("./Register");
                 }
             }
 

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SmartGarage.Data.Models;
 using SmartGarage.Service.Contracts;
 using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.GetDTOs;
@@ -62,7 +63,7 @@ namespace SmartGarage.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, VehicleEditViewModel updateInformation)
+        public async Task<IActionResult> Edit(int id, Vehicle updateInformation)
         {
             if (id != updateInformation.Id)
             {
