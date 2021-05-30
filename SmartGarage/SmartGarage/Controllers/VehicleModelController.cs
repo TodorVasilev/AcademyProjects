@@ -96,6 +96,12 @@ namespace SmartGarage.Controllers
             return View(viewModel);
         }
 
+        [Authorize(Roles = "Admin,Employee")]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
         [HttpPost]
         [AutoValidateAntiforgeryToken]
         [Authorize(Roles = "Admin,Employee")]
@@ -106,6 +112,11 @@ namespace SmartGarage.Controllers
                 return RedirectToAction("Edit");
             }
 
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
+        [Authorize(Roles = "Admin,Employee")]
+        public async Task<IActionResult> Edit(int id, VehicleModelEditViewModel vehicleModel)
+        {
             if (id != vehicleModel.Id)
             {
                 return NotFound();

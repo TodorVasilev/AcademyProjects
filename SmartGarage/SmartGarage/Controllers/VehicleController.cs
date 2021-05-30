@@ -125,6 +125,9 @@ namespace SmartGarage.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+            return View(vehicle);
+        }
+
         [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Delete(int id)
         {
