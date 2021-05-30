@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SmartGarage.Data;
 using SmartGarage.Data.Models;
 using SmartGarage.Service.Contracts;
@@ -20,6 +21,7 @@ namespace SmartGarage.Controllers
 
         public SmartGarageContext Context { get; }
 
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Index(int pageNumber = 1)
         {
             var pageSize = 10;
@@ -32,6 +34,7 @@ namespace SmartGarage.Controllers
             return View(PaginatedList<GetManufacturerDTO>.CreateAsync(manufacturers, pageNumber, pageSize));
         }
 
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Details(int id)
         {
             var manufacturer = await service.GetAsync(id);
@@ -44,6 +47,7 @@ namespace SmartGarage.Controllers
             return View(manufacturer);
         }
 
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Edit(int id)
         {
             var manufacturer = await service.GetAsync(id);
@@ -58,6 +62,7 @@ namespace SmartGarage.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Edit(int id, Manufacturer manufacturer)
         {
             if (id != manufacturer.Id)
@@ -86,6 +91,7 @@ namespace SmartGarage.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Create(ManufacturerDTO manufacturer)
         {
             if (ModelState.IsValid)

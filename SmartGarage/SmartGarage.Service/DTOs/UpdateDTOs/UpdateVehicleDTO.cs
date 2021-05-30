@@ -8,7 +8,7 @@ namespace SmartGarage.Service.DTOs.UpdateDTOs
 
         public int UserId { get; set; }
 
-        [StringLength(8, MinimumLength = 6, ErrorMessage = "{0} must be between {1} and {2} symbols.")]
+        [StringLength(10, MinimumLength = 8, ErrorMessage = "{0} must be between {1} and {2} symbols.")]
         public string NumberPlate { get; set; }
 
         [StringLength(17, ErrorMessage = "{0} must be exactly {1} symbols.")]

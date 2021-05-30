@@ -20,12 +20,14 @@ namespace SmartGarage.Controllers
             this.service = service;
         }
 
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Index(string name, int pageNumber = 1)
         {
             var pageSize = 3;
             return View(PaginatedList<GetVehicleDTO>.CreateAsync(await service.GetAll(name), pageNumber, pageSize));
         }
 
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Details(int id)
         {
             var vehicle = await service.GetAsync(id);
@@ -38,7 +40,7 @@ namespace SmartGarage.Controllers
             return View(vehicle);
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Edit(int id)
         {
             var vehicle = await service.GetAsync(id);
@@ -63,7 +65,8 @@ namespace SmartGarage.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Vehicle updateInformation)
+        [Authorize(Roles = "Admin,Employee")]
+        public async Task<IActionResult> Edit(int id, VehicleEditViewModel updateInformation)
         {
             if (id != updateInformation.Id)
             {
@@ -92,7 +95,7 @@ namespace SmartGarage.Controllers
                 }
             }
 
-            return View(vehicleInformation);
+            return View(updateInformation);
         }
 
         public IActionResult Create()
@@ -102,6 +105,7 @@ namespace SmartGarage.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Create(CreateVehicleDTO vehicle)
         {
             if (ModelState.IsValid)
@@ -113,6 +117,7 @@ namespace SmartGarage.Controllers
             return View(vehicle);
         }
 
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Delete(int id)
         {
             var vehicleToRemove = await service.GetAsync(id);
@@ -127,6 +132,7 @@ namespace SmartGarage.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             await service.RemoveAsync(id);

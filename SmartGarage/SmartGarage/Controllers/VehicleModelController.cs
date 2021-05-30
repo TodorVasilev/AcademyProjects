@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SmartGarage.Data.Models;
 using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.SharedDTOs;
@@ -18,12 +19,14 @@ namespace SmartGarage.Controllers
             this.service = service;
         }
 
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Index(int pageNumber = 1)
         {
             var pageSize = 1;
             return View(PaginatedList<GetVehicleModelDTO>.CreateAsync(await service.GetAll(), pageNumber, pageSize));
         }
 
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Edit(int id)
         {
             var vehicleModel = await service.GetAsync(id);
@@ -44,6 +47,7 @@ namespace SmartGarage.Controllers
             return View(viewModel);
         }
 
+        [Authorize(Roles = "Admin,Employee")]
         public IActionResult Create()
         {
             return View();
@@ -51,6 +55,7 @@ namespace SmartGarage.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Create(VehicleModelDTO vehicleModel)
         {
             if (ModelState.IsValid)
@@ -64,7 +69,8 @@ namespace SmartGarage.Controllers
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
-        public async Task<IActionResult> Edit(int id, VehicleModel vehicleModel)
+        [Authorize(Roles = "Admin,Employee")]
+        public async Task<IActionResult> Edit(int id, VehicleModelEditViewModel vehicleModel)
         {
             if (id != vehicleModel.Id)
             {
