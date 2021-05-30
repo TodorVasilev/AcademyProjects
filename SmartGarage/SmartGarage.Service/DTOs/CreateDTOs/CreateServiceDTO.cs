@@ -2,12 +2,14 @@
 
 namespace SmartGarage.Service.DTOs.CreateDTOs
 {
-    public class CreateServiceDTO
-    {
-        [Required]
-        public string Name { get; set; }
+	public class CreateServiceDTO
+	{
+		[Required]
+		[MinLength(3, ErrorMessage = "Enter minimum 3 chars.")]
+		public string Name { get; set; }
 
-        [Required]
-        public double? Price { get; set; }
-    }
+		[Required]
+		[Range(0,10000, ErrorMessage = "Min price is 0 €")]
+		public decimal? Price { get; set; }
+	}
 }

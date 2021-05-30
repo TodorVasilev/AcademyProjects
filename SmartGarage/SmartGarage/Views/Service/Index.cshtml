@@ -1,6 +1,7 @@
 ﻿@model PaginatedList<GetServiceDTO>
 
-
+<div class="container">
+        
 @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
 {
     <a class="btn btn-primary" asp-action="Create" role="button">Create</a>
@@ -225,3 +226,4 @@
         }
     </ul>
 </nav>
+</div>
