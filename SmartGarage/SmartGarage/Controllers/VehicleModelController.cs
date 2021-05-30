@@ -103,9 +103,8 @@ namespace SmartGarage.Controllers
         }
 
         [HttpPost]
-        [AutoValidateAntiforgeryToken]
-        [Authorize(Roles = "Admin,Employee")]
-        public async Task<IActionResult> Edit(int id, VehicleModelViewModel vehicleModel)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(VehicleModelDTO vehicleModel)
         {
             if (vehicleModel.VehicleTypeId == default || vehicleModel.ManufacturerId == default)
             {
