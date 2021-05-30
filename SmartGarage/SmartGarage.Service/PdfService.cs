@@ -20,6 +20,7 @@ namespace SmartGarage.Service
                 return await page.PdfStreamAsync();
             }
         }
+
         public async Task<Stream> GeneratePdf()
         {
             await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);
