@@ -3,9 +3,9 @@
 <div class="container">
 	@if (User.IsInRole("Employee") || User.IsInRole("Admin"))
 	{
-		<p>
+	<p>
 			<a asp-action="Create">Create Order</a>
-		</p>
+	</p>
 	}
 	<form asp-controller="Order" asp-action="Index">
 		<div class="form-actions no-color">
