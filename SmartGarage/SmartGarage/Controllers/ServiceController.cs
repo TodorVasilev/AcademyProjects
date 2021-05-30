@@ -5,13 +5,11 @@ using SmartGarage.Data.Models;
 using SmartGarage.Service.Contracts;
 using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.GetDTOs;
-using SmartGarage.Service.DTOs.SharedDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;
 using SmartGarage.Service.Helpers;
 using SmartGarage.Service.QueryObjects;
 using SmartGarage.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Controllers

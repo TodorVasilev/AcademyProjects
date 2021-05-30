@@ -66,13 +66,7 @@ namespace SmartGarage.Service
 				.Where(s => !s.IsDeleted)
 				.AsQueryable()
 				.FilterServices(filterObject)
-				.OrderBy(s=>s.Name);
-
-			//Returns null when there is not a service with this id.
-			if (services.Count() == 0)
-			{
-				return null;
-			}
+				.OrderBy(s=>s.Name);		
 
 			return await services.Select(x => new GetServiceDTO(x))
 				.ToListAsync();
@@ -134,11 +128,7 @@ namespace SmartGarage.Service
 				.FilterCustomerServices(filterObject)
 				.OrderBy(s => s.Service.Name);
 
-			//Returns null when there aren't any services linked to the customer.
-			if (servicesOrders.Count() == 0)
-			{
-				return null;
-			}
+			//Returns null when there aren't any services linked to the customer.		
 
 			return await servicesOrders.Select(x => new GetServiceDTO(x.Service))
 				.ToListAsync();

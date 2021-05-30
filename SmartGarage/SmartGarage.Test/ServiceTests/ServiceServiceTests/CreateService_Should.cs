@@ -18,7 +18,7 @@ namespace SmartGarage.Test.ServiceTests.ServiceServiceTests
             var service = new CreateServiceDTO
             {
                 Name = "Change Oil",
-                Price = 149.99
+                Price = 149.99m
             };
 
             using (var arrCtx = new SmartGarageContext(options))
