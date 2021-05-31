@@ -29,8 +29,19 @@ namespace SmartGarage.Controllers
 			var orders = await service.GetAll(user,name);
 
 			return View(PaginatedList<GetOrderDTO>.CreateAsync(orders, pageNumber, pageSize));
-
 		}
 
+		public async Task<IActionResult> Details(int id)
+		{
+			string currency="USD";
+			var order = await service.GetAsync(id, currency );
+
+			if (order == null)
+			{
+				return NotFound();
+			}
+
+			return View(order);
+		}
 	}
 }

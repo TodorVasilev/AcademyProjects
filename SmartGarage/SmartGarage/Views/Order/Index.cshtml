@@ -46,7 +46,7 @@
 						<td>@Html.DisplayFor(modelItem => item.VehicleNumberPlate)</td>
 						@if (User.IsInRole("Employee") || User.IsInRole("Admin"))
 						{
-							<td>@Html.DisplayFor(modelItem => item.CustomerEmail)</td>
+							<td>@Html.DisplayFor(modelItem => item.CustomerName)</td>
 
 						}
 						<td>

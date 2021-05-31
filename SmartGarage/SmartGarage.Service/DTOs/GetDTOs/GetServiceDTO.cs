@@ -13,6 +13,6 @@
 
         public string Name { get; }
 
-        public decimal Price { get; }
+        public decimal Price { get; set; }
     }
 }

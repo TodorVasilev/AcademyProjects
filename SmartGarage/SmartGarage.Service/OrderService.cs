@@ -14,28 +14,30 @@ namespace SmartGarage.Service
 	public class OrderService : IOrderService
 	{
 		private readonly SmartGarageContext context;
-		public OrderService(SmartGarageContext context)
+
+		private readonly ICurrencyService currencyService;
+		public OrderService(SmartGarageContext context, ICurrencyService currencyService)
 		{
 			this.context = context;
+			this.currencyService = currencyService;
 		}
 
 		public async Task<List<GetOrderDTO>> GetAll(User user, string name)
 		{
 			var orders = context.Orders
 			  .Include(o => o.ServiceOrder)
-			  .ThenInclude(so => so.Service)
+					.ThenInclude(so => so.Service)
 			  .Include(o => o.Garage)
 			  .Include(o => o.OrderStatus)
 			  .Include(o => o.Vehicle)
-			  .ThenInclude(v => v.User)
-			  .Where(o => !o.IsDeleted)
+					.ThenInclude(v => v.User)
 			  .AsQueryable();
 
-			if (name!=default)
+			if (name != default)
 			{
-				orders = orders.Where(o => o.Vehicle.User.FirstName.ToUpper().Contains(name.ToUpper())||
+				orders = orders.Where(o => o.Vehicle.User.FirstName.ToUpper().Contains(name.ToUpper()) ||
 				o.Vehicle.User.LastName.ToUpper().Contains(name.ToUpper()));
-							
+
 			}
 
 			if (user.CurrentRole == "CUSTOMER")
@@ -48,12 +50,15 @@ namespace SmartGarage.Service
 				.ToListAsync();
 		}
 
-		public async Task<GetOrderDTO> GetAsync(int id)
+		public async Task<GetOrderDTO> GetAsync(int id, string currency = "EUR")
 		{
-
 			var order = await this.context.Orders
 				.Include(o => o.ServiceOrder)
-				.ThenInclude(so => so.Service)
+						.ThenInclude(so => so.Service)
+				.Include(o => o.Garage)
+				.Include(o => o.OrderStatus)
+				.Include(o => o.Vehicle)
+						.ThenInclude(v => v.User)
 				.FirstOrDefaultAsync(o => o.Id == id);
 
 			if (order == null || order.IsDeleted == true)
@@ -61,7 +66,23 @@ namespace SmartGarage.Service
 				return null;
 			}
 
-			return new GetOrderDTO(order);
+			decimal currencyRate = default;
+			if (order.FinishDate == null)
+			{
+				currencyRate = currencyService.Convert(System.DateTime.Now, currency).Result;
+			}
+
+			currencyRate = currencyService.Convert(order.FinishDate.Value, currency).Result;
+
+			var result = new GetOrderDTO(order);
+			foreach (var item in result.ServicesDTO)
+			{
+				item.Price *= currencyRate;
+			}
+
+			result.TotalPrice *= currencyRate;
+
+			return result;
 		}
 
 		public async Task<bool> DeleteAsync(int id)
