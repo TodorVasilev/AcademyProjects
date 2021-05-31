@@ -1,7 +1,11 @@
 ﻿@model VehicleModelEditViewModel
 
-<div class="row">
-    <div class="col-md-4">
+@{
+    Layout = null;
+}
+
+<div class="container text-center">
+    <div class="col-md-12">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
@@ -25,8 +29,4 @@
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to list</a>
 </div>

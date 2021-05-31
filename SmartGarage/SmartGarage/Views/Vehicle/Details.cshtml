@@ -2,45 +2,25 @@
 
 @{
     ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
 
-<div>
-    <h4>Vehicle</h4>
-    <hr />
-    <h5>
+<div class="container text-center">
+    <h3>
         @Model.VehicleModel
-    </h5>
-    <table class="table" id="table">
-        <thead>
-            <tr class="active">
-                <th scope="row">Owner</th>
-                <th>Colour</th>
-                <th>VIN</th>
-                <th>Number plate</th>
-                <th>Edit</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="table-active">
-                <td>@Model.Owner</td>
-                <td style="width: 230px">@Model.Colour</td>
-                <td>@Model.VIN</td>
-                <td>@Model.NumberPlate</td>
-                <td> <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a></td>
-                <td> <a asp-action="Delete" asp-route-id="@Model.Id">Delete</a></td>
-            </tr>
-        </tbody>
-    </table>
+    </h3>
+    <div>
+        <p>Owner: @Model.Owner</p>
+        <p>Colour: @Model.Colour</p>
+        <p>VIN: @Model.VIN</p>
+        <p>Number plate: @Model.NumberPlate</p>
+    </div>
 </div>
 <div>
-    <a class="btn btn-primary" asp-action="Index">Back to list</a>
     <button onclick="downloadPdf()">Download Page</button>
 </div>
 
 <script src="/js/html2pdf.bundle.min.js"></script>
-
 <script>
     const downloadPdf = () => {
         var element = document.getElementById('table');
