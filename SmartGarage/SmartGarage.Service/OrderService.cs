@@ -45,7 +45,7 @@ namespace SmartGarage.Service
 				orders = orders.Where(o => o.Vehicle.UserId == user.Id);
 			}
 
-			orders = orders.OrderByDescending(o => o.ArrivalDate);
+			orders = orders.OrderBy(o => o.ArrivalDate);
 			return await orders.Select(order => new GetOrderDTO(order))
 				.ToListAsync();
 		}

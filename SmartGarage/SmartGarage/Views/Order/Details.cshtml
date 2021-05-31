@@ -19,6 +19,17 @@
 	}
 </style>
 <div class="container">
+	<div class="dropdown">
+		<a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			Dropdown link
+		</a>
+
+		<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+			<a class="dropdown-item" href="/Order/Details/@Model.Id?currency=USD">USD</a>
+			<a class="dropdown-item" href="/Order/Details/@Model.Id?currency=GBP">GBP</a>
+			<a class="dropdown-item" href="/Order/Details/@Model.Id?currency=EUR">EUR</a>
+		</div>
+	</div>
 	<div>
 		<h4>Order</h4>
 		<hr />
@@ -60,21 +71,24 @@
 				<table class="table w-50" id="table">
 					<thead>
 						<tr>
-
+							<th class="w-25">#</th>
 							<th>Description</th>
 							<th>Price</th>
-
 						</tr>
 					</thead>
 					<tbody style="height: 150px;overflow: scroll;">
-						@foreach (var item in Model.ServicesDTO)
-						{
+					@{ int count = 1;
 
+						foreach (var item in Model.ServicesDTO)
+						{
 							<tr class="table-active">
+								<td class="w-25">@count</td>
 								<td>@item.Name</td>
-								<td>@item.Price</td>
+								<td>@Math.Round(item.Price,2)</td>
 							</tr>
+							count++;
 						}
+					}
 					</tbody>
 				</table>
 			</dd>
@@ -91,4 +105,6 @@
 		<a class="btn btn-primary" asp-action="Index">Back to list</a>
 	</div>
 </div>
+
+
 

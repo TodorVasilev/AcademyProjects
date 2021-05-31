@@ -37,8 +37,7 @@
 				foreach (var item in Model.ItemsCollection)
 				{
 					<tr>
-						<th scope="row"> @count</th>
-
+						<td>@count</td>
 						<td>@Html.DisplayFor(modelItem => item.ArrivalDate) </td>
 						<td>@Html.DisplayFor(modelItem => item.FinishDate)</td>
 						<td>@Html.DisplayFor(modelItem => item.Garage)</td>
