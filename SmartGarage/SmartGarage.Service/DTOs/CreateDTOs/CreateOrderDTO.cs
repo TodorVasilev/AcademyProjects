@@ -11,6 +11,5 @@ namespace SmartGarage.Service.DTOs.CreateDTOs
         public int VehicleId { get; set; }
 
         public DateTime ArrivalDate { get; set; }
-
     }
 }

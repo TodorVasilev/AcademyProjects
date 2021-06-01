@@ -37,7 +37,7 @@ namespace SmartGarage.Test.ServiceTests.OrderServiceTests
             //Act
             using (var actCtx = new SmartGarageContext(options))
             {
-                var sut = new OrderService(actCtx);
+            //    var sut = new OrderService(actCtx);
                // var result = await sut.GetAll();
 
                 //Assert
@@ -61,7 +61,7 @@ namespace SmartGarage.Test.ServiceTests.OrderServiceTests
             //Act
             using (var actCtx = new SmartGarageContext(options))
             {
-                var sut = new OrderService(actCtx);
+              //  var sut = new OrderService(actCtx);
             //    var result = await sut.GetAll();
 
                 //Assert

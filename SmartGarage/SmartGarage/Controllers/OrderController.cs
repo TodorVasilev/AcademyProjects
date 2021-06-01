@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using SmartGarage.Data.Models;
 using SmartGarage.Service.Contracts;
+using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.Helpers;
 using System;
@@ -21,6 +22,7 @@ namespace SmartGarage.Controllers
 			this.service = service;
 			this.userManager = userManager;
 		}
+
 		public async Task<IActionResult> Index(string name, int pageNumber = 1)
 		{
 			var pageSize = 10;
@@ -34,7 +36,6 @@ namespace SmartGarage.Controllers
 		[HttpGet()]
 		public async Task<IActionResult> Details(int id, [FromQuery]string currency="EUR")
 		{
-
 			var order = await service.GetAsync(id, currency);
 
 			if (order == null)
@@ -44,5 +45,23 @@ namespace SmartGarage.Controllers
 
 			return View(order);
 		}
+
+		public IActionResult Create()
+		{
+			return View();
+		}
+
+		//[HttpGet()]
+		//public async Task<IActionResult> Create(CreateOrderDTO createOrder)
+		//{
+			//var order = await service.GetAsync(id, currency);
+
+			//if (order == null)
+			//{
+			//	return NotFound();
+			//}
+
+			//return View(order);
+		//}
 	}
 }

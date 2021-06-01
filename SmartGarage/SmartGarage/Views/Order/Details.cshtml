@@ -19,9 +19,9 @@
 	}
 </style>
 <div class="container">
-	<div class="dropdown">
+	<div class="dropdown float-right">
 		<a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			Dropdown link
+			Currency
 		</a>
 
 		<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -34,7 +34,7 @@
 		<h4>Order</h4>
 		<hr />
 		<dl class="row">
-			<dt class="col-sm-2">
+			<dt class="col-sm-2"> 
 				@Html.DisplayNameFor(model => model.CustomerName)
 			</dt>
 			<dd class="col-sm-10">
@@ -68,7 +68,7 @@
 				@Html.DisplayNameFor(model => model.ServicesDTO)
 			</dt>
 			<dd class="col-sm-10">
-				<table class="table w-50" id="table">
+				<table class="table w-50" id="table" >
 					<thead>
 						<tr>
 							<th class="w-25">#</th>
@@ -76,19 +76,19 @@
 							<th>Price</th>
 						</tr>
 					</thead>
-					<tbody style="height: 150px;overflow: scroll;">
-					@{ int count = 1;
+					<tbody style="height: 350px;overflow-y: scroll;width:fit-content">
+						@{ int count = 1;
 
-						foreach (var item in Model.ServicesDTO)
-						{
-							<tr class="table-active">
-								<td class="w-25">@count</td>
-								<td>@item.Name</td>
-								<td>@Math.Round(item.Price,2)</td>
-							</tr>
-							count++;
+							foreach (var item in Model.ServicesDTO)
+							{
+								<tr class="table-active">
+									<td class="w-25">@count</td>
+									<td>@item.Name</td>
+									<td>@Math.Round(item.Price, 2)</td>
+								</tr>
+								count++;
+							}
 						}
-					}
 					</tbody>
 				</table>
 			</dd>
