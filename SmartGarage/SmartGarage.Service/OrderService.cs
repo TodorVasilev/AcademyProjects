@@ -16,10 +16,21 @@ namespace SmartGarage.Service
 		private readonly SmartGarageContext context;
 
 		private readonly ICurrencyService currencyService;
-		public OrderService(SmartGarageContext context, ICurrencyService currencyService)
+		private readonly IUserService userService;
+		private readonly IUserHelper userHelperService;
+		private readonly IVehicleService vehicleService;
+
+		public OrderService(SmartGarageContext context,
+		ICurrencyService currencyService,
+		IUserService userService,
+		IUserHelper userHelperService,
+		IVehicleService vehicleService)
 		{
 			this.context = context;
 			this.currencyService = currencyService;
+			this.userService = userService;
+			this.userHelperService = userHelperService;
+			this.vehicleService = vehicleService;
 		}
 
 		public async Task<List<GetOrderDTO>> GetAll(User user, string name)
@@ -37,7 +48,6 @@ namespace SmartGarage.Service
 			{
 				orders = orders.Where(o => o.Vehicle.User.FirstName.ToUpper().Contains(name.ToUpper()) ||
 				o.Vehicle.User.LastName.ToUpper().Contains(name.ToUpper()));
-
 			}
 
 			if (user.CurrentRole == "CUSTOMER")
@@ -45,7 +55,7 @@ namespace SmartGarage.Service
 				orders = orders.Where(o => o.Vehicle.UserId == user.Id);
 			}
 
-			orders = orders.OrderBy(o => o.ArrivalDate);
+			orders = orders.OrderByDescending(o => o.ArrivalDate);
 			return await orders.Select(order => new GetOrderDTO(order))
 				.ToListAsync();
 		}
@@ -71,11 +81,13 @@ namespace SmartGarage.Service
 			{
 				currencyRate = currencyService.Convert(System.DateTime.Now, currency).Result;
 			}
-
-			currencyRate = currencyService.Convert(order.FinishDate.Value, currency).Result;
+			else
+			{
+				currencyRate = currencyService.Convert(order.FinishDate.Value, currency).Result;
+			}
 
 			var result = new GetOrderDTO(order);
-			foreach (var item in result.ServicesDTO)
+			foreach (var item in result.Services)
 			{
 				item.Price *= currencyRate;
 			}
@@ -125,28 +137,67 @@ namespace SmartGarage.Service
 			return true;
 		}
 
-		public async Task<GetOrderDTO> CreateAsync(CreateOrderDTO order)
+		public async Task<bool> CreateAsync(CreateOrderDTO createOrderDTO)
 		{
-			if (order.GarageId == 0
-				|| order.ArrivalDate == default
-				|| order.OrderStatusId == 0
-				|| order.VehicleId == 0)
+			if (createOrderDTO.GarageName == default)
 			{
-				return null;
+				return false;
 			}
 
+			var user = await this.context.Users.FirstOrDefaultAsync(u => u.Email == createOrderDTO.Email);
+			if (user == null)
+			{
+				var createUser = new CreateUserDTO()
+				{
+					Address = createOrderDTO.Address,
+					Age = createOrderDTO.Age,
+					DrivingLicenseNumber = createOrderDTO.DrivingLicenseNumber,
+					Email = createOrderDTO.Email,
+					FirstName = createOrderDTO.FirstName,
+					LastName = createOrderDTO.LastName,
+					PhoneNumber = createOrderDTO.PhoneNumber,
+					UserName = createOrderDTO.UserName
+				};
+				await userHelperService.CreateUserAsync(createUser);
+				user = await this.context.Users.FirstOrDefaultAsync(u => u.Email == createOrderDTO.Email);
+			}
+
+			var vehicle = await this.context.Vehicles.FirstOrDefaultAsync(v => v.NumberPlate == createOrderDTO.NumberPlate);
+			var vehicleId = 0;
+			if (vehicle == null)
+			{
+				var createVehicle = new CreateVehicleDTO()
+				{
+					Colour = createOrderDTO.Colour,
+					NumberPlate = createOrderDTO.NumberPlate,
+					VIN = createOrderDTO.VIN,
+					UserId = user.Id,
+					VehicleModelId = createOrderDTO.VehicleModelId,
+				};
+				var tempVehicle = await vehicleService.CreateAsync(createVehicle);
+				vehicleId = tempVehicle.Id;
+			}
+			else
+			{
+				vehicleId = vehicle.Id;
+			}
+			var garage = await this.context.Garages.FirstOrDefaultAsync(g => g.Name == createOrderDTO.GarageName);
+			if (garage == null)
+			{
+				return false;
+			}
 			var newOrder = new Order
 			{
-				GarageId = order.GarageId,
-				ArrivalDate = order.ArrivalDate,
-				OrderStatusId = order.OrderStatusId,
-				VehicleId = order.VehicleId
+				GarageId = garage.Id,
+				ArrivalDate = System.DateTime.Now,
+				OrderStatusId = 1,
+				VehicleId = vehicleId
 			};
 
 			await this.context.AddAsync(newOrder);
 			this.context.SaveChanges();
 
-			return new GetOrderDTO(newOrder);
+			return true;
 		}
 
 		public async Task<bool> AddService(List<ServiceOrder> serviceOrder)

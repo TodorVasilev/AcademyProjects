@@ -9,7 +9,7 @@ namespace SmartGarage.Service.Contracts
 {
 	public interface IOrderService
 	{
-		Task<GetOrderDTO> CreateAsync(CreateOrderDTO order);
+		Task<bool> CreateAsync(CreateOrderDTO order);
 
 		Task<bool> DeleteAsync(int id);
 

@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SmartGarage.Data;
 using SmartGarage.Data.Models;
 using SmartGarage.Service.Contracts;
 using SmartGarage.Service.DTOs.CreateDTOs;
@@ -34,7 +36,7 @@ namespace SmartGarage.Controllers
 		}
 
 		[HttpGet()]
-		public async Task<IActionResult> Details(int id, [FromQuery]string currency="EUR")
+		public async Task<IActionResult> Details(int id, [FromQuery] string currency = "EUR")
 		{
 			var order = await service.GetAsync(id, currency);
 
@@ -51,17 +53,18 @@ namespace SmartGarage.Controllers
 			return View();
 		}
 
-		//[HttpGet()]
-		//public async Task<IActionResult> Create(CreateOrderDTO createOrder)
-		//{
-			//var order = await service.GetAsync(id, currency);
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		[Authorize(Roles = "Admin,Employee")]
+		public async Task<IActionResult> Create(CreateOrderDTO createOrderDTO)
+		{
+			if (ModelState.IsValid)
+			{
+				await service.CreateAsync(createOrderDTO);
+				return RedirectToAction(nameof(Index));
+			}
 
-			//if (order == null)
-			//{
-			//	return NotFound();
-			//}
-
-			//return View(order);
-		//}
+			return View(createOrderDTO);
+		}
 	}
 }

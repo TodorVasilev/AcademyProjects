@@ -3,7 +3,7 @@ using SmartGarage.Service.DTOs;
 using SmartGarage.Service.DTOs.CreateDTOs;
 using System.Threading.Tasks;
 
-namespace SmartGarage.Contracts
+namespace SmartGarage.Service.Contracts
 {
     public interface IUserHelper
     {

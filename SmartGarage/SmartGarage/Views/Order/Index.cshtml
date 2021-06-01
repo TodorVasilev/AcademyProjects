@@ -1,9 +1,12 @@
 ﻿@model PaginatedList<GetOrderDTO>
 
 <div class="container">
-	<p>
-		<a asp-action="Create">Create New</a>
-	</p>
+	@if (User.IsInRole("Employee") || User.IsInRole("Admin"))
+	{
+		<p>
+			<a asp-action="Create">Create Order</a>
+		</p>
+	}
 	<form asp-controller="Order" asp-action="Index">
 		<div class="form-actions no-color">
 			<p>

@@ -68,7 +68,7 @@ namespace SmartGarage.Service
 
 				if (currencyType == "USD")
 				{
-					foreach (var item in orderToConvert.ServicesDTO)
+					foreach (var item in orderToConvert.Services)
 					{
 						item.Price = rates.Rates.USD * item.Price;
 					}
@@ -78,7 +78,7 @@ namespace SmartGarage.Service
 
 				if (currencyType == "GBP")
 				{
-					foreach (var item in orderToConvert.ServicesDTO)
+					foreach (var item in orderToConvert.Services)
 					{
 						item.Price = rates.Rates.GBP * item.Price;
 					}
