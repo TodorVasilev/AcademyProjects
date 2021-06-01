@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SmartGarage.Data.Models;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace SmartGarage.Service.DTOs.CreateDTOs
