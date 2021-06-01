@@ -1,12 +1,14 @@
-﻿using SmartGarage.Data.Models;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace SmartGarage.Service.DTOs.CreateDTOs
 {
 	public class CreateOrderDTO
+
 	{
+		[Required]
+		[MinLength(2), MaxLength(20)]
+		[Display(Name = "Garage name")]
 		public string GarageName { get; set; }
 
 		[Required]
@@ -24,6 +26,7 @@ namespace SmartGarage.Service.DTOs.CreateDTOs
 		[Display(Name = "Family name")]
 		public string LastName { get; set; }
 
+		[Required]
 		[StringLength(10)]
 		[DataType(DataType.PhoneNumber)]
 		[Display(Name = "Phone number")]
