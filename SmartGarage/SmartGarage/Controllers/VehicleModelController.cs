@@ -6,6 +6,7 @@ using SmartGarage.Service.DTOs.SharedDTOs;
 using SmartGarage.Service.Helpers;
 using SmartGarage.Service.ServiceContracts;
 using SmartGarage.ViewModels;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Controllers

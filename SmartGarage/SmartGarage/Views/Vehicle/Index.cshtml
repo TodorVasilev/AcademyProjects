@@ -14,7 +14,10 @@
                     <p style="width: 50px">#</p>
                 </th>
                 <th>
-                    <p>Vehicle</p>
+                    <p>Manufacturer</p>
+                </th>
+                <th>
+                    <p>Model</p>
                 </th>
                 <th>
                     <p>Owner (UserName)</p>
@@ -36,11 +39,14 @@
                             <th scope="row">
                                 @count
                             </th>
+                            <td>@item.Manufacturer</td>
                             <td>@item.VehicleModel (@item.Colour)</td>
                             <td>@Html.DisplayFor(modelItem => item.Owner) (@item.OwnerUserName)</td>
-                            <td><a onclick="showInPopup('@Url.Action("Details", "Vehicle", new { id = item.Id }, Context.Request.Scheme)', 'Vehicle Details')" class="btn btn-info text-white">Details</a>
-                            <a onclick="showInPopup('@Url.Action("Edit", "Vehicle", new { id = item.Id }, Context.Request.Scheme)', 'Update Vehicle')" class="btn btn-warning text-white">Edit</a>
-                            <a onclick="showInPopup('@Url.Action("Delete", "Vehicle", new { id = item.Id }, Context.Request.Scheme)', 'Delete Vehicle')" class="btn btn-danger text-white">Delete</a></td>
+                            <td>
+                                <a onclick="showInPopup('@Url.Action("Details", "Vehicle", new { id = item.Id }, Context.Request.Scheme)', 'Vehicle Details')" class="btn btn-info text-white">Details</a>
+                                <a onclick="showInPopup('@Url.Action("Edit", "Vehicle", new { id = item.Id }, Context.Request.Scheme)', 'Update Vehicle')" class="btn btn-warning text-white">Edit</a>
+                                <a onclick="showInPopup('@Url.Action("Delete", "Vehicle", new { id = item.Id }, Context.Request.Scheme)', 'Delete Vehicle')" class="btn btn-danger text-white">Delete</a>
+                            </td>
                         </tr>
                     }
                     else
@@ -49,11 +55,14 @@
                             <th scope="row">
                                 @count
                             </th>
+                            <td>@item.Manufacturer</td>
                             <td>@item.VehicleModel (@item.Colour)</td>
                             <td>@Html.DisplayFor(modelItem => item.Owner) (@item.OwnerUserName)</td>
-                            <td><a onclick="showInPopup('@Url.Action("Details", "Vehicle", new { id = item.Id }, Context.Request.Scheme)', 'Vehicle Details')" class="btn btn-info text-white">Details</a>
-                            <a onclick="showInPopup('@Url.Action("Edit", "Vehicle", new { id = item.Id }, Context.Request.Scheme)', 'Update Vehicle')" class="btn btn-warning text-white">Edit</a>
-                            <a onclick="showInPopup('@Url.Action("Delete", "Vehicle", new { id = item.Id }, Context.Request.Scheme)', 'Delete Vehicle')" class="btn btn-danger text-white">Delete</a></td>
+                            <td>
+                                <a onclick="showInPopup('@Url.Action("Details", "Vehicle", new { id = item.Id }, Context.Request.Scheme)', 'Vehicle Details')" class="btn btn-info text-white">Details</a>
+                                <a onclick="showInPopup('@Url.Action("Edit", "Vehicle", new { id = item.Id }, Context.Request.Scheme)', 'Update Vehicle')" class="btn btn-warning text-white">Edit</a>
+                                <a onclick="showInPopup('@Url.Action("Delete", "Vehicle", new { id = item.Id }, Context.Request.Scheme)', 'Delete Vehicle')" class="btn btn-danger text-white">Delete</a>
+                            </td>
                         </tr>
                     }
                     count++;

@@ -17,6 +17,7 @@ namespace SmartGarage.Service.DTOs.GetDTOs
             this.VehicleModelId = vehicle.Id;
             this.UserId = vehicle.UserId;
             this.OwnerUserName = vehicle.User.UserName;
+            this.Manufacturer = vehicle.VehicleModel.Manufacturer.Name;
         }
 
         [Required]
@@ -37,6 +38,9 @@ namespace SmartGarage.Service.DTOs.GetDTOs
 
         [Required]
         public string VehicleModel { get; }
+
+        [Required]
+        public string Manufacturer { get; }
 
         [Required]
         public string Colour { get; }

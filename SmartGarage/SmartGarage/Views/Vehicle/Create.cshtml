@@ -1,26 +1,69 @@
-﻿@model VehicleEditViewModel
+﻿@model VehicleViewModel
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery AntiForgery
 
 @{
     ViewData["Title"] = "Create";
     Layout = null;
 }
 
-<div class="container">
+<head>
+    @*<script>
+        $(document).ready(function () {
+            var MakeDDL = $("#Make");
+            var ModelDDL = $("#Model");
+            ModelDDL.prop('disabled', false);
+            MakeDDL.change(function () {
+                if ($(this).val() == "0") {
+                    ModelDDL.prop('disabled', true);
+                    ModelDDL.val("0");
+                }
+                else {
+                    $.ajax({
+                        url: '/Vehicle/Pesho/' + $(this).val(),
+                        method: "GET",
+                         headers: {
+                            'RequestVerificationToken': '@AntiForgery.GetAndStoreTokens(Context).RequestToken'
+                        },
+                        success: function (data) {
+                            ModelDDL.prop('disabled', false);
+                            console.log("Success:");
+                            ModelDDL.empty();
+                            ModelDDL.append($('<option/>', { value: '0', text: '--Select Model--' }));
+                            $(data).each(function (index, item) {
+                                ModelDDL.append($('<option/>', { value: item.id, text: item.name }));
+                            });
+                        }
+                    });
+                }
+            });
+        });
+    </script>*@
+</head>
+<div class="container" enctype="multipart/form-data" asp-action="Create">
     <div class="col-md-12">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div>
+                <label asp-for="Manufacturers"></label>
+            </div>
             <div class="form-group">
-                <label asp-for="VehicleModelId" class="control-label"></label>
-                <input asp-for="VehicleModelId" class="form-control" />
+                <select asp-for="ManufacturerId" asp-items="Model.Manufacturers.ToSelectList()" class="form-control" id="Make"></select>
+                <span asp-validation-for="ManufacturerId" class="text-danger"></span>
+            </div>
+            <div>
+                <label asp-for="Models"></label>
+            </div>
+            <div class="form-group">
+                <select asp-for="VehicleModelId" asp-items="Model.Models.ToSelectList()" class="form-control" id="Model"></select>
                 <span asp-validation-for="VehicleModelId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UserId" class="control-label"></label>
+                <label asp-for="UserId" class="control-label">Customer</label>
                 <input asp-for="UserId" class="form-control" />
                 <span asp-validation-for="UserId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NumberPlate" class="control-label"></label>
+                <label asp-for="NumberPlate" class="control-label">Number Plate</label>
                 <input asp-for="NumberPlate" class="form-control" />
                 <span asp-validation-for="NumberPlate" class="text-danger"></span>
             </div>
@@ -40,7 +83,3 @@
         </form>
     </div>
 </div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

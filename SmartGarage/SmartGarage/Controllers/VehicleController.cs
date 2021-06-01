@@ -6,7 +6,9 @@ using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;
 using SmartGarage.Service.Helpers;
+using SmartGarage.Service.ServiceContracts;
 using SmartGarage.ViewModels;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Controllers
@@ -14,10 +16,14 @@ namespace SmartGarage.Controllers
     public class VehicleController : Controller
     {
         private readonly IVehicleService service;
+        private readonly IManufacturerService manufacturerService;
+        private readonly IVehicleModelService vehicleModelService;
 
-        public VehicleController(IVehicleService service)
+        public VehicleController(IVehicleService service, IManufacturerService manufacturerService, IVehicleModelService vehicleModelService)
         {
             this.service = service;
+            this.manufacturerService = manufacturerService;
+            this.vehicleModelService = vehicleModelService;
         }
 
         [Authorize(Roles = "Admin,Employee")]
@@ -98,19 +104,34 @@ namespace SmartGarage.Controllers
             return View(updateInformation);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var model = new VehicleViewModel
+            {
+                Manufacturers = await manufacturerService.GetAll(),
+                Models = await vehicleModelService.GetAll()
+            };
+
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Employee")]
-        public async Task<IActionResult> Create(CreateVehicleDTO vehicle)
+        public async Task<IActionResult> Create(Vehicle vehicle)
         {
             if (ModelState.IsValid)
             {
-                await service.CreateAsync(vehicle);
+                var createVehicle = new CreateVehicleDTO
+                {
+                    UserId = vehicle.UserId,
+                    NumberPlate = vehicle.NumberPlate,
+                    Colour = vehicle.Colour,
+                    VehicleModelId = vehicle.VehicleModelId,
+                    VIN = vehicle.VIN
+                };
+
+                await service.CreateAsync(createVehicle);
                 return RedirectToAction(nameof(Index));
             }
 
@@ -138,6 +159,16 @@ namespace SmartGarage.Controllers
             await service.RemoveAsync(id);
 
             return RedirectToAction(nameof(Index));
+        }
+
+
+        [HttpGet("Pesho/{id}")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ManufacturerModels(int? id)
+        {
+            var models = await vehicleModelService.GetAll();
+
+            return Json(models.Where(x => x.ManufacturerId == id).ToList());
         }
     }
 }
