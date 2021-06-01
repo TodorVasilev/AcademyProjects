@@ -1,36 +1,51 @@
-﻿@model VehicleModelDTO
+﻿@model VehicleModelViewModel
 
 @{
     ViewData["Title"] = "Create";
-    Layout = null;
 }
 
-<div class="container">
-    <div class="col-md-12">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
+<div class="container col-md-5 mt-md-5" enctype="multipart/form-data" asp-action="Create">
+    <form asp-action="Create">
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger text-center" role="alert">
+                <p>@TempData["Error"]</p>
             </div>
-            <div class="form-group">
-                <label asp-for="ManufacturerId" class="control-label"></label>
-                <input asp-for="ManufacturerId" class="form-control" />
-                <span asp-validation-for="ManufacturerId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VehicleTypeId" class="control-label"></label>
-                <input asp-for="VehicleTypeId" class="form-control" />
-                <span asp-validation-for="VehicleTypeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary btn-block" />
-            </div>
-        </form>
-    </div>
+        }
+        <div asp-validation-summary="ModelOnly" class="text-danger" id="create"></div>
+        <div class="form-group">
+            <label asp-for="Name" class="control-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="Manufacturers"></label>
+        </div>
+        <div class="form-group">
+            <select asp-for="ManufacturerId" asp-items="Model.Manufacturers.ToSelectList()" class="form-control"></select>
+            <span asp-validation-for="ManufacturerId" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="VehicleTypes"></label>
+        </div>
+        <div class="form-group">
+            <select asp-for="VehicleTypeId" asp-items="Model.VehicleTypes.ToSelectList()" class="form-control"></select>
+            <span asp-validation-for="VehicleTypeId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary btn-block" />
+        </div>
+    </form>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+
+        $("#create").validate({
+            submitHandler: function (form) {
+                form.submit();
+            }
+        });
+    </script>
 }

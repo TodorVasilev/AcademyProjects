@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SmartGarage.Data.Models;
+using SmartGarage.Service.Contracts;
 using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.SharedDTOs;
 using SmartGarage.Service.Helpers;
 using SmartGarage.Service.ServiceContracts;
 using SmartGarage.ViewModels;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Controllers
@@ -14,17 +13,63 @@ namespace SmartGarage.Controllers
     public class VehicleModelController : Controller
     {
         private readonly IVehicleModelService service;
+        private readonly IVehicleTypeService vehicleTypeService;
+        private readonly IManufacturerService manufacturerService;
 
-        public VehicleModelController(IVehicleModelService service)
+        public VehicleModelController(IVehicleModelService service, IVehicleTypeService vehicleTypeService, IManufacturerService manufacturerService)
         {
             this.service = service;
+            this.vehicleTypeService = vehicleTypeService;
+            this.manufacturerService = manufacturerService;
         }
 
         [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Index(int pageNumber = 1)
         {
-            var pageSize = 1;
+            var pageSize = 5;
             return View(PaginatedList<GetVehicleModelDTO>.CreateAsync(await service.GetAll(), pageNumber, pageSize));
+        }
+
+        [Authorize(Roles = "Admin,Employee")]
+        public async Task<IActionResult> Create()
+        {
+            var viewModel = new VehicleModelViewModel
+            {
+                VehicleTypes = await vehicleTypeService.GetAll(),
+                Manufacturers = await manufacturerService.GetAll()
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Employee")]
+        public async Task<IActionResult> Create(VehicleModelViewModel vehicleModel)
+        {
+
+            if (vehicleModel.VehicleTypeId == default || vehicleModel.ManufacturerId == default)
+            {
+                TempData["Error"] = "Please select among the options";
+                return RedirectToAction("Create");
+            }
+
+            var vehicleModelDTO = new VehicleModelDTO
+            {
+                Name = vehicleModel.Name,
+                ManufacturerId = vehicleModel.ManufacturerId,
+                VehicleTypeId = vehicleModel.VehicleTypeId
+            };
+
+            try
+            {
+                await service.CreateAsync(vehicleModelDTO);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (System.Exception)
+            {
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         [Authorize(Roles = "Admin,Employee")]
@@ -37,68 +82,51 @@ namespace SmartGarage.Controllers
                 return NotFound();
             }
 
-            var viewModel = new VehicleModelEditViewModel
+            var viewModel = new VehicleModelViewModel
             {
                 Id = vehicleModel.Id,
                 Name = vehicleModel.ManafacturerName,
                 ManufacturerId = vehicleModel.ManufacturerId,
-                VehicleTypeId = vehicleModel.VehicleTypeId
+                VehicleTypeId = vehicleModel.VehicleTypeId,
+                VehicleTypes = await vehicleTypeService.GetAll(),
+                Manufacturers = await manufacturerService.GetAll()
             };
 
             return View(viewModel);
         }
 
-        [Authorize(Roles = "Admin,Employee")]
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin,Employee")]
-        public async Task<IActionResult> Create(VehicleModelDTO vehicleModel)
-        {
-            if (ModelState.IsValid)
-            {
-                await service.CreateAsync(vehicleModel);
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View(vehicleModel);
-        }
-
         [HttpPost]
         [AutoValidateAntiforgeryToken]
         [Authorize(Roles = "Admin,Employee")]
-        public async Task<IActionResult> Edit(int id, VehicleModelEditViewModel vehicleModel)
+        public async Task<IActionResult> Edit(int id, VehicleModelViewModel vehicleModel)
         {
+            if (vehicleModel.VehicleTypeId == default || vehicleModel.ManufacturerId == default)
+            {
+                TempData["Error"] = "Please select among the options";
+                return RedirectToAction("Edit");
+            }
+
             if (id != vehicleModel.Id)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            var updateInformation = new VehicleModelDTO
             {
-                var updateInformation = new VehicleModelDTO
-                {
-                    Name = vehicleModel.Name,
-                    ManufacturerId = vehicleModel.ManufacturerId,
-                    VehicleTypeId = vehicleModel.VehicleTypeId
-                };
+                Name = vehicleModel.Name,
+                ManufacturerId = vehicleModel.ManufacturerId,
+                VehicleTypeId = vehicleModel.VehicleTypeId
+            };
 
-                try
-                {
-                    await service.UpdateAsync(updateInformation, id);
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (System.Exception)
-                {
-                    return RedirectToAction("Edit", "VehicleModel");
-                }
+            try
+            {
+                await service.UpdateAsync(updateInformation, id);
+                return RedirectToAction(nameof(Index));
             }
-
-            return View(vehicleModel);
+            catch (System.Exception)
+            {
+                return RedirectToAction("Edit", "VehicleModel");
+            }
         }
     }
 }

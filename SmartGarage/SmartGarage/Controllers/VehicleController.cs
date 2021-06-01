@@ -56,14 +56,16 @@ namespace SmartGarage.Controllers
                 return NotFound();
             }
 
-            var vehicleToUpdate = new VehicleEditViewModel
+            var vehicleToUpdate = new VehicleViewModel
             {
                 Id = vehicle.Id,
                 VehicleModelId = vehicle.VehicleModelId,
                 UserId = vehicle.UserId,
                 VIN = vehicle.VIN,
                 NumberPlate = vehicle.NumberPlate,
-                Colour = vehicle.Colour
+                Colour = vehicle.Colour,
+                Manufacturers = await manufacturerService.GetAll(),
+                Models = await vehicleModelService.GetAll()
             };
 
             return View(vehicleToUpdate);
@@ -72,13 +74,8 @@ namespace SmartGarage.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Employee")]
-        public async Task<IActionResult> Edit(int id, VehicleEditViewModel updateInformation)
+        public async Task<IActionResult> Edit(int id, VehicleViewModel updateInformation)
         {
-            if (id != updateInformation.Id)
-            {
-                return NotFound();
-            }
-
             var vehicleInformation = new UpdateVehicleDTO
             {
                 VehicleModelId = updateInformation.VehicleModelId,
@@ -88,20 +85,15 @@ namespace SmartGarage.Controllers
                 Colour = updateInformation.Colour
             };
 
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    await service.UpdateAsync(vehicleInformation, id);
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (System.Exception)
-                {
-                    return RedirectToAction("Edit", "VehicleModel");
-                }
+                await service.UpdateAsync(vehicleInformation, id);
+                return RedirectToAction(nameof(Index));
             }
-
-            return View(updateInformation);
+            catch (System.Exception)
+            {
+                return RedirectToAction("Edit", "VehicleModel");
+            }
         }
 
         public async Task<IActionResult> Create()
@@ -118,24 +110,19 @@ namespace SmartGarage.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Employee")]
-        public async Task<IActionResult> Create(Vehicle vehicle)
+        public async Task<IActionResult> Create(VehicleViewModel vehicle)
         {
-            if (ModelState.IsValid)
+            var createVehicle = new CreateVehicleDTO
             {
-                var createVehicle = new CreateVehicleDTO
-                {
-                    UserId = vehicle.UserId,
-                    NumberPlate = vehicle.NumberPlate,
-                    Colour = vehicle.Colour,
-                    VehicleModelId = vehicle.VehicleModelId,
-                    VIN = vehicle.VIN
-                };
+                UserId = vehicle.UserId,
+                NumberPlate = vehicle.NumberPlate,
+                Colour = vehicle.Colour,
+                VehicleModelId = vehicle.VehicleModelId,
+                VIN = vehicle.VIN
+            };
 
-                await service.CreateAsync(createVehicle);
-                return RedirectToAction(nameof(Index));
-            }
-
-            return View(vehicle);
+            await service.CreateAsync(createVehicle);
+            return RedirectToAction(nameof(Index));
         }
 
         [Authorize(Roles = "Admin,Employee")]

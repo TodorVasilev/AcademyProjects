@@ -3,83 +3,90 @@
 
 @{
     ViewData["Title"] = "Create";
-    Layout = null;
 }
 
-<head>
     @*<script>
-        $(document).ready(function () {
-            var MakeDDL = $("#Make");
-            var ModelDDL = $("#Model");
-            ModelDDL.prop('disabled', false);
-            MakeDDL.change(function () {
-                if ($(this).val() == "0") {
-                    ModelDDL.prop('disabled', true);
-                    ModelDDL.val("0");
-                }
-                else {
-                    $.ajax({
-                        url: '/Vehicle/Pesho/' + $(this).val(),
-                        method: "GET",
-                         headers: {
-                            'RequestVerificationToken': '@AntiForgery.GetAndStoreTokens(Context).RequestToken'
-                        },
-                        success: function (data) {
-                            ModelDDL.prop('disabled', false);
-                            console.log("Success:");
-                            ModelDDL.empty();
-                            ModelDDL.append($('<option/>', { value: '0', text: '--Select Model--' }));
-                            $(data).each(function (index, item) {
-                                ModelDDL.append($('<option/>', { value: item.id, text: item.name }));
-                            });
-                        }
-                    });
-                }
+            $(document).ready(function () {
+                var MakeDDL = $("#Make");
+                var ModelDDL = $("#Model");
+                ModelDDL.prop('disabled', false);
+                MakeDDL.change(function () {
+                    if ($(this).val() == "0") {
+                        ModelDDL.prop('disabled', true);
+                        ModelDDL.val("0");
+                    }
+                    else {
+                        $.ajax({
+                            url: '/Vehicle/Pesho/' + $(this).val(),
+                            method: "GET",
+                             headers: {
+                                'RequestVerificationToken': '@AntiForgery.GetAndStoreTokens(Context).RequestToken'
+                            },
+                            success: function (data) {
+                                ModelDDL.prop('disabled', false);
+                                console.log("Success:");
+                                ModelDDL.empty();
+                                ModelDDL.append($('<option/>', { value: '0', text: '--Select Model--' }));
+                                $(data).each(function (index, item) {
+                                    ModelDDL.append($('<option/>', { value: item.id, text: item.name }));
+                                });
+                            }
+                        });
+                    }
+                });
             });
-        });
-    </script>*@
-</head>
-<div class="container" enctype="multipart/form-data" asp-action="Create">
-    <div class="col-md-12">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div>
-                <label asp-for="Manufacturers"></label>
-            </div>
-            <div class="form-group">
-                <select asp-for="ManufacturerId" asp-items="Model.Manufacturers.ToSelectList()" class="form-control" id="Make"></select>
-                <span asp-validation-for="ManufacturerId" class="text-danger"></span>
-            </div>
-            <div>
-                <label asp-for="Models"></label>
-            </div>
-            <div class="form-group">
-                <select asp-for="VehicleModelId" asp-items="Model.Models.ToSelectList()" class="form-control" id="Model"></select>
-                <span asp-validation-for="VehicleModelId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserId" class="control-label">Customer</label>
-                <input asp-for="UserId" class="form-control" />
-                <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="NumberPlate" class="control-label">Number Plate</label>
-                <input asp-for="NumberPlate" class="form-control" />
-                <span asp-validation-for="NumberPlate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="VIN" class="control-label"></label>
-                <input asp-for="VIN" class="form-control" />
-                <span asp-validation-for="VIN" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Colour" class="control-label"></label>
-                <input asp-for="Colour" class="form-control" />
-                <span asp-validation-for="Colour" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary btn-block" />
-            </div>
-        </form>
-    </div>
+        </script>*@
+<div class="container col-md-5 mt-md-5" enctype="multipart/form-data" asp-action="Create">
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger" id="create"></div>
+        <div>
+            <label asp-for="Manufacturers"></label>
+        </div>
+        <div class="form-group">
+            <select asp-for="ManufacturerId" asp-items="Model.Manufacturers.ToSelectList()" class="form-control" id="Make"></select>
+            <span asp-validation-for="ManufacturerId" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="Models"></label>
+        </div>
+        <div class="form-group">
+            <select asp-for="VehicleModelId" asp-items="Model.Models.ToSelectList()" class="form-control" id="Model"></select>
+            <span asp-validation-for="VehicleModelId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="UserId" class="control-label">Customer</label>
+            <input asp-for="UserId" class="form-control" />
+            <span asp-validation-for="UserId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="NumberPlate" class="control-label">Number Plate</label>
+            <input asp-for="NumberPlate" class="form-control" />
+            <span asp-validation-for="NumberPlate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="VIN" class="control-label"></label>
+            <input asp-for="VIN" class="form-control" />
+            <span asp-validation-for="VIN" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Colour" class="control-label"></label>
+            <input asp-for="Colour" class="form-control" />
+            <span asp-validation-for="Colour" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary btn-block" />
+        </div>
+    </form>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+
+        $("#create").validate({
+            submitHandler: function (form) {
+                form.submit();
+            }
+        });
+    </script>
+}
