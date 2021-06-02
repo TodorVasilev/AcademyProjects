@@ -20,7 +20,7 @@ namespace SmartGarage.Service.Contracts
 		Task<List<GetServiceDTO>> GetAllLinkedToCustomer(CustomerServicesFilterQueryObject filterObject, int userId);
 
 		Task<bool> RemoveAsync(int id);
-		Task<List<GetServiceDTO>> GetAvailableServices(int orderID)
+		Task<List<GetServiceDTO>> GetAvailableServices(int orderID);
 
 	}
 }
