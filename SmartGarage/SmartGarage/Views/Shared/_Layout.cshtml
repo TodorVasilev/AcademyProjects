@@ -2,88 +2,81 @@
 <html lang="en">
 
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<title>@ViewData["Title"] - SmartGarage</title>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
-	@*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap" rel="stylesheet">
-	<link rel="stylesheet" href="~/css/site.css" />
-	<style>
-		.navbar-brand {
-			margin-left: 150px;
-			margin-right: 150px;
-		}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - SmartGarage</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital@1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        .navbar-brand {
+            margin-left: 150px;
+            margin-right: 150px;
+        }
 
-		body {
-			background-image: url('images/Vehicles.jpg')
-		}
-	</style>
+        body {
+            background-image: url('images/Vehicles.jpg')
+        }
+    </style>
 </head>
 
 <body>
-	<header>
-		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark border-bottom box-shadow">
-			<div class="container-fluid">
-				<a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index">SmartGarage</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
-						aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-					<partial name="_LoginPartial" />
-					<ul class="navbar-nav flex-grow-1">
-						<li class="nav-item">
-							<a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-						</li>
-						@if (User.IsInRole("Employee") || User.IsInRole("Admin"))
-						{
-							<li class="nav-item">
-								<a class="nav-link text-white" asp-area="" asp-controller="Manufacturer"
-								   asp-action="Index">Manufacturers</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link link text-white" asp-area="" asp-controller="VehicleModel"
-								   asp-action="Index">VehicleModels</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link link text-white" asp-area="" asp-controller="Vehicle"
-								   asp-action="Index">Vehicles</a>
-							</li>
-
-							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle text-white " data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Customer</a>
-								<div class="dropdown-menu">
-									<a class="dropdown-item" asp-controller="User"
-									   asp-action="Index">All Customers</a>
-									<a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Register User</a>
-									<a class="dropdown-item" asp-area="Identity"
-									   asp-page="/Account/ForgotPassword">Customer Pass Reset</a>
-									<a class="dropdown-item" asp-controller="User"
-									   asp-action="UpdateAdmin">Update Customers</a>
-								</div>
-							</li>
-
-						}
-						@if (User.IsInRole("Customer"))
-						{
-							<li class="nav-item">
-								<a class="nav-link link text-white" asp-area="Identity"
-								   asp-page="/Account/ChangePassword">Customer Pass Reset</a>
-							</li>
-						}
-						@if (User.IsInRole("Employee") || User.IsInRole("Admin") || User.IsInRole("Customer"))
-						{
-							<li class="nav-item">
-								<a class="nav-link link text-white" asp-area="" asp-controller="Order"
-								   asp-action="Index">Order </a>
-							</li>
-						}
-						<li class="nav-item">
-							<a class="nav-link link text-dark" asp-area="" asp-controller="Service"
-							   asp-action="Index">Service </a>
-						</li>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark border-bottom box-shadow">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index">SmartGarage</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    <partial name="_LoginPartial" />
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        @if (User.IsInRole("Employee") || User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="" asp-controller="Manufacturer"
+                                   asp-action="Index">Manufacturers</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link link text-white" asp-area="" asp-controller="VehicleModel"
+                                   asp-action="Index">VehicleModels</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link link text-white" asp-area="" asp-controller="Vehicle"
+                                   asp-action="Index">Vehicles</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link link text-white" asp-area="Identity"
+                                   asp-page="/Account/ForgotPassword">Customer Pass Reset</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Register">Register User</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Customer"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link link text-white" asp-area="Identity"
+                                   asp-page="/Account/ChangePassword">Customer Pass Reset</a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Employee") || User.IsInRole("Admin") || User.IsInRole("Customer"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link link text-white" asp-area="" asp-controller="Order"
+                                   asp-action="Index">Order </a>
+                            </li>
+                        }
+                        <li class="nav-item">
+                            <a class="nav-link link text-dark" asp-area="" asp-controller="Service"
+                               asp-action="Index">Service </a>
+                        </li>
 
 					</ul>
 				</div>

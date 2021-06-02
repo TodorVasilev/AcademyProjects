@@ -13,7 +13,7 @@
 		</div>
 	</div>
 </body>
-
+                        </th>
 @section Scripts {
 	<script>
 		$(document).ready(function () {
@@ -63,4 +63,13 @@
 		});
 	</script>
 }
-
+                                        <a onclick="showInPopup('@Url.Action("Delete", "Vehicle", new { id = item.Id }, Context.Request.Scheme)', 'Delete Vehicle')" class="btn btn-outline-danger text-white">Delete</a>
+                        }
+                        <li class="page-item">
+                            <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex+1)" class="btn btn-outline-success text-white @nextDisabled">Next</a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        </div>
+    </body>

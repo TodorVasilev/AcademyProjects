@@ -17,15 +17,15 @@
 	}
 			</p>
 		</div>
-
+		</div>
 
 		<div id="partialView">
 			<partial name="Service_Table_Partial" model="@Model" />
 		</div>
-
+				<input type="text" name="name" placeholder="Search by Name" />
 	</div>
 </body>
-
+			</tr>
 @section Scripts {
 	<script>
 		$(document).ready(function () {
@@ -80,4 +80,15 @@
 			});
 		});
 	</script>
-}
+}							<a class="page-link" asp-action="Index" asp-route-pageNumber="@i">@i</a>
+						</li>
+					}
+				}
+				<li class="page-item">
+					<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex+1)"
+					   class="btn btn-primary @nextDisabled">Next</a>
+				</li>
+			}
+		</ul>
+	</nav>
+</div>
