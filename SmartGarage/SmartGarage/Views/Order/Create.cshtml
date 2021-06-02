@@ -4,13 +4,19 @@
 	ViewData["Title"] = "Create";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="container">
-
+<div class="container col-md-6">
 	<hr />
 	<div class="row">
-		<div class="col-md-12">
+		<div>
 			<form asp-action="Create">
 				<div asp-validation-summary="ModelOnly" class="text-danger" id="CreateOrder"></div>
+				<div class="col-md-12 p-0">
+					<div class="form-group">
+						<label asp-for="GarageName" class="control-label"></label>
+						<input asp-for="GarageName" class="form-control" />
+						<span asp-validation-for="GarageName" class="text-danger"></span>
+					</div>
+				</div>
 				<div class="row">
 					<div class="col-md-6">
 						<div class="form-group">
@@ -72,13 +78,6 @@
 					</div>
 					<div class="col-md-6">
 						<div class="form-group">
-							<label asp-for="GarageName" class="control-label"></label>
-							<input asp-for="GarageName" class="form-control" />
-							<span asp-validation-for="GarageName" class="text-danger"></span>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="form-group">
 							<label asp-for="NumberPlate" class="control-label"></label>
 							<input asp-for="NumberPlate" class="form-control" />
 							<span asp-validation-for="NumberPlate" class="text-danger"></span>
@@ -91,14 +90,14 @@
 							<span asp-validation-for="VIN" class="text-danger"></span>
 						</div>
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-6">
 						<div class="form-group">
 							<label asp-for="Colour" class="control-label"></label>
 							<input asp-for="Colour" class="form-control" />
 							<span asp-validation-for="Colour" class="text-danger"></span>
 						</div>
 					</div>
-					<div class="col-md-3">
+					<div class="col-md-6">
 						<div class="form-group">
 							<label asp-for="VehicleModelId" class="control-label"></label>
 							<input asp-for="VehicleModelId" class="form-control" />

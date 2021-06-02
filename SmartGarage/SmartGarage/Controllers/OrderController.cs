@@ -6,7 +6,9 @@ using SmartGarage.Data.Models;
 using SmartGarage.Service.Contracts;
 using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.GetDTOs;
+using SmartGarage.Service.DTOs.UpdateDTOs;
 using SmartGarage.Service.Helpers;
+using SmartGarage.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,5 +68,54 @@ namespace SmartGarage.Controllers
 
 			return View(createOrderDTO);
 		}
+		[ValidateAntiForgeryToken]
+		[Authorize(Roles = "Admin,Employee")]
+		[HttpPost()]
+		public async Task<IActionResult> Edit(int id, OrderEditViewModel orderEditViewModel)
+		{
+			if (ModelState.IsValid)
+			{
+				var updateInformation = new UpdateOrderDTO
+				{
+					OrderStatusId = orderEditViewModel.OrderStatusId,
+					VehicleId = orderEditViewModel.VehicleId,
+				};
+
+				try
+				{
+					await service.UpdateAsync(id, updateInformation);
+					return RedirectToAction(nameof(Index));
+				}
+				catch (System.Exception)
+				{
+					return RedirectToAction("Edit", "Service");
+				}
+			}
+
+			return View(orderEditViewModel);
+		}
+
+		[Authorize(Roles = "Admin,Employee")]
+		[HttpGet()]
+		public async Task<IActionResult> Edit(int id)
+		{
+			{
+				var orderModel = await service.GetAsync(id);
+
+				if (orderModel == null)
+				{
+					return NotFound();
+				}
+
+				var viewModel = new OrderEditViewModel
+				{
+					OrderStatusId = orderModel.OrderStatusId,
+					VehicleId = orderModel.VehicleId,
+				};
+
+				return View(viewModel);
+			}
+		}
+
 	}
 }

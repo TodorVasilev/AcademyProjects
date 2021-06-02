@@ -116,18 +116,17 @@ namespace SmartGarage.Service
 			{
 				return false;
 			}
-			if (updateOrder.GarageId != 0)
-			{
-				orderToUpdate.GarageId = updateOrder.GarageId;
-			}
+			
 			if (updateOrder.OrderStatusId != 0)
 			{
 				orderToUpdate.OrderStatusId = updateOrder.OrderStatusId;
 			}
-			if (updateOrder.FinishDate.Value >= orderToUpdate.ArrivalDate.Date && updateOrder.FinishDate.Value != null)
+
+			if (orderToUpdate.OrderStatusId==3)
 			{
-				orderToUpdate.FinishDate = updateOrder.FinishDate;
+				orderToUpdate.FinishDate = System.DateTime.Now;
 			}
+
 			if (updateOrder.VehicleId != 0)
 			{
 				orderToUpdate.VehicleId = updateOrder.VehicleId;

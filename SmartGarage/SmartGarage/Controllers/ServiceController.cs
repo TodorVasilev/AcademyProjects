@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace SmartGarage.Controllers
 {
+
 	public class ServiceController : Controller
 	{
 		private readonly IServiceService service;
@@ -81,9 +82,9 @@ namespace SmartGarage.Controllers
 			return View(serviceDTO);
 		}
 
-		[HttpPost("edit/{id}")]
-		[ValidateAntiForgeryToken]
+
 		[Authorize(Roles = "Admin,Employee")]
+		[HttpPost()]
 		public async Task<IActionResult> Edit(int id, ServiceEditViewModel serviceModel)
 		{
 			if (ModelState.IsValid)
@@ -107,9 +108,9 @@ namespace SmartGarage.Controllers
 
 			return View(serviceModel);
 		}
-
+		
 		[Authorize(Roles = "Admin,Employee")]
-		[HttpGet("edit/{id}")]
+		[HttpGet()]
 		public async Task<IActionResult> Edit(int id)
 		{
 			{

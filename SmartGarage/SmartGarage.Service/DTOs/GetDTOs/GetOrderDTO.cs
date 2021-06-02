@@ -60,17 +60,6 @@ namespace SmartGarage.Service.DTOs.GetDTOs
 		public List<GetServiceDTO> Services { get; set; }
 		[DisplayName("Total Price:")]
 		public decimal TotalPrice { get; set; }
-
-
-
-
-
-
-
-
-
-
-
-
+		public object Name { get; set; }
 	}
 }
