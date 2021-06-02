@@ -72,6 +72,17 @@ namespace SmartGarage.Service
 				.ToListAsync();
 		}
 
+		public async Task<List<GetServiceDTO>> GetAvailableServices(int orderID)
+		{
+			var services = context.Services
+				  .Where(s => !s.IsDeleted)
+				  .AsQueryable();
+
+			var result=services.Where(x => !x.ServiceOrder.Any(s => s.OrderId == orderID));
+
+			return await result.Select(x => new GetServiceDTO(x)).ToListAsync();
+
+		}
 		//Gets a service with specific id.
 		public async Task<GetServiceDTO> GetAsync(int id)
 		{

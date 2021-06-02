@@ -18,13 +18,15 @@ namespace SmartGarage.Controllers
 {
 	public class OrderController : Controller
 	{
-		private readonly IOrderService service;
+		private readonly IOrderService orderService;
 		private readonly UserManager<User> userManager;
+		private readonly IServiceService serviceService;
 
-		public OrderController(IOrderService service, UserManager<User> userManager)
+		public OrderController(IOrderService orderService, UserManager<User> userManager, IServiceService serviceService)
 		{
-			this.service = service;
+			this.orderService = orderService;
 			this.userManager = userManager;
+			this.serviceService = serviceService;
 		}
 
 		public async Task<IActionResult> Index(string name, int pageNumber = 1)
@@ -32,7 +34,7 @@ namespace SmartGarage.Controllers
 			var pageSize = 10;
 			var user = await userManager.FindByNameAsync(User.Identity.Name);
 
-			var orders = await service.GetAll(user, name);
+			var orders = await orderService.GetAll(user, name);
 
 			return View(PaginatedList<GetOrderDTO>.CreateAsync(orders, pageNumber, pageSize));
 		}
@@ -40,7 +42,7 @@ namespace SmartGarage.Controllers
 		[HttpGet()]
 		public async Task<IActionResult> Details(int id, [FromQuery] string currency = "EUR")
 		{
-			var order = await service.GetAsync(id, currency);
+			var order = await orderService.GetAsync(id, currency);
 
 			if (order == null)
 			{
@@ -62,7 +64,7 @@ namespace SmartGarage.Controllers
 		{
 			if (ModelState.IsValid)
 			{
-				await service.CreateAsync(createOrderDTO);
+				await orderService.CreateAsync(createOrderDTO);
 				return RedirectToAction(nameof(Index));
 			}
 
@@ -83,7 +85,7 @@ namespace SmartGarage.Controllers
 
 				try
 				{
-					await service.UpdateAsync(id, updateInformation);
+					await orderService.UpdateAsync(id, updateInformation);
 					return RedirectToAction(nameof(Index));
 				}
 				catch (System.Exception)
@@ -100,7 +102,7 @@ namespace SmartGarage.Controllers
 		public async Task<IActionResult> Edit(int id)
 		{
 			{
-				var orderModel = await service.GetAsync(id);
+				var orderModel = await orderService.GetAsync(id);
 
 				if (orderModel == null)
 				{
@@ -117,5 +119,24 @@ namespace SmartGarage.Controllers
 			}
 		}
 
+		[Authorize(Roles = "Admin,Employee")]
+		[HttpGet()]
+		public async Task<IActionResult> EditServices(int id)
+		{
+			{
+				var order = await orderService.GetAsync(id);
+				var model = new ServiceOrderViewModel
+				{
+					UsedServices = order.Services.ToList(),
+					AvailableServices = serviceService.GetAvailableServices(order.Id).Result,
+				};
+				if (model == null)
+				{
+					return NotFound();
+				}
+
+				return View(model);
+			}
+		}
 	}
 }

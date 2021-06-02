@@ -7,18 +7,20 @@ using System.Threading.Tasks;
 
 namespace SmartGarage.Service.Contracts
 {
-    public interface IServiceService
-    {
-        Task<List<GetServiceDTO>> GetAll(ServiceFilterQueryObject filterObject);
+	public interface IServiceService
+	{
+		Task<List<GetServiceDTO>> GetAll(ServiceFilterQueryObject filterObject);
 
-        Task<GetServiceDTO> GetAsync(int id);
+		Task<GetServiceDTO> GetAsync(int id);
 
-        Task<GetServiceDTO> CreateAsync(CreateServiceDTO serviceInformation);
+		Task<GetServiceDTO> CreateAsync(CreateServiceDTO serviceInformation);
 
-        Task<bool> UpdateAsync(UpdateServiceDTO updateInformation, int id);
+		Task<bool> UpdateAsync(UpdateServiceDTO updateInformation, int id);
 
-        Task<List<GetServiceDTO>> GetAllLinkedToCustomer(CustomerServicesFilterQueryObject filterObject, int userId);
+		Task<List<GetServiceDTO>> GetAllLinkedToCustomer(CustomerServicesFilterQueryObject filterObject, int userId);
 
-        Task<bool> RemoveAsync(int id);
-    }
+		Task<bool> RemoveAsync(int id);
+		Task<List<GetServiceDTO>> GetAvailableServices(int orderID)
+
+	}
 }
