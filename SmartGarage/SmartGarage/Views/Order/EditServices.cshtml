@@ -2,6 +2,13 @@
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery AntiForgery
 
 
+<style>
+	tbody {
+		flex: 1 1 auto;
+		display: block;
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
 
 <div class="container col-md-5 mt-md-2 mb-md-5" enctype="multipart/form-data" asp-action="EditServices">
 	<h4>Order</h4>
@@ -42,7 +49,7 @@
 			<select asp-for="AvailableServiceId" asp-items="Model.AvailableServices.ToSelectList()" class="form-control" id="Make"></select>
 			<span asp-validation-for="AvailableServiceId" class="text-danger"></span>
 		</div>
-		<div class="form-group ">
+		<div class="form-group ">			
 			<input type="hidden" asp-for="OrderId" class="form-control" />
 			<span asp-validation-for="OrderId" class="text-danger"></span>
 		</div>
@@ -59,29 +66,29 @@
 				<th></th>
 				<th>
 					<p>Price</p>
-				</th>
+				</th>				
 				<th></th>
 				<th></th>
 			</tr>
 		</thead>
 		<tbody>
-			@{ int count = 1;
+				@{ int count = 1;
 
-				foreach (var item in Model.UsedServices)
-				{
-					<tr class="table-active">
-						<td class="w-25">@count</td>
-						<td>@item.Name</td>
-						<td>@Math.Round(item.Price, 2) Euro</td>
-						<td>
+					foreach (var item in Model.UsedServices)
+					{
+						<tr class="table-active">
+							<td class="w-25">@count</td>
+							<td>@item.Name</td>
+							<td>@Math.Round(item.Price, 2) Euro</td>
+							<td>								
 							<a class="btn btn-danger text-white" href="/Order/DeleteService?orderId=@Model.OrderId&serviceId=@item.Id">Delete</a>
-						</td>
-					</tr>
-					count++;
+							</td>
+						</tr>
+						count++;
+					}
 				}
-			}
-		</tbody>
-	</table>
+			</tbody>
+		</table>
 	<dl class="row">
 		<dt class="col-sm-5">
 			@Html.DisplayNameFor(model => model.TotalPrice)
