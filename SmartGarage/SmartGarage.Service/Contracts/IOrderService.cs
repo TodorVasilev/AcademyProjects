@@ -18,5 +18,9 @@ namespace SmartGarage.Service.Contracts
 		Task<GetOrderDTO> GetAsync(int id, string currency = "EUR");
 
 		Task<bool> UpdateAsync(int id, UpdateOrderDTO updateOrder);
+
+		Task<bool> DeleteService(ServiceOrder serviceOrder);
+
+		Task<bool> AddService(ServiceOrder serviceOrder);
 	}
 }

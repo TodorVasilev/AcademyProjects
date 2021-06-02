@@ -123,20 +123,51 @@ namespace SmartGarage.Controllers
 		[HttpGet()]
 		public async Task<IActionResult> EditServices(int id)
 		{
+			var order = await orderService.GetAsync(id);
+			var model = new ServiceOrderViewModel
 			{
-				var order = await orderService.GetAsync(id);
-				var model = new ServiceOrderViewModel
-				{
-					UsedServices = order.Services.ToList(),
-					AvailableServices = serviceService.GetAvailableServices(order.Id).Result,
-				};
-				if (model == null)
-				{
-					return NotFound();
-				}
-
-				return View(model);
+				OrderId = order.Id,
+				UsedServices = order.Services.ToList(),
+				AvailableServices = await serviceService.GetAvailableServices(order.Id),
+				ArrivalDate = order.ArrivalDate,
+				CustomerName = order.CustomerName,
+				OrderStatus = order.OrderStatus,
+				VehicleNumberPlate = order.VehicleNumberPlate
+			};
+			if (model == null)
+			{
+				return NotFound();
 			}
+
+			return View(model);
+		}
+
+		[Authorize(Roles = "Admin,Employee")]
+		[HttpPost()]
+		public async Task<IActionResult> AddServiceToOrder(ServiceOrderViewModel serviceOrderViewModel)
+
+		{
+			var serviceOrder = new ServiceOrder
+			{
+				OrderId = serviceOrderViewModel.OrderId,
+				ServiceId = serviceOrderViewModel.AvailableServiceId
+			};
+			await orderService.AddService(serviceOrder);		
+			return RedirectToAction("EditServices", new { id = serviceOrder.OrderId });
+		}
+
+		[Authorize(Roles = "Admin,Employee")]
+		[HttpDelete()]
+		public async Task<IActionResult> DeleteService(ServiceOrderViewModel serviceOrderViewModel)
+
+		{
+			var serviceOrder = new ServiceOrder
+			{
+				OrderId = serviceOrderViewModel.OrderId,
+				ServiceId = serviceOrderViewModel.AvailableServiceId
+			};
+			await orderService.DeleteService(serviceOrder);
+			return RedirectToAction("EditServices", new { id = serviceOrder.OrderId });
 		}
 	}
 }

@@ -39,25 +39,28 @@
 
 				foreach (var item in Model.ItemsCollection)
 				{
-					<tr>
-						<td>@count</td>
-						<td>@Html.DisplayFor(modelItem => item.ArrivalDate) </td>
-						<td>@Html.DisplayFor(modelItem => item.FinishDate)</td>
-						<td>@Html.DisplayFor(modelItem => item.Garage)</td>
-						<td>@Html.DisplayFor(modelItem => item.OrderStatus)</td>
-						<td>@Html.DisplayFor(modelItem => item.VehicleNumberPlate)</td>
-						@if (User.IsInRole("Employee") || User.IsInRole("Admin"))
-						{
-							<td>@Html.DisplayFor(modelItem => item.CustomerName)</td>
+						<tr>
+							<td>@count</td>
+							<td>@Html.DisplayFor(modelItem => item.ArrivalDate) </td>
+							<td>@Html.DisplayFor(modelItem => item.FinishDate)</td>
+							<td>@Html.DisplayFor(modelItem => item.Garage)</td>
+							<td>@Html.DisplayFor(modelItem => item.OrderStatus)</td>
+							<td>@Html.DisplayFor(modelItem => item.VehicleNumberPlate)</td>
+							@if (User.IsInRole("Employee") || User.IsInRole("Admin"))
+							{
+								<td>@Html.DisplayFor(modelItem => item.CustomerName)</td>
 
-						}
-						<td>
-							<a type="button" class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Details</a>
-						</td>
-						<td>
-							<a type="button" class="btn btn-light" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-						</td>
-					</tr>
+							}
+							<td>
+								<a type="button" class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Details</a>
+							</td>
+							<td>
+								<a type="button" class="btn btn-info" asp-action="EditServices" asp-route-id="@item.Id">AddServices</a>
+							</td>
+							<td>
+								<a type="button" class="btn btn-light" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+							</td>
+						</tr>
 					count++;
 				}
 			}

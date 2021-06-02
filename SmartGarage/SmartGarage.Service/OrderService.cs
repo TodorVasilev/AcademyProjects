@@ -200,9 +200,17 @@ namespace SmartGarage.Service
 			return true;
 		}
 
-		public async Task<bool> AddService(List<ServiceOrder> serviceOrder)
+		public async Task<bool> AddService(ServiceOrder serviceOrder)
 		{
 			await this.context.ServiceOrders.AddRangeAsync(serviceOrder);
+			await this.context.SaveChangesAsync();
+
+			return true;
+		}
+
+		public async Task<bool> DeleteService(ServiceOrder serviceOrder)
+		{
+			this.context.ServiceOrders.Remove(serviceOrder);
 			await this.context.SaveChangesAsync();
 
 			return true;
