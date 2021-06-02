@@ -5,7 +5,7 @@
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-        <li class="nav-item">
+        <li class="nav-item" style="margin-left:300px;">
             <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
         </li>
         <li class="nav-item">
@@ -13,12 +13,6 @@
                 <button type="submit" class="nav-link btn btn-link text-white">Logout</button>
             </form>
         </li>
-        @if (User.IsInRole("Employee") || User.IsInRole("Admin"))
-        {
-            <li class="nav-item">
-                <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Register">Register User</a>
-            </li>
-        }
     }
     else
     {
