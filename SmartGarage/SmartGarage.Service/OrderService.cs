@@ -132,6 +132,7 @@ namespace SmartGarage.Service
 				orderToUpdate.VehicleId = updateOrder.VehicleId;
 			}
 
+			this.context.Update(orderToUpdate);
 			await this.context.SaveChangesAsync();
 			return true;
 		}
