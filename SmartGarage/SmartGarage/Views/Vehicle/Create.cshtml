@@ -5,37 +5,6 @@
     ViewData["Title"] = "Create";
 }
 
-    @*<script>
-            $(document).ready(function () {
-                var MakeDDL = $("#Make");
-                var ModelDDL = $("#Model");
-                ModelDDL.prop('disabled', false);
-                MakeDDL.change(function () {
-                    if ($(this).val() == "0") {
-                        ModelDDL.prop('disabled', true);
-                        ModelDDL.val("0");
-                    }
-                    else {
-                        $.ajax({
-                            url: '/Vehicle/Pesho/' + $(this).val(),
-                            method: "GET",
-                             headers: {
-                                'RequestVerificationToken': '@AntiForgery.GetAndStoreTokens(Context).RequestToken'
-                            },
-                            success: function (data) {
-                                ModelDDL.prop('disabled', false);
-                                console.log("Success:");
-                                ModelDDL.empty();
-                                ModelDDL.append($('<option/>', { value: '0', text: '--Select Model--' }));
-                                $(data).each(function (index, item) {
-                                    ModelDDL.append($('<option/>', { value: item.id, text: item.name }));
-                                });
-                            }
-                        });
-                    }
-                });
-            });
-        </script>*@
 <div class="container col-md-5 mt-md-5" enctype="multipart/form-data" asp-action="Create">
     <form asp-action="Create">
         <div asp-validation-summary="ModelOnly" class="text-danger" id="create"></div>
@@ -81,6 +50,7 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="~/js/site.js"></script>
     <script>
 
         $("#create").validate({

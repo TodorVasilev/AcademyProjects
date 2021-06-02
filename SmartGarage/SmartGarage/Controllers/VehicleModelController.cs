@@ -27,7 +27,7 @@ namespace SmartGarage.Controllers
         [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Index(int pageNumber = 1)
         {
-            var pageSize = 5;
+            var pageSize = 10;
             return View(PaginatedList<GetVehicleModelDTO>.CreateAsync(await service.GetAll(), pageNumber, pageSize));
         }
 
@@ -103,7 +103,6 @@ namespace SmartGarage.Controllers
         {
             if (vehicleModel.VehicleTypeId == default || vehicleModel.ManufacturerId == default)
             {
-                TempData["Error"] = "Please select among the options";
                 return RedirectToAction("Edit");
             }
 

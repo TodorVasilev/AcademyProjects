@@ -29,7 +29,7 @@ namespace SmartGarage.Controllers
         [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Index(string name, int pageNumber = 1)
         {
-            var pageSize = 3;
+            var pageSize = 10;
             return View(PaginatedList<GetVehicleDTO>.CreateAsync(await service.GetAll(name), pageNumber, pageSize));
         }
 
@@ -148,10 +148,7 @@ namespace SmartGarage.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
-        [HttpGet("Pesho/{id}")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ManufacturerModels(int? id)
+        public async Task<IActionResult> VehicleModels(int? id)
         {
             var models = await vehicleModelService.GetAll();
 

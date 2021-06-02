@@ -5,33 +5,34 @@
     Layout = null;
 }
 
-<div class="container text-center">
-    <h3>
-        @Model.VehicleModel
-    </h3>
-    <div>
+
+<div class="card" style="width: 31rem;">
+    <img class="card-img-top" src="~/images/Mercedes.jpg" alt="Card image cap">
+    <div class="card-body">
         <p>Owner: @Model.Owner</p>
         <p>Colour: @Model.Colour</p>
         <p>VIN: @Model.VIN</p>
         <p>Number plate: @Model.NumberPlate</p>
     </div>
 </div>
-<div>
-    <button onclick="downloadPdf()">Download Page</button>
-</div>
 
-<script src="/js/html2pdf.bundle.min.js"></script>
-<script>
-    const downloadPdf = () => {
-        var element = document.getElementById('table');
-        var opt = {
-            margin: 1,
-            filename: 'myfiles.pdf',
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2 },
-            jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-        };
+@*<div>
+        <button onclick="downloadPdf()">Download Page</button>
+    </div>
 
-        html2pdf().from(element).set(opt).save();
-    }
-</script>
+    <script src="/js/html2pdf.bundle.min.js"></script>
+    <script>
+        const downloadPdf = () => {
+            var element = document.getElementById('table');
+            var opt = {
+                margin: 1,
+                filename: 'myfiles.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            html2pdf().from(element).set(opt).save();
+        }
+    </script>
+*@
