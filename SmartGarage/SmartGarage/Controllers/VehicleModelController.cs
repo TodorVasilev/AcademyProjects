@@ -96,25 +96,10 @@ namespace SmartGarage.Controllers
             return View(viewModel);
         }
 
-        [Authorize(Roles = "Admin,Employee")]
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(VehicleModelDTO vehicleModel)
-        {
-            if (vehicleModel.VehicleTypeId == default || vehicleModel.ManufacturerId == default)
-            {
-                return RedirectToAction("Edit");
-            }
-
         [HttpPost]
         [AutoValidateAntiforgeryToken]
         [Authorize(Roles = "Admin,Employee")]
-        public async Task<IActionResult> Edit(int id, VehicleModelEditViewModel vehicleModel)
+        public async Task<IActionResult> Edit(int id, VehicleModelViewModel vehicleModel)
         {
             if (id != vehicleModel.Id)
             {
