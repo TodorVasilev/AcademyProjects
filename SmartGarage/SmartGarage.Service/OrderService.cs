@@ -117,9 +117,9 @@ namespace SmartGarage.Service
 				return false;
 			}
 			
-			if (updateOrder.OrderStatusId != 0)
+			if (updateOrder.OrderStatusId !=null)
 			{
-				orderToUpdate.OrderStatusId = updateOrder.OrderStatusId;
+				orderToUpdate.OrderStatusId = (int)updateOrder.OrderStatusId;
 			}
 
 			if (orderToUpdate.OrderStatusId==3)
@@ -129,7 +129,7 @@ namespace SmartGarage.Service
 
 			if (updateOrder.VehicleId != 0)
 			{
-				orderToUpdate.VehicleId = updateOrder.VehicleId;
+				orderToUpdate.VehicleId = (int)updateOrder.VehicleId;
 			}
 
 			this.context.Update(orderToUpdate);
