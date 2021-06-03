@@ -33,6 +33,13 @@ namespace SmartGarage.Controllers
             return View(PaginatedList<GetVehicleDTO>.CreateAsync(await service.GetAll(name), pageNumber, pageSize));
         }
 
+        [HttpGet("Vehicle/Filter")]
+        public async Task<IActionResult> PartialView(string name, int pageNumber = 1)
+        {
+            var pageSize = 10;
+            return PartialView("Vehicle_Table_Partial", PaginatedList<GetVehicleDTO>.CreateAsync(await service.GetAll(name), pageNumber, pageSize));
+        }
+
         [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Details(int id)
         {
