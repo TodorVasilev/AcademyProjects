@@ -132,7 +132,8 @@ namespace SmartGarage.Controllers
 				ArrivalDate = order.ArrivalDate,
 				CustomerName = order.CustomerName,
 				OrderStatus = order.OrderStatus,
-				VehicleNumberPlate = order.VehicleNumberPlate
+				VehicleNumberPlate = order.VehicleNumberPlate,
+				TotalPrice=order.TotalPrice
 			};
 			if (model == null)
 			{
@@ -152,19 +153,20 @@ namespace SmartGarage.Controllers
 				OrderId = serviceOrderViewModel.OrderId,
 				ServiceId = serviceOrderViewModel.AvailableServiceId
 			};
-			await orderService.AddService(serviceOrder);		
+
+			await orderService.AddService(serviceOrder);
+			
 			return RedirectToAction("EditServices", new { id = serviceOrder.OrderId });
 		}
 
 		[Authorize(Roles = "Admin,Employee")]
-		[HttpDelete()]
-		public async Task<IActionResult> DeleteService(ServiceOrderViewModel serviceOrderViewModel)
-
+		[HttpGet()]
+		public async Task<IActionResult> DeleteService([FromQuery] int orderId, [FromQuery] int serviceId)
 		{
 			var serviceOrder = new ServiceOrder
 			{
-				OrderId = serviceOrderViewModel.OrderId,
-				ServiceId = serviceOrderViewModel.AvailableServiceId
+				OrderId = orderId,
+				ServiceId = serviceId
 			};
 			await orderService.DeleteService(serviceOrder);
 			return RedirectToAction("EditServices", new { id = serviceOrder.OrderId });

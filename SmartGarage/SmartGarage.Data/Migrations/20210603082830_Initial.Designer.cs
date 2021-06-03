@@ -10,7 +10,7 @@ using SmartGarage.Data;
 namespace SmartGarage.Data.Migrations
 {
     [DbContext(typeof(SmartGarageContext))]
-    [Migration("20210526103619_Initial")]
+    [Migration("20210603082830_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -264,18 +264,17 @@ namespace SmartGarage.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ArrivalDate = new DateTime(2021, 5, 27, 13, 36, 19, 256, DateTimeKind.Local).AddTicks(2141),
-                            FinishDate = new DateTime(2021, 5, 29, 13, 36, 19, 258, DateTimeKind.Local).AddTicks(3042),
+                            ArrivalDate = new DateTime(2021, 6, 1, 11, 28, 29, 697, DateTimeKind.Local).AddTicks(1942),
+                            FinishDate = new DateTime(2021, 6, 3, 11, 28, 29, 699, DateTimeKind.Local).AddTicks(3451),
                             GarageId = 1,
                             IsDeleted = false,
-                            OrderStatusId = 2,
+                            OrderStatusId = 3,
                             VehicleId = 1
                         },
                         new
                         {
                             Id = 2,
-                            ArrivalDate = new DateTime(2021, 5, 28, 13, 36, 19, 258, DateTimeKind.Local).AddTicks(3474),
-                            FinishDate = new DateTime(2021, 5, 31, 13, 36, 19, 258, DateTimeKind.Local).AddTicks(3489),
+                            ArrivalDate = new DateTime(2021, 5, 31, 11, 28, 29, 699, DateTimeKind.Local).AddTicks(4006),
                             GarageId = 1,
                             IsDeleted = false,
                             OrderStatusId = 1,
@@ -348,21 +347,21 @@ namespace SmartGarage.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "62bc0c26-1440-40ef-90c2-b5681e21b856",
+                            ConcurrencyStamp = "9e32e03d-2ca7-43fb-aad9-d167b56b9513",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "59fcd461-b54a-4c29-b79d-49323c00e164",
+                            ConcurrencyStamp = "be562afb-290c-4fb8-aa7c-af6a0d7c6a93",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
                             Id = 3,
-                            ConcurrencyStamp = "d1adbd15-1dbc-4f72-a9bb-4b4609f987cf",
+                            ConcurrencyStamp = "054755af-523d-427c-b82e-4f892662b35c",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
@@ -431,15 +430,29 @@ namespace SmartGarage.Data.Migrations
                             IsDeleted = false,
                             Name = "Computer diagnostic",
                             Price = 35.99m
+                        },
+                        new
+                        {
+                            Id = 7,
+                            IsDeleted = false,
+                            Name = "Fuel pump replacment",
+                            Price = 180.20m
+                        },
+                        new
+                        {
+                            Id = 8,
+                            IsDeleted = false,
+                            Name = "Diagnostic and endgine inspection",
+                            Price = 125.30m
                         });
                 });
 
             modelBuilder.Entity("SmartGarage.Data.Models.ServiceOrder", b =>
                 {
-                    b.Property<int>("ServiceId")
+                    b.Property<int?>("ServiceId")
                         .HasColumnType("int");
 
-                    b.Property<int>("OrderId")
+                    b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
                     b.HasKey("ServiceId", "OrderId");
@@ -570,7 +583,7 @@ namespace SmartGarage.Data.Migrations
                             AccessFailedCount = 0,
                             Address = "Sofia, Bulgaria",
                             Age = 37,
-                            ConcurrencyStamp = "93eaa674-a8e6-4b26-b3c5-363b7ce9de20",
+                            ConcurrencyStamp = "a78c9725-1d06-423b-887a-c7986097ebf0",
                             CurrentRole = "ADMIN",
                             DrivingLicenseNumber = "93302193",
                             Email = "smartgarage@gmail.com",
@@ -581,9 +594,9 @@ namespace SmartGarage.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "SMARTGARAGE@GMAIL.COM",
                             NormalizedUserName = "SMARTGARAGE",
-                            PasswordHash = "AQAAAAEAACcQAAAAECWBxtrBGWS/JKedv6GYBVxLAl/EogzpC5zFMJLIggq6v+4veQ6vkDkT0U+niMRGiQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECu7RNV9Qr/swdZbHxeUWxs94kA6jzC07euj0v/97mB6RiaTaB+z+Va3WiQoIKT/Rg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a7dc362c-3f1a-4374-8c60-dbe8f40d0c74",
+                            SecurityStamp = "3a38b858-79cf-407c-a369-653d2dfe0255",
                             TwoFactorEnabled = false,
                             UserName = "SmartGarage"
                         },
@@ -593,7 +606,7 @@ namespace SmartGarage.Data.Migrations
                             AccessFailedCount = 0,
                             Address = "Sofia, Bulgaria",
                             Age = 28,
-                            ConcurrencyStamp = "6061f929-517c-43f4-9d5c-0ec86473f16d",
+                            ConcurrencyStamp = "e388f298-dd22-4eba-9495-12ff1cfff988",
                             CurrentRole = "EMPLOYEE",
                             DrivingLicenseNumber = "3241219",
                             Email = "petar@test.com",
@@ -604,9 +617,9 @@ namespace SmartGarage.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "PETAR@TEST.COM",
                             NormalizedUserName = "PETARPETROV",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBxD9QPZt/oDuiExDBCdMIaD+ETqmcwOksh+1B9pVOCcmLy55wemzFEvGhZ/lAiXFA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECyuCAytxtv5YKi1Cl+TZyf8ZgXmey5CBSZ5ZH967iCt0UjXhXMDyfQzaQWweqsYXA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d4571749-7690-4638-82d9-bc6b63d0298f",
+                            SecurityStamp = "2f73988d-8282-452d-93bb-0f3343079c9f",
                             TwoFactorEnabled = false,
                             UserName = "PetarPetrov"
                         },
@@ -616,7 +629,7 @@ namespace SmartGarage.Data.Migrations
                             AccessFailedCount = 0,
                             Address = "Sofia, Bulgaria",
                             Age = 28,
-                            ConcurrencyStamp = "ef0d6b7e-11ff-47ab-b25e-2be61772c648",
+                            ConcurrencyStamp = "e4bc4167-90c9-4793-b3bc-2d76670f3b3a",
                             CurrentRole = "CUSTOMER",
                             DrivingLicenseNumber = "13302343",
                             Email = "firstcustomer@gmail.com",
@@ -627,9 +640,9 @@ namespace SmartGarage.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "FIRSTCUSTOMER@GMAIL.COM",
                             NormalizedUserName = "THEVERYFIRSTCUSTOMER",
-                            PasswordHash = "AQAAAAEAACcQAAAAEP0pSvRBuglDScjI7G0XBNBVI66KwzNKL6mAJt7n8Jn3i2Ksj8sX1E9YGXNLttR6Iw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMApkYaKcS8TtJu9JLMv3LnCQyqPC60IuUeGqLc4dc1igtnGGsdCCVQC7xEpSmageQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6f432f57-7cd9-4866-a7af-a32a24679b1c",
+                            SecurityStamp = "d4e9ab5a-bed8-47d2-ac04-12dae31711f0",
                             TwoFactorEnabled = false,
                             UserName = "TheVeryFirstCustomer"
                         },
@@ -639,7 +652,7 @@ namespace SmartGarage.Data.Migrations
                             AccessFailedCount = 0,
                             Address = "Burgas, Bulgaria",
                             Age = 40,
-                            ConcurrencyStamp = "22e113f2-8053-4f8e-bf17-4c7cf88c672e",
+                            ConcurrencyStamp = "cfac57f2-34e2-4a48-a1d6-f09cee8f1f3e",
                             CurrentRole = "CUSTOMER",
                             DrivingLicenseNumber = "73322193",
                             Email = "ivangeorgiev14@gmail.com",
@@ -650,9 +663,9 @@ namespace SmartGarage.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "IVANGEORGIEV14@GMAIL.COM",
                             NormalizedUserName = "IVANG",
-                            PasswordHash = "AQAAAAEAACcQAAAAEFh5Rk070j/7VIJ6ednRDgVF/Q7uO+SlWGL3vMK0RRbFAs9jgIoRp28MQykKvYAIIA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFbHTeQStd56DpNwZ46zNOKc3Kr20kXjL9hpzTAznAcf5+DECToH43NKEza4inEGzQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "38647bdd-af1b-4603-8d41-2420d44cb7e5",
+                            SecurityStamp = "9d1bad4c-1c21-4116-a43d-86309600edcd",
                             TwoFactorEnabled = false,
                             UserName = "IvanG"
                         },
@@ -662,7 +675,7 @@ namespace SmartGarage.Data.Migrations
                             AccessFailedCount = 0,
                             Address = "Blagoevgrad, Bulgaria",
                             Age = 22,
-                            ConcurrencyStamp = "426130b2-0548-4a6c-a330-1521f322174d",
+                            ConcurrencyStamp = "bee6ed9a-d4bf-42bb-acbb-7100c1a1fde6",
                             CurrentRole = "CUSTOMER",
                             DrivingLicenseNumber = "91304433",
                             Email = "californication@gmail.com",
@@ -673,9 +686,9 @@ namespace SmartGarage.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "CALIFORNICATION@GMAIL.COM",
                             NormalizedUserName = "LOVETOACT",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGIcpW88F0HmktSsJSNo/Js1PKSCMz1pV9beimexJ9CqYYyQHrMk7feuyLUCaLSzWQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECiXBkVjZmGvXla9AKHkESBLlb0mnx4Nou7bGWx7MdZFcrsl+inM+qQoOikK9yHQPw==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9380daeb-f4f3-4799-b090-d674cf24a7e5",
+                            SecurityStamp = "1d9b1546-ec0e-4ece-bd32-5bd349067c2c",
                             TwoFactorEnabled = false,
                             UserName = "LoveToAct"
                         });
@@ -996,13 +1009,13 @@ namespace SmartGarage.Data.Migrations
                     b.HasOne("SmartGarage.Data.Models.Order", "Order")
                         .WithMany("ServiceOrder")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SmartGarage.Data.Models.Service", "Service")
                         .WithMany("ServiceOrder")
                         .HasForeignKey("ServiceId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 

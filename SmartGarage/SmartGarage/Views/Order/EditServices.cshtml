@@ -2,21 +2,8 @@
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery AntiForgery
 
 
-<style>
-	tbody {
-		flex: 1 1 auto;
-		display: block;
-		overflow-y: auto;
-		overflow-x: hidden;
-	}
 
-	tr {
-		width: 100%;
-		display: table;
-		table-layout: fixed;
-	}
-</style>
-<div class="container col-md-5 mt-md-5" enctype="multipart/form-data" asp-action="EditServices">
+<div class="container col-md-5 mt-md-2 mb-md-5" enctype="multipart/form-data" asp-action="EditServices">
 	<h4>Order</h4>
 	<hr />
 	<dl class="row">
@@ -55,7 +42,7 @@
 			<select asp-for="AvailableServiceId" asp-items="Model.AvailableServices.ToSelectList()" class="form-control" id="Make"></select>
 			<span asp-validation-for="AvailableServiceId" class="text-danger"></span>
 		</div>
-		<div class="form-group ">			
+		<div class="form-group ">
 			<input type="hidden" asp-for="OrderId" class="form-control" />
 			<span asp-validation-for="OrderId" class="text-danger"></span>
 		</div>
@@ -63,36 +50,46 @@
 			<input type="submit" value="Add" class="btn btn-primary btn-block" />
 		</div>
 	</form>
-	<table class="table table-dark table-hover text-white table-responsive">
+	<table class="table table-dark table-hover text-white table-responsive p-4 mb-3 col-md-10" style="height:300px;">
 		<thead>
 			<tr class="active" style="line-height: 3px;">
 				<th>
 					<p>Description</p>
 				</th>
+				<th></th>
 				<th>
 					<p>Price</p>
-				</th>				
+				</th>
+				<th></th>
+				<th></th>
 			</tr>
 		</thead>
-		
-			<tbody style="height: 350px;overflow-y: scroll;width:auto" >
-				@{ int count = 1;
+		<tbody>
+			@{ int count = 1;
 
-					foreach (var item in Model.UsedServices)
-					{
-						<tr class="table-active">
-							<td class="w-25">@count</td>
-							<td>@item.Name</td>
-							<td>@Math.Round(item.Price, 2) Euro</td>
-							<td>								
-									<a class="btn btn-danger text-white-50" asp-controller="Order" asp-action="DeleteService">Delete</a>							
-							</td>
-						</tr>
-						count++;
-					}
+				foreach (var item in Model.UsedServices)
+				{
+					<tr class="table-active">
+						<td class="w-25">@count</td>
+						<td>@item.Name</td>
+						<td>@Math.Round(item.Price, 2) Euro</td>
+						<td>
+							<a class="btn btn-danger text-white" href="/Order/DeleteService?orderId=@Model.OrderId&serviceId=@item.Id">Delete</a>
+						</td>
+					</tr>
+					count++;
 				}
-			</tbody>
-		</table>
+			}
+		</tbody>
+	</table>
+	<dl class="row">
+		<dt class="col-sm-5">
+			@Html.DisplayNameFor(model => model.TotalPrice)
+		</dt>
+		<dd class="col-sm-10">
+			@Html.DisplayFor(model => model.TotalPrice) Euro
+		</dd>
+	</dl>
 
 
 </div>

@@ -29,5 +29,8 @@ namespace SmartGarage.ViewModels
 		[DisplayName("Order Id:")]
 		public int OrderId { get; set; }
 
+		[DisplayName("Total price:")]
+		public decimal TotalPrice { get; set; }
+
 	}
 }

@@ -84,7 +84,7 @@
 								<tr class="table-active">
 									<td class="w-25">@count</td>
 									<td>@item.Name</td>
-									<td>@Math.Round(item.Price, 2)</td>
+									<td>@Math.Round(item.Price, 2)  @Model.Currency</td>
 								</tr>
 								count++;
 							}
@@ -96,7 +96,7 @@
 				@Html.DisplayNameFor(model => model.TotalPrice)
 			</dt>
 			<dd class="col-sm-10">
-				@Html.DisplayFor(model => model.TotalPrice)
+				@Html.DisplayFor(model => model.TotalPrice) @Model.Currency
 			</dd>
 		</dl>
 	</div>

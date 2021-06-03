@@ -93,7 +93,7 @@ namespace SmartGarage.Service
 			}
 
 			result.TotalPrice *= currencyRate;
-
+			result.Currency = currency;
 			return result;
 		}
 
@@ -202,6 +202,10 @@ namespace SmartGarage.Service
 
 		public async Task<bool> AddService(ServiceOrder serviceOrder)
 		{
+			if (serviceOrder.OrderId==0|| serviceOrder.ServiceId==0)
+			{
+				return false;
+			}
 			await this.context.ServiceOrders.AddRangeAsync(serviceOrder);
 			await this.context.SaveChangesAsync();
 
@@ -210,6 +214,11 @@ namespace SmartGarage.Service
 
 		public async Task<bool> DeleteService(ServiceOrder serviceOrder)
 		{
+			if (serviceOrder.OrderId == 0 || serviceOrder.ServiceId == 0)
+			{
+				return false;
+			}
+
 			this.context.ServiceOrders.Remove(serviceOrder);
 			await this.context.SaveChangesAsync();
 
