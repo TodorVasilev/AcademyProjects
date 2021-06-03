@@ -48,7 +48,20 @@ namespace SmartGarage.Controllers
 
 		}
 
-		public async Task<IActionResult> Index(decimal? price, string name, int pageNumber = 1)
+
+		public async Task<IActionResult> Index()
+		{
+			int pageNumber = 1;
+			var pageSize = 10;
+			var filterService = new ServiceFilterQueryObject();
+
+			var services = await service.GetAll(filterService);
+
+			return View(PaginatedList<GetServiceDTO>.CreateAsync(services, pageNumber, pageSize));
+		}
+
+		[HttpGet("Service/Search")]
+		public async Task<IActionResult> PartialViewPager(decimal? price, string name, int pageNumber = 1)
 		{
 			var pageSize = 10;
 			var filterService = new ServiceFilterQueryObject
@@ -58,9 +71,8 @@ namespace SmartGarage.Controllers
 			};
 			var services = await service.GetAll(filterService);
 
-			return View(PaginatedList<GetServiceDTO>.CreateAsync(services, pageNumber, pageSize));
+			return PartialView("Service_Table_Partial", PaginatedList<GetServiceDTO>.CreateAsync(services, pageNumber, pageSize));
 		}
-
 
 		public IActionResult Create()
 		{
@@ -108,7 +120,7 @@ namespace SmartGarage.Controllers
 
 			return View(serviceModel);
 		}
-		
+
 		[Authorize(Roles = "Admin,Employee")]
 		[HttpGet()]
 		public async Task<IActionResult> Edit(int id)
