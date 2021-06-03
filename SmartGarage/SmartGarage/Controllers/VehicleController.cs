@@ -27,8 +27,10 @@ namespace SmartGarage.Controllers
         }
 
         [Authorize(Roles = "Admin,Employee")]
-        public async Task<IActionResult> Index(string name, int pageNumber = 1)
+        public async Task<IActionResult> Index()
         {
+            int pageNumber = 1;
+            string name = default;
             var pageSize = 10;
             return View(PaginatedList<GetVehicleDTO>.CreateAsync(await service.GetAll(name), pageNumber, pageSize));
         }
