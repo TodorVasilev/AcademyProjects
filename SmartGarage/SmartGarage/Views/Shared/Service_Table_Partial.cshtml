@@ -193,7 +193,11 @@
 			<li class="page-item">
 				<a href="#" class="btn btn-outline-success text-white @nextDisabled" id="next">Next</a>
 			</li>
-		}		
+		}
+		@if (User.IsInRole("Customer"))
+		{
+			<a class="btn btn-outline-primary" style="margin-left:270px" asp-action="IndexCustomer" role="button">My Services</a>
+		}
 	</ul>
 </nav>
 <input hidden id="page" value="@Model.PageIndex" />
