@@ -1,8 +1,11 @@
 ﻿@model PaginatedList<GetVehicleDTO>
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
 <body>
 	<div class="container mt-3 pt-2" style="background-color:#212529;">
 		<p class="text-white">
-			Customer name: <input type="text" name="name" id="name"/>
+			Customer name: <input type="text" name="name" id="name" />
 			<input type="submit" value="Filter" id="search" />
 		</p>
 		<div id="partialView">

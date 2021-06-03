@@ -29,8 +29,10 @@ namespace SmartGarage.Controllers
 			this.serviceService = serviceService;
 		}
 
-		public async Task<IActionResult> Index(string name, int pageNumber = 1)
+		public async Task<IActionResult> Index()
 		{
+			string name=default;
+			int pageNumber = 1;
 			var pageSize = 10;
 			var user = await userManager.FindByNameAsync(User.Identity.Name);
 
@@ -38,6 +40,19 @@ namespace SmartGarage.Controllers
 
 			return View(PaginatedList<GetOrderDTO>.CreateAsync(orders, pageNumber, pageSize));
 		}
+
+		[HttpGet("Order/Search")]
+		public async Task<IActionResult> IndexPartial(string name, int pageNumber = 1)
+		{
+			var pageSize = 10;
+			var user = await userManager.FindByNameAsync(User.Identity.Name);
+
+			var orders = await orderService.GetAll(user, name);
+
+			return PartialView("Order_Table_Partial",PaginatedList<GetOrderDTO>.CreateAsync(orders, pageNumber, pageSize));
+		}
+
+
 
 		[HttpGet()]
 		public async Task<IActionResult> Details(int id, [FromQuery] string currency = "EUR")
@@ -133,7 +148,7 @@ namespace SmartGarage.Controllers
 				CustomerName = order.CustomerName,
 				OrderStatus = order.OrderStatus,
 				VehicleNumberPlate = order.VehicleNumberPlate,
-				TotalPrice=order.TotalPrice
+				TotalPrice = order.TotalPrice
 			};
 			if (model == null)
 			{
@@ -155,7 +170,7 @@ namespace SmartGarage.Controllers
 			};
 
 			await orderService.AddService(serviceOrder);
-			
+
 			return RedirectToAction("EditServices", new { id = serviceOrder.OrderId });
 		}
 

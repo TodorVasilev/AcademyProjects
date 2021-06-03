@@ -1,203 +1,73 @@
 ﻿@model PaginatedList<GetOrderDTO>
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
-<div class="container">
-	@if (User.IsInRole("Employee") || User.IsInRole("Admin"))
-	{
-	<p>
-			<a asp-action="Create">Create Order</a>
-	</p>
-	}
-	<form asp-controller="Order" asp-action="Index">
-		<div class="form-actions no-color">
+<body>
+	<div class="container mt-3 pt-2" style="background-color:#212529;">
+		@if (User.IsInRole("Employee") || User.IsInRole("Admin"))
+		{
 			<p>
-				<input type="text" name="name" placeholder="Search by Name" />
-				<input type="submit" value="name" class="btn btn-outline-success" />
+				<a asp-action="Create" class="btn btn-outline-success">Create Order</a>
 			</p>
+		}
+		<p>
+			<input type="text" name="name" placeholder="Search by Name" id="name" />
+			<input type="submit" value="Search" class="btn btn-outline-success" id="search" />
+		</p>
+		<div id="partialView">
+			<partial name="Order_Table_Partial" model="@Model" />
 		</div>
-	</form>
+	</div>
+</body>
 
-	<table class="table table-hover">
-		<thead>
-			<tr>
-				<th scope="col"> #</th>
-				<th scope="col">Arrival Date</th>
-				<th scope="col">Finish Date</th>
-				<th scope="col">Garage Name</th>
-				<th scope="col">Status</th>
-				<th scope="col">Car Numeber Plate</th>
-				@if (User.IsInRole("Employee") || User.IsInRole("Admin"))
-				{
-					<th scope="col">Owner Email</th>
-				}
-				<th></th>
-				<th></th>
-			</tr>
-		</thead>
-		<tbody>
-			@{
-				int count = 1 + (Model.PageIndex - 1) * Model.PageSize;
+@section Scripts {
+	<script>
+		$(document).ready(function () {
+			$(document).on("click", "#search", function () {
+				var name = $('#name').val();
+				$.ajax({
+					url: "/Order/Search",
+					type: "GET",
+					data: {
+						name: name
+					}
+				})
+					.done(function (partialViewResult) {
+						$("#partialView").html(partialViewResult);
+					});
+			});
+			$(document).on("click", "#next", function () {
+				var name = $('#name').val();
+				var page = $('#page').val();
+				$.ajax({
+					url: "/Order/Search",
+					type: "GET",
+					data: {
+						name: name,
+						pageNumber: parseInt(page) + 1
+					}
+				})
+					.done(function (partialViewResult) {
+						$("#partialView").html(partialViewResult);
+					});
+			});
+			$(document).on("click", "#prev", function () {
+				var name = $('#name').val();
+				var page = $('#page').val();
+				$.ajax({
+					url: "/Order/Search",
+					type: "GET",
+					data: {
+						name: name,
+						pageNumber: parseInt(page) - 1
+					}
+				})
+					.done(function (partialViewResult) {
+						$("#partialView").html(partialViewResult);
+					});
+			});
+		});
+	</script>
+}
 
-				foreach (var item in Model.ItemsCollection)
-				{
-						<tr>
-							<td>@count</td>
-							<td>@Html.DisplayFor(modelItem => item.ArrivalDate) </td>
-							<td>@Html.DisplayFor(modelItem => item.FinishDate)</td>
-							<td>@Html.DisplayFor(modelItem => item.Garage)</td>
-							<td>@Html.DisplayFor(modelItem => item.OrderStatus)</td>
-							<td>@Html.DisplayFor(modelItem => item.VehicleNumberPlate)</td>
-							@if (User.IsInRole("Employee") || User.IsInRole("Admin"))
-							{
-								<td>@Html.DisplayFor(modelItem => item.CustomerName)</td>
-
-							}
-							<td>
-								<a type="button" class="btn btn-info" asp-action="Details" asp-route-id="@item.Id">Details</a>
-							</td>
-							<td>
-								<a type="button" class="btn btn-info" asp-action="EditServices" asp-route-id="@item.Id">AddServices</a>
-							</td>
-							<td>
-								<a type="button" class="btn btn-light" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-							</td>
-						</tr>
-					count++;
-				}
-			}
-		</tbody>
-	</table>
-
-	@{
-		var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
-		var nextDisabled = !Model.HasNextPage ? "disabled" : "";
-	}
-	<nav aria-label="...">
-		<ul class="pagination">
-			@if (Model.PageIndex > 4 && Model.PageIndex + 3 < Model.TotalPages)
-			{
-				<li class="page-item disabled">
-					<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex-1)"
-					   class="btn btn-primary @prevDisabled">Previous</a>
-				</li>
-				<li class="page-item">
-					<a class="page-link" asp-action="Index" asp-route-pageNumber="">1</a>
-				</li>
-				<li class="page-item">
-					<a class="page-link" href="#!">...</a>
-				</li>
-				<li class="page-item">
-					<a class="page-link" asp-action="Index"
-					   asp-route-pageNumber="@(Model.PageIndex-1)">@(Model.PageIndex-1)</a>
-				</li>
-				<li class="page-item active">
-					<a class="page-link" asp-action="Index" asp-route-pageNumber="@Model.PageIndex">@Model.PageIndex</a>
-				</li>
-				<li class="page-item">
-					<a class="page-link" asp-action="Index"
-					   asp-route-pageNumber="@(Model.PageIndex+1)">@(Model.PageIndex+1)</a>
-				</li>
-				<li class="page-item">
-					<a class="page-link" href="#!">...</a>
-				</li>
-				<li class="page-item">
-					<a class="page-link" asp-action="Index" asp-route-pageNumber="@Model.TotalPages">@Model.TotalPages</a>
-				</li>
-				<li class="page-item">
-					<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex+1)"
-					   class="btn btn-primary @nextDisabled">Next</a>
-				</li>
-
-			}
-			else if (Model.PageIndex > 4 && Model.PageIndex + 3 >= Model.TotalPages)
-			{
-				<li class="page-item disabled">
-					<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex-1)"
-					   class="btn btn-primary @prevDisabled">Previous</a>
-				</li>
-				<li class="page-item">
-					<a class="page-link" asp-action="Index" asp-route-pageNumber="">1</a>
-				</li>
-				<li class="page-item">
-					<a class="page-link" href="#!">...</a>
-				</li>
-				@for (int i = Model.TotalPages - 3; i <= Model.TotalPages; i++)
-				{
-					@if (Model.PageIndex == i)
-					{
-						<li class="page-item active">
-							<a class="page-link" asp-action="Index" asp-route-pageNumber="@i">@i</a>
-						</li>
-					}
-					else
-					{
-						<li class="page-item">
-							<a class="page-link" asp-action="Index" asp-route-pageNumber="@i">@i</a>
-						</li>
-					}
-				}
-				<li class="page-item">
-					<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex+1)"
-					   class="btn btn-primary @nextDisabled">Next</a>
-				</li>
-			}
-			else if (Model.TotalPages > 4 && Model.PageIndex < 5)
-			{
-				<li class="page-item disabled">
-					<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex-1)"
-					   class="btn btn-primary @prevDisabled">Previous</a>
-				</li>
-				@for (int i = 1; i <= 4; i++)
-				{
-					@if (Model.PageIndex == i)
-					{
-						<li class="page-item active">
-							<a class="page-link" asp-action="Index" asp-route-pageNumber="@i">@i</a>
-						</li>
-					}
-					else
-					{
-						<li class="page-item">
-							<a class="page-link" asp-action="Index" asp-route-pageNumber="@i">@i</a>
-						</li>
-					}
-				}
-				<li class="page-item">
-					<a class="page-link" href="#!">...</a>
-				</li>
-				<li>
-					<a class="page-link" asp-action="Index" asp-route-pageNumber="@Model.TotalPages">@Model.TotalPages</a>
-				</li>
-				<li class="page-item">
-					<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex+1)"
-					   class="btn btn-primary @nextDisabled">Next</a>
-				</li>
-			}
-			else
-			{
-				<li class="page-item disabled">
-					<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex-1)"
-					   class="btn btn-primary @prevDisabled">Previous</a>
-				</li>
-				@for (int i = 1; i <= Model.TotalPages; i++)
-				{
-					@if (Model.PageIndex == i)
-					{
-						<li class="page-item active">
-							<a class="page-link" asp-action="Index" asp-route-pageNumber="@i">@i</a>
-						</li>
-					}
-					else
-					{
-						<li class="page-item">
-							<a class="page-link" asp-action="Index" asp-route-pageNumber="@i">@i</a>
-						</li>
-					}
-				}
-				<li class="page-item">
-					<a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex+1)"
-					   class="btn btn-primary @nextDisabled">Next</a>
-				</li>
-			}
-		</ul>
-	</nav>
-</div>
