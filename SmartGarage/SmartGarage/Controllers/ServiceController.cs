@@ -27,7 +27,25 @@ namespace SmartGarage.Controllers
 		}
 
 
-		public async Task<IActionResult> IndexCustomer(DateTime date, string numberPlate, int pageNumber = 1)
+		public async Task<IActionResult> IndexCustomer( )
+		{
+			var filterForCustomer = new CustomerServicesFilterQueryObject();
+
+			int pageNumber = 1;
+			var pageSize = 10;
+
+			var user = await userManager.GetUserAsync(HttpContext.User);
+
+			var services = await service.GetAllLinkedToCustomer(filterForCustomer, user.Id);
+			if (services == null)
+			{
+				return View();
+			}
+			return View(PaginatedList<GetServiceDTO>.CreateAsync(services, pageNumber, pageSize));
+
+		}
+		[HttpGet("Service/SearchCustomer")]
+		public async Task<IActionResult> PartialForCustomer(DateTime date, string numberPlate, int pageNumber = 1)
 		{
 			var filterForCustomer = new CustomerServicesFilterQueryObject
 			{
@@ -40,11 +58,8 @@ namespace SmartGarage.Controllers
 			var user = await userManager.GetUserAsync(HttpContext.User);
 
 			var services = await service.GetAllLinkedToCustomer(filterForCustomer, user.Id);
-			if (services == null)
-			{
-				return View();
-			}
-			return View(PaginatedList<GetServiceDTO>.CreateAsync(services, pageNumber, pageSize));
+	
+			return PartialView("ServiceCustomer_Table_Partial", PaginatedList<GetServiceDTO>.CreateAsync(services, pageNumber, pageSize));
 
 		}
 
@@ -61,7 +76,7 @@ namespace SmartGarage.Controllers
 		}
 
 		[HttpGet("Service/Search")]
-		public async Task<IActionResult> PartialViewPager(decimal? price, string name, int pageNumber = 1)
+		public async Task<IActionResult> PartialForAdminEmployee(decimal? price, string name, int pageNumber = 1)
 		{
 			var pageSize = 10;
 			var filterService = new ServiceFilterQueryObject

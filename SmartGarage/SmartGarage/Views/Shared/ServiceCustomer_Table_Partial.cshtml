@@ -1,5 +1,7 @@
 ﻿@model PaginatedList<GetServiceDTO>
 
+
+
 <table class="table table-dark">
 	<thead>
 		<tr style="line-height: 3px;" class="active">
@@ -11,14 +13,7 @@
 			</th>
 			<th>
 				<p>Price</p>
-			</th>
-
-			@if (User.IsInRole("Admin") || User.IsInRole("Employee"))
-			{
-				<th>
-					<a class="btn btn-outline-success" asp-action="Create" role="button">Create</a>
-				</th>
-			}
+			</th>			
 		</tr>
 	</thead>
 	<tbody>
@@ -34,17 +29,7 @@
 							@count
 						</th>
 						<td>@Html.DisplayFor(modelItem => item.Name)</td>
-						<td>@Html.DisplayFor(modelItem => item.Price)</td>
-
-						@if (User.IsInRole("Admin") || User.IsInRole("Employee"))
-						{
-							<td>
-								<a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-							</td>
-							<td>
-								<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-							</td>
-						}
+						<td>@Html.DisplayFor(modelItem => item.Price)</td>						
 					</tr>
 				}
 				else
@@ -55,16 +40,7 @@
 						</th>
 						<td>@Html.DisplayFor(modelItem => item.Name)</td>
 						<td>@Html.DisplayFor(modelItem => item.Price)</td>
-						@if (User.IsInRole("Admin") || User.IsInRole("Employee"))
-						{
-							<td>
-								<a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-							</td>
-							<td>
-								<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-							</td>
-						}
-
+						
 					</tr>
 				}
 				count++;
@@ -137,7 +113,7 @@
 				}
 			}
 			<li class="page-item">
-				<a href="#" class="btn btn-outline-success text-white @nextDisabled" id="next" >Next</a>
+				<a href="#" class="btn btn-outline-success text-white @nextDisabled" id="next">Next</a>
 			</li>
 		}
 		else if (Model.TotalPages > 4 && Model.PageIndex < 5)
@@ -173,7 +149,7 @@
 		else
 		{
 			<li class="page-item disabled">
-				<a  href="#" class="btn btn-outline-success text-white @prevDisabled" id="prev">Previous</a>
+				<a href="#" class="btn btn-outline-success text-white @prevDisabled" id="prev">Previous</a>
 			</li>
 			@for (int i = 1; i <= Model.TotalPages; i++)
 			{
@@ -193,7 +169,7 @@
 			<li class="page-item">
 				<a href="#" class="btn btn-outline-success text-white @nextDisabled" id="next">Next</a>
 			</li>
-		}		
-	</ul>
+		}
+		</ul>
 </nav>
 <input hidden id="page" value="@Model.PageIndex" />
