@@ -7,7 +7,7 @@
 
 
 <div class="card" style="width: 31rem;">
-    <img class="card-img-top" src="~/images/Mercedes.jpg" alt="Card image cap">
+    <img class="card-img-top w-100" src="~/images/Mercedes.jpg" alt="Card image cap">
     <div class="card-body">
         <p>Owner: @Model.Owner</p>
         <p>Colour: @Model.Colour</p>
@@ -15,24 +15,3 @@
         <p>Number plate: @Model.NumberPlate</p>
     </div>
 </div>
-
-@*<div>
-        <button onclick="downloadPdf()">Download Page</button>
-    </div>
-
-    <script src="/js/html2pdf.bundle.min.js"></script>
-    <script>
-        const downloadPdf = () => {
-            var element = document.getElementById('table');
-            var opt = {
-                margin: 1,
-                filename: 'myfiles.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
-                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-            };
-
-            html2pdf().from(element).set(opt).save();
-        }
-    </script>
-*@

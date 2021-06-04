@@ -41,17 +41,17 @@ namespace SmartGarage.Areas.Identity.Pages.Account
 		public class InputModel
 		{
 			[Required]
-			[MinLength(2), MaxLength(20)]
+			[MinLength(5), MaxLength(20)]
 			[Display(Name = "User name")]
 			public string UserName { get; set; }
 
 			[Required]
-			[MinLength(2), MaxLength(20)]
+			[MinLength(5), MaxLength(20)]
 			[Display(Name = "First name")]
 			public string FirstName { get; set; }
 
 			[Required]
-			[MinLength(2), MaxLength(20)]
+			[MinLength(5), MaxLength(20)]
 			[Display(Name = "Family name")]
 			public string LastName { get; set; }
 

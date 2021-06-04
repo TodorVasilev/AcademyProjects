@@ -52,11 +52,10 @@
                                    asp-action="Index">Vehicles</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link link text-white" asp-area="Identity"
-                                   asp-page="/Account/ForgotPassword">Customer Pass Reset</a>
+                                <a onclick="showInPopup('Identity/Account/ForgotPassword')" class="nav-link text-white" text-white">Customer Pass Reset</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Register">Register User</a>
+                                <a onclick="showInPopup('Identity/Account/Register')" class="nav-link text-white" text-white">Register User</a>
                             </li>
                         }
                         @if (User.IsInRole("Customer"))
@@ -96,7 +95,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
                     <span aria-hidden="true">&times;</span>
                 </div>
-                <div class="modal-body p-0">
+                <div class="modal-body p-2">
                 </div>
             </div>
         </div>
