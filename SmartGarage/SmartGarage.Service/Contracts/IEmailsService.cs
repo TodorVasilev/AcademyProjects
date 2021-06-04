@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using SmartGarage.Service.Helpers;
+using System.Threading.Tasks;
 
 namespace SmartGarage.Service.ServiceContracts
 {
@@ -7,5 +8,7 @@ namespace SmartGarage.Service.ServiceContracts
         Task SendRegistrationEmail(string email, string template);
 
         Task ForgotenPassword(string email, string subject, string url);
+
+        Task RecieveEmail(RecieveEmailViewModel recieveEmailModel);
     }
 }

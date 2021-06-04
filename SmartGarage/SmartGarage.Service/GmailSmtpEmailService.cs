@@ -1,6 +1,8 @@
-﻿using SmartGarage.Service.ServiceContracts;
+﻿using SmartGarage.Service.Helpers;
+using SmartGarage.Service.ServiceContracts;
 using System.Net;
 using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Service
@@ -47,6 +49,32 @@ namespace SmartGarage.Service
                     smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                     smtp.EnableSsl = true;
                     mail.Attachments.Add(new Attachment(await new PdfService().GeneratePdf(), "TopPDF.pdf"));
+                    await smtp.SendMailAsync(mail);
+                }
+            }
+        }
+
+        public async Task RecieveEmail (RecieveEmailViewModel recieveEmailModel)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine($"Person Name: {recieveEmailModel.PersonName}");
+            sb.AppendLine($"Person E-mail: {recieveEmailModel.PersonEmail}");
+            sb.AppendLine($"Person Number: {recieveEmailModel.PhoneNumber}");
+            sb.AppendLine($"Message {recieveEmailModel.Message}");
+
+            using (MailMessage mail = new MailMessage())
+            {
+                mail.From = new MailAddress(recieveEmailModel.PersonEmail);
+                mail.To.Add(fromEmail);
+                mail.Subject = "New message";
+                mail.Body = sb.ToString();
+                mail.IsBodyHtml = true;
+
+                using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    smtp.Credentials = new NetworkCredential(fromEmail, password);
+                    smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    smtp.EnableSsl = true;
                     await smtp.SendMailAsync(mail);
                 }
             }
