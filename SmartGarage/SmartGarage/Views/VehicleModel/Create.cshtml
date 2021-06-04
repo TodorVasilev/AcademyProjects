@@ -2,9 +2,10 @@
 
 @{
     ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_LayoutForPopup.cshtml";
 }
 
-<div class="container col-md-5 mt-md-5" enctype="multipart/form-data" asp-action="Create">
+<div class="container" enctype="multipart/form-data" asp-action="Create">
     <form asp-action="Create">
         @if (TempData["Error"] != null)
         {

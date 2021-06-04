@@ -1,6 +1,11 @@
 ﻿@model VehicleModelViewModel
 
-<div class="container col-md-5 mt-md-5" enctype="multipart/form-data" asp-action="Edit">
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_LayoutForPopup.cshtml";
+}
+
+<div class="container" enctype="multipart/form-data" asp-action="Edit">
     <form asp-action="Edit">
         <div asp-validation-summary="ModelOnly" class="text-danger" id="edit"></div>
         <input type="hidden" asp-for="Id" />
@@ -32,7 +37,6 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script>
-
         $("#edit").validate({
             submitHandler: function (form) {
                 form.submit();

@@ -173,11 +173,4 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script>
-        $("#create").validate({
-            submitHandler: function (form) {
-                form.submit();
-            }
-        });
-    </script>
 }

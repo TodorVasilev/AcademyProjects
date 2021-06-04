@@ -1,5 +1,6 @@
 ﻿using SmartGarage.Data.Models;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
 namespace SmartGarage.Service.DTOs.GetDTOs
@@ -15,6 +16,8 @@ namespace SmartGarage.Service.DTOs.GetDTOs
 
         public int Id { get; }
 
+        [Required]
+        [StringLength(25, MinimumLength = 5, ErrorMessage = "{0} must be between {2} and {1} symbols.")]
         public string Name { get; }
 
         [JsonIgnore]

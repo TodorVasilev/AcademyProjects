@@ -16,7 +16,7 @@
 				<p>Owner (UserName)</p>
 			</th>
 			<th style="width:250px;">
-				<a asp-controller="Vehicle" asp-action="Create" class="btn btn-outline-success text-white">Create New</a>
+                <a onclick="showInPopup('@Url.Action("Create", "Vehicle",null, Context.Request.Scheme)', 'Create Vehhicle')" class="btn btn-outline-success text-white">Create</a>
 			</th>
 		</tr>
 	</thead>
@@ -35,11 +35,11 @@
 						<td>@item.Manufacturer</td>
 						<td>@item.VehicleModel (@item.Colour)</td>
 						<td>@Html.DisplayFor(modelItem => item.Owner) (@item.OwnerUserName)</td>
-						<td>
-							<a onclick="showInPopup('@Url.Action("Details", "Vehicle", new { id = item.Id }, Context.Request.Scheme)', 'Vehicle Details')" class="btn btn-outline-info text-white">Details</a>
-							<a asp-controller="Vehicle" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning text-white">Edit</a>
-							<a onclick="showInPopup('@Url.Action("Delete", "Vehicle", new { id = item.Id }, Context.Request.Scheme)', 'Delete Vehicle')" class="btn btn-outline-danger text-white">Delete</a>
-						</td>
+                        <td>
+                            <a onclick="showInPopup('@Url.Action("Details", "Vehicle", new { id = item.Id }, Context.Request.Scheme)', 'Vehicle Details')" class="btn btn-outline-info text-white">Details</a>
+                            <a onclick="showInPopup('@Url.Action("Edit", "Vehicle",new { id = item.Id }, Context.Request.Scheme)', 'Edit Vehicle')" class="btn btn-outline-warning text-white">Edit</a>
+                            <a onclick="showInPopup('@Url.Action("Delete", "Vehicle", new { id = item.Id }, Context.Request.Scheme)', 'Delete Vehicle')" class="btn btn-outline-danger text-white">Delete</a>
+                        </td>
 					</tr>
 				}
 				else
@@ -53,7 +53,7 @@
 						<td>@Html.DisplayFor(modelItem => item.Owner) (@item.OwnerUserName)</td>
 						<td>
 							<a onclick="showInPopup('@Url.Action("Details", "Vehicle", new { id = item.Id }, Context.Request.Scheme)', 'Vehicle Details')" class="btn btn-outline-info text-white">Details</a>
-							<a asp-controller="Vehicle" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning text-white">Edit</a>
+							<a onclick="showInPopup('@Url.Action("Edit", "Vehicle",new { id = item.Id }, Context.Request.Scheme)', 'Edit Vehicle')" class="btn btn-outline-warning text-white">Edit</a>
 							<a onclick="showInPopup('@Url.Action("Delete", "Vehicle", new { id = item.Id }, Context.Request.Scheme)', 'Delete Vehicle')" class="btn btn-outline-danger text-white">Delete</a>
 						</td>
 					</tr>
