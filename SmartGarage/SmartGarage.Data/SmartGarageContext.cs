@@ -132,7 +132,98 @@ namespace SmartGarage.Data
 					DrivingLicenseNumber = "91304433",
 					CurrentRole= "CUSTOMER",
 					SecurityStamp = Guid.NewGuid().ToString(),
+				},
+				new User
+				{
+					Id = 6,
+					FirstName = "Penka",
+					LastName = "Petrova",
+					UserName = "PenkaPetrova",
+					NormalizedUserName = "PENKAPETROVA",
+					Address = "Blagoevgrad, Bulgaria",
+					Age = 24,
+					Email = "penkapetrova@gmail.com",
+					NormalizedEmail = "PENKAPETROVA@GMAIL.COM",
+					DrivingLicenseNumber = "91304433123",
+					CurrentRole= "CUSTOMER",
+					SecurityStamp = Guid.NewGuid().ToString(),
+				},
+				new User
+				{
+					Id = 7,
+					FirstName = "Ivan",
+					LastName = "Dimitrov",
+					UserName = "IvanDimitrov",
+					NormalizedUserName = "IVANDIMITROV",
+					Address = "Botevgrad, Bulgaria",
+					Age = 31,
+					Email = "ivandimitrov@gmail.com",
+					NormalizedEmail = "IVANDIMITROV@GMAIL.COM",
+					DrivingLicenseNumber = "4984654156",
+					CurrentRole= "CUSTOMER",
+					SecurityStamp = Guid.NewGuid().ToString(),
+				},
+				new User
+				{
+					Id = 8,
+					FirstName = "Marian",
+					LastName = "Kuzmov",
+					UserName = "MarianKusmov",
+					NormalizedUserName = "MARIANKUZMOV",
+					Address = "Russe, Bulgaria",
+					Age = 48,
+					Email = "kuzmov34@gmail.com",
+					NormalizedEmail = "KUZMOV34@GMAIL.COM",
+					DrivingLicenseNumber = "498124654156",
+					CurrentRole= "CUSTOMER",
+					SecurityStamp = Guid.NewGuid().ToString(),
+				},
+				new User
+				{
+					Id = 9,
+					FirstName = "Petar",
+					LastName = "Lakov",
+					UserName = "PetarLakov",
+					NormalizedUserName = "PETARLAKOV",
+					Address = "Sofia, Bulgaria",
+					Age = 35,
+					Email = "pepilakov34@gmail.com",
+					NormalizedEmail = "PEPILAKOV34@GMAIL.COM",
+					DrivingLicenseNumber = "49812324654156",
+					CurrentRole= "CUSTOMER",
+					SecurityStamp = Guid.NewGuid().ToString(),
+				},
+				new User
+				{
+					Id = 10,
+					FirstName = "Nikola",
+					LastName = "Urumov",
+					UserName = "NikolaUrumov",
+					NormalizedUserName = "NIKOLAURUMOV",
+					Address = "Dobrich, Bulgaria",
+					Age = 24,
+					Email = "nikola12@gmail.com",
+					NormalizedEmail = "NIKOLA12@GMAIL.COM",
+					DrivingLicenseNumber = "4982124654156",
+					CurrentRole= "CUSTOMER",
+					SecurityStamp = Guid.NewGuid().ToString(),
+				},
+				new User
+				{
+					Id = 11,
+					FirstName = "Roman",
+					LastName = "Abramovich",
+					UserName = "Rumi123",
+					NormalizedUserName = "RUMI123",
+					Address = "Pernik, Bulgaria",
+					Age = 49,
+					Email = "rumi@gmail.com",
+					NormalizedEmail = "RUMI@GMAIL.COM",
+					DrivingLicenseNumber = "42134654156",
+					CurrentRole= "CUSTOMER",
+					SecurityStamp = Guid.NewGuid().ToString(),
 				}
+
 			};
 
 			var passHasher = new PasswordHasher<User>();
@@ -142,6 +233,12 @@ namespace SmartGarage.Data
 			users[2].PasswordHash = passHasher.HashPassword(users[2], "Customer123");
 			users[3].PasswordHash = passHasher.HashPassword(users[3], "Ivan123");
 			users[4].PasswordHash = passHasher.HashPassword(users[4], "Todor123");
+			users[5].PasswordHash = passHasher.HashPassword(users[5], "Petar123");
+			users[6].PasswordHash = passHasher.HashPassword(users[6], "Nikola123");
+			users[7].PasswordHash = passHasher.HashPassword(users[7], "Dragan123");
+			users[8].PasswordHash = passHasher.HashPassword(users[8], "Petkan123");
+			users[9].PasswordHash = passHasher.HashPassword(users[9], "Gogo123");
+			users[10].PasswordHash = passHasher.HashPassword(users[10], "Dummy123");
 
 			builder.Entity<User>().HasIndex(u => u.Email).IsUnique();
 			builder.Entity<User>().HasIndex(u => u.UserName).IsUnique();
@@ -168,7 +265,7 @@ namespace SmartGarage.Data
 					Id = 3,
 					Name = "Customer",
 					NormalizedName = "CUSTOMER"
-				 }
+				 }	
 			};
 
 			builder.Entity<Role>().HasData(roles);
@@ -200,6 +297,36 @@ namespace SmartGarage.Data
 			   new IdentityUserRole<int>
 				{
 					UserId = 5,
+					RoleId = 3
+				},
+			   new IdentityUserRole<int>
+				{
+					UserId = 6,
+					RoleId = 3
+				},
+			   new IdentityUserRole<int>
+				{
+					UserId = 7,
+					RoleId = 3
+				},
+			   new IdentityUserRole<int>
+				{
+					UserId = 8,
+					RoleId = 3
+				},
+			   new IdentityUserRole<int>
+				{
+					UserId = 9,
+					RoleId = 3
+				},
+			   new IdentityUserRole<int>
+				{
+					UserId = 10,
+					RoleId = 3
+				},
+			   new IdentityUserRole<int>
+				{
+					UserId = 11,
 					RoleId = 3
 				}
 			};
@@ -538,6 +665,33 @@ namespace SmartGarage.Data
 					ArrivalDate = DateTime.Now.AddDays(-3),
 					FinishDate = null,
 				},
+					new Order
+				{
+					Id = 3,
+					GarageId = 1,
+					VehicleId = 4,
+					OrderStatusId = 2,
+					ArrivalDate = DateTime.Now.AddDays(-10),
+					FinishDate = null,
+				},
+					new Order
+				{
+					Id = 4,
+					GarageId = 1,
+					VehicleId = 2,
+					OrderStatusId = 2,
+					ArrivalDate = DateTime.Now.AddDays(-4),
+					FinishDate = null,
+				},
+					new Order
+				{
+					Id = 5,
+					GarageId = 1,
+					VehicleId = 1,
+					OrderStatusId = 1,
+					ArrivalDate = DateTime.Now.AddDays(-1),
+					FinishDate = null,
+				},
 			};
 
 			builder.Entity<Order>().HasData(orders);
@@ -554,7 +708,31 @@ namespace SmartGarage.Data
 				{
 					ServiceId = 2,
 					OrderId = 2
-				}
+				},
+
+				new ServiceOrder
+				{
+					ServiceId = 1,
+					OrderId = 3
+				},
+
+				new ServiceOrder
+				{
+					ServiceId = 5,
+					OrderId = 4
+				},
+
+				new ServiceOrder
+				{
+					ServiceId = 3,
+					OrderId = 5
+				},
+
+				new ServiceOrder
+				{
+					ServiceId = 3,
+					OrderId = 1
+				}	
 			};
 
 			builder.Entity<ServiceOrder>().HasData(serviceOrders);

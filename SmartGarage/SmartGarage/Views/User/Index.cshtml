@@ -1,0 +1,115 @@
+﻿@model PaginatedList<GetUserDTO>
+@{
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<body>
+	<div class="container-fluid col-6 mt-3 pt-2" style="background-color:#212529;">
+		<p>
+			<a class="btn btn-outline-success float-lg-right" asp-area="Identity" asp-page="/Account/Register">Register User</a>
+		</p>
+		<p>
+			<input type="submit" value="Search" class="btn btn-outline-success" id="search" />
+			<input type="text" name="name" placeholder="Name" id="name" />
+			<input type="text" name="phoneNumber" placeholder="Phone Number" id="phoneNumber" />
+			<input type="text" name="Email" placeholder="user@gmail.com" id="email" />
+			<input type="text" name="Vehicle" placeholder="Vehicle" id="vehicle" />
+			<input type="date" name="StartDate" placeholder="StartDate" id="startDate" />
+			<input type="date" name="EndDate" placeholder="EndDate Name" id="endDate" />
+
+		</p>
+		<select id="orderName" name="Name">
+			<option value="">Name</option>
+			<option value="asc">ASC</option>
+			<option value="desc">DSC</option>
+		</select>
+		<select id="orderDate" name="Date">
+			<option value="">Date</option>
+			<option value="asc">ASC</option>
+			<option value="desc">DSC</option>
+		</select>
+		<div id="partialView">
+			<partial name="User_Table_Partial" model="@Model" id="partialView" />
+		</div>
+
+	</div>
+</body>
+
+
+@section Scripts {
+	<script>
+		$(document).ready(function () {
+
+			$(document).on("click", "#search", function () {
+				var name = $('#name').val();
+				var phoneNumber = $('#phoneNumber').val();
+				var email = $('#email').val();
+				var vehicle = $('#vehicle').val();
+				var startDate = $('#startDate').val();
+				var endDate = $('#endDate').val();
+				var orderName = $('#orderName').val();
+				var orderDate = $('#orderDate').val();
+				$.ajax({
+					url: "/User/Search",
+					type: "GET",
+					data: {
+						name: name,
+						phoneNumber: phoneNumber,
+						email: email,
+						vehicle: vehicle,
+						startDate: startDate,
+						endDate: endDate,
+						orderByName: orderName,
+						OrderByDate: orderDate
+					}
+				})
+					.done(function (partialViewResult) {
+						$("#partialView").html(partialViewResult);
+					});
+			});
+
+			$(document).on("click", "#next", function () {
+
+				var page = $('#page').val();
+				$.ajax({
+					url: "/User/Search",
+					type: "GET",
+					data: {
+						name: name,
+						phoneNumber: phoneNumber,
+						email: email,
+						vehicle: vehicle,
+						startDate: startDate,
+						endDate: endDate,
+						orderByName: orderName,
+						OrderByDate: orderDate,
+						pageNumber: parseInt(page) + 1
+					}
+				})
+					.done(function (partialViewResult) {
+						$("#partialView").html(partialViewResult);
+					});
+			});
+			$(document).on("click", "#prev", function () {
+				var page = $('#page').val();
+				$.ajax({
+					url: "/User/Search",
+					type: "GET",
+					data: {
+						name: name,
+						phoneNumber: phoneNumber,
+						email: email,
+						vehicle: vehicle,
+						startDate: startDate,
+						endDate: endDate,
+						pageNumber: parseInt(page) - 1
+					}
+				})
+					.done(function (partialViewResult) {
+						$("#partialView").html(partialViewResult);
+					});
+			});
+		});
+	</script>
+
+}

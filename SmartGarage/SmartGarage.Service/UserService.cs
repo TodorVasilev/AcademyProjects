@@ -133,10 +133,10 @@ namespace SmartGarage.Service
             }
 
             //Returns null when there is not a service with this id.
-            if (users.Count() == 0)
-            {
-                return null;
-            }
+            //if (users.Count() == 0)
+            //{
+            //    return null;
+            //}
             //order the users  
             var usersList = await users.ToListAsync();
             usersList = usersList.SortBy(order.OrderByName, order.OrderByDate);
