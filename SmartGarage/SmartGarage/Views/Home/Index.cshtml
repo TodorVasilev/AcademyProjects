@@ -3,13 +3,74 @@
 }
 <head>
     <style>
+        #picture-text {
+            position: absolute;
+            top: 86%;
+            left: 20%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+        }
+
         .centered {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             color: white;
-            font-size: 3rem;
+            font-size: 4rem;
+        }
+
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+
+        .column {
+            float: left;
+            width: 33.3%;
+            margin-bottom: 16px;
+            padding: 0 8px;
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            margin: 8px;
+        }
+
+        #team-card{
+            width:30%;
+        }
+
+        .about-section {
+            padding: 20px;
+            text-align: center;
+            background-color: #333944;
+            color: white;
+        }
+
+        .container {
+            padding: 0 16px;
+        }
+
+            .container::after, .row::after {
+                content: "";
+                clear: both;
+                display: table;
+            }
+
+        .title {
+            color: grey;
+        }
+
+        .button {
+            border: none;
+            outline: 0;
+            display: inline-block;
+            padding: 8px;
+            color: white;
+            background-color: #000;
+            text-align: center;
+            cursor: pointer;
+            width: 90%;
         }
     </style>
 </head>
@@ -80,7 +141,7 @@
                     <div class="card-body text-white" style="background-color:#8c8c8c">
                         <h5 class="card-title">Our Team</h5>
                         <p class="card-text">We are the best team ever.</p>
-                        <a class="btn btn-info mt-5" asp-action="">Our Team</a>
+                        <a class="btn btn-info mt-5"href="#our-team">Our Team</a>
                     </div>
                 </div>
                 <div class="card mr-5 mb-5 mt-5">
@@ -88,16 +149,65 @@
                     <div class="card-body text-white" style="background-color:#737373">
                         <h5 class="card-title">About Us</h5>
                         <p class="card-text">We are the best smart garage ever!</p>
-                        <a class="btn btn-info mt-5" asp-action="">About us</a>
+                        <a class="btn btn-info mt-5" href="#about-us">About Us</a>
                     </div>
                 </div>
             </div>
         </div>
-        <div>
-            <p hidden></p>
+        <div class="about-section mb-5" id="our-team">
+            <h1>Our Team</h1>
+            <p>Some text about who we are and what we do.</p>
+            <p>Resize the browser window to see that this page is responsive by the way.</p>
+        </div>
+        <div class="row justify-content-center mb-0 w-100">
+            <div class="column col-3" id="team-card">
+                <div class="card">
+                    <img src="~/images/Todor.jpg" alt="Mike" style="width:100%;">
+                    <div class="container">
+                        <h2>Todor Vasilev</h2>
+                        <p class="title">CEO & Founder</p>
+                        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+                        <p>johndoe@example.com</p>
+                        <p><button class="button" asp-action="ContactUs">Contact</button></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column col-3" id="team-card">
+                <div class="card">
+                    <img src="~/images/Plamen1.png" alt="Mike" style="width:100%;">
+                    <div class="container">
+                        <h2>Mike Ross</h2>
+                        <p class="title">Art Director & Founder</p>
+                        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+                        <p>plamkata@example.com</p>
+                         <a class="button mb-3 mr-4 btn-info mt-5 text-white" asp-controller="Home" asp-action="ContactUs">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column col-3 img-fluid" id="team-card">
+                <div class="card">
+                    <img src="~/images/Bobi.jpg" alt="John" style="width:100%; height:272px">
+                    <div class="container">
+                        <h2>Bobkata</h2>
+                        <p class="title">CTO</p>
+                        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
+                        <p>bobkata@example.com</p>
+                        <a class="button mt-0 mb-3 mr-4 btn-info text-white" asp-controller="Home" asp-action="ContactUs">Contact Us</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="about-us">
+            <div class="centered w-25" id="picture-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+            sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+            sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren,</div>
+            <img class="w-100" src="~/images/AboutUs.png" />
         </div>
     </div>
 </body>
+
 @section Scripts{
     <script src="~/js/site.js"></script>
     <script>

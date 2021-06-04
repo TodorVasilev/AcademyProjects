@@ -1,7 +1,6 @@
 ﻿@model RecieveEmailViewModel
 
-@{
-    Layout = null;
+@{ Layout = null;
 }
 
 <head>
@@ -98,6 +97,7 @@
         .submit-btn {
             float: right;
             padding: 7px 35px;
+            margin: 6px auto;
             border-radius: 60px;
             display: inline-block;
             background-color: #4b8cfb;
@@ -126,6 +126,7 @@
     </style>
 </head>
 <div class="col-md-12 p-0">
+    <div asp-validation-summary="ModelOnly" class="text-danger" id="create"></div>
     <form asp-action="RecieveEmail">
         <div class="container">
             <div class="row">
@@ -137,32 +138,46 @@
             <div class="row input-container">
                 <div class="col-xs-12">
                     <div class="styled-input wide">
-                        <input asp-for="PersonName" type="text" required />
+                        <input asp-for="PersonName" type="text" />
                         <label>Name</label>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-12">
                     <div class="styled-input">
-                        <input asp-for="PersonEmail" type="text" required />
+                        <input asp-for="PersonEmail" type="text" />
                         <label>Email</label>
                     </div>
                 </div>
                 <div class="col-md-6 col-sm-12">
                     <div class="styled-input" style="float:right;">
-                        <input asp-for="PhoneNumber" type="text" required />
+                        <input asp-for="PhoneNumber" type="text" />
                         <label>Phone Number</label>
                     </div>
                 </div>
                 <div class="col-xs-12">
                     <div class="styled-input wide">
-                        <textarea asp-for="Message" type="text" required id="message"></textarea>
+                        <textarea asp-for="Message" type="text" id="message"></textarea>
                         <label>Message</label>
                     </div>
                 </div>
                 <div class="col-xs-12">
-                    <input type="submit" class="btn-lrg submit-btn" id="button" value="Send Message" />
+                    <input type="submit" class="btn-lrg submit-btn" style="background-color:darkgreen" id="button" value="Send Message" />
+                </div>
+                <div class="col-xs-12">
+                    <input type="submit" class="btn-lrg submit-btn" id="button" asp-action="Index" value="Back to Home Page" />
                 </div>
             </div>
         </div>
     </form>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $("#create").validate({
+            submitHandler: function (form) {
+                form.submit();
+            }
+        });
+    </script>
+}
