@@ -16,12 +16,12 @@ namespace SmartGarage.Api_Controllers
 	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 	[ApiController]
 	[Route("api/[controller]")]
-	public class UserController : ControllerBase
+	public class UserApiController : ControllerBase
 	{
 		private readonly IUserService userService;
 		private readonly IUserHelper userHelper;
 
-		public UserController(IUserService userService, IUserHelper userHelper)
+		public UserApiController(IUserService userService, IUserHelper userHelper)
 		{
 			this.userService = userService;
 			this.userHelper = userHelper;
