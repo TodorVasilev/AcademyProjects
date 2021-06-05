@@ -164,15 +164,25 @@ namespace SmartGarage.Controllers
 
 		public async Task<IActionResult> Delete(int id)
 		{
-			var isDeleted = await service.RemoveAsync(id);
-			if (isDeleted == false)
+			var serviceToDelete = await service.GetAsync(id);
+
+			if (serviceToDelete == null)
 			{
-				return BadRequest();
+				return NotFound();
 			}
-			return RedirectToAction(nameof(Index));
+
+			return View(serviceToDelete);
 		}
 
-	
+		[HttpPost, ActionName("Delete")]
+		[ValidateAntiForgeryToken]
+		[Authorize(Roles = "Admin,Employee")]
+		public async Task<IActionResult> DeleteConfirmed(int id)
+		{
+			await service.RemoveAsync(id);
+
+			return RedirectToAction(nameof(Index));
+		}
 	}
 }
 
