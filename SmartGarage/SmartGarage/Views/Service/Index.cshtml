@@ -11,6 +11,10 @@
 				<input type="submit" value="Search" class="btn btn-outline-success" id="search" />
 				<input type="text" name="price" placeholder="Search by Price" id="price" />
 				<input type="text" name="name" placeholder="Search by Name" id="name" />
+				@if (User.IsInRole("Customer"))
+				{
+					<a class="btn btn-outline-primary" style="" asp-action="IndexCustomer" role="button">My Services</a>
+				}
 			</p>
 		</div>
 
