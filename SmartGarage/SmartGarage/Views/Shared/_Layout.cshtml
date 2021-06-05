@@ -33,51 +33,55 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        @if (User.IsInRole("Employee") || User.IsInRole("Admin"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-white" asp-area="" asp-controller="Manufacturer"
-                                   asp-action="Index">Manufacturers</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link link text-white" asp-area="" asp-controller="VehicleModel"
-                                   asp-action="Index">VehicleModels</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link link text-white" asp-area="" asp-controller="Vehicle"
-                                   asp-action="Index">Vehicles</a>
-                            </li>
-                            <li class="nav-item">
-                                <a onclick="showInPopup('Identity/Account/ForgotPassword')" class="nav-link text-white" text-white">Customer Pass Reset</a>
-                            </li>
-                            <li class="nav-item">
-                                <a onclick="showInPopup('Identity/Account/Register')" class="nav-link text-white" text-white">Register User</a>
-                            </li>
-                        }
-                        @if (User.IsInRole("Customer"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link link text-white" asp-area="Identity"
-                                   asp-page="/Account/ChangePassword">Customer Pass Reset</a>
-                            </li>
-                        }
-                        @if (User.IsInRole("Employee") || User.IsInRole("Admin") || User.IsInRole("Customer"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link link text-white" asp-area="" asp-controller="Order"
-                                   asp-action="Index">Order </a>
-                            </li>
-                        }
-                        <li class="nav-item">
-                            <a class="nav-link link text-white" asp-area="" asp-controller="Service"
-                               asp-action="Index">Service </a>
-                        </li>
+					<ul class="navbar-nav flex-grow-1">
+						<li class="nav-item">
+							<a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+						</li>
+						@if (User.IsInRole("Employee") || User.IsInRole("Admin"))
+						{
+							<li class="nav-item">
+								<a class="nav-link text-white" asp-area="" asp-controller="Manufacturer"
+								   asp-action="Index">Manufacturers</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link link text-white" asp-area="" asp-controller="VehicleModel"
+								   asp-action="Index">VehicleModels</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link link text-white" asp-area="" asp-controller="Vehicle"
+								   asp-action="Index">Vehicles</a>
+							</li>						
 
-                    </ul>
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle text-white " data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Customer</a>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" asp-controller="User"
+									   asp-action="Index">All Customers</a>
+									<a  onclick="showInPopup('Identity/Account/ForgotPassword')" class="dropdown-item" >Customer Pass Reset</a>
+									<a onclick="showInPopup('Identity/Account/Register')"class="dropdown-item" >Register User</a>
+								</div>
+							</li>
+						}
+						@if (User.IsInRole("Customer"))
+						{
+							<li class="nav-item">
+								<a class="nav-link link text-white" asp-area="Identity"
+								   asp-page="/Account/ChangePassword">Customer Pass Reset</a>
+							</li>
+						}
+						@if (User.IsInRole("Employee") || User.IsInRole("Admin") || User.IsInRole("Customer"))
+						{
+							<li class="nav-item">
+								<a class="nav-link link text-white" asp-area="" asp-controller="Order"
+								   asp-action="Index">Order </a>
+							</li>
+						}
+						<li class="nav-item">
+							<a class="nav-link link text-white" asp-area="" asp-controller="Service"
+							   asp-action="Index">Service </a>
+						</li>
+
+					</ul>
                 </div>
             </div>
         </nav>
