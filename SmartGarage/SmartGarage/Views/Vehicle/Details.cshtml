@@ -5,36 +5,12 @@
     Layout = null;
 }
 
-<div class="card" style="width: 31rem;" id="table">
-    <img class="card-img-top w-100" src="~/images/Mercedes.jpg" alt="Card image cap">
+<div class="card w-100" style="width: 31rem;" id="table">
+    <img class="w-100 " src="~/images/NoCar.jpg" alt="Card image cap">
     <div class="card-body">
-        <p>Owner: @Model.Owner</p>
-        <p>Colour: @Model.Colour</p>
-        <p>VIN: @Model.VIN</p>
-        <p>Number plate: @Model.NumberPlate</p>
+        <h5>Owner: @Model.Owner</h5>
+        <h5>Colour: @Model.Colour</h5>
+        <h5>VIN: @Model.VIN</h5>
+        <h5>Number plate: @Model.NumberPlate</h5>
     </div>
 </div>
-
-<div>
-    <button onclick="downloadPdf()">Download Page</button>
-    </div>
-
-
-
-    <script src="/js/html2pdf.bundle.min.js"></script>
-    <script>
-    const downloadPdf = () => {
-    var element = document.getElementById('table');
-    var opt = {
-    margin: 1,
-    filename: 'myfiles.pdf',
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2 },
-    jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-    };
-
-
-
-    html2pdf().from(element).set(opt).save();
-    }
-    </script>
