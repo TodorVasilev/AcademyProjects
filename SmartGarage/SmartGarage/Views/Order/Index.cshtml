@@ -7,14 +7,12 @@
 	<div class="container mt-3 pt-2" style="background-color:#212529;">
 		@if (User.IsInRole("Employee") || User.IsInRole("Admin"))
 		{
-			<p>
-				<a asp-action="Create" class="btn btn-outline-success">Create Order</a>
-			</p>
+        <p>
+            <input type="text" name="name" placeholder="Search by Name" id="name" />
+            <input type="submit" value="Search" class="btn btn-outline-success" id="search" />
+            <a asp-action="Create" class="btn btn-outline-success float-right">Create Order</a>
+        </p>
 		}
-		<p>
-			<input type="text" name="name" placeholder="Search by Name" id="name" />
-			<input type="submit" value="Search" class="btn btn-outline-success" id="search" />
-		</p>
 		<div id="partialView">
 			<partial name="Order_Table_Partial" model="@Model" />
 		</div>
