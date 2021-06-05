@@ -99,7 +99,7 @@ namespace SmartGarage.Api_Controllers
 		[ProducesResponseType(StatusCodes.Status500InternalServerError)]
 		[Authorize(Roles = "Admin")]
 		[HttpPut("admin/{id}")]
-		public async Task<IActionResult> UpdateAdminAsync(int id, [FromBody] string role)
+		public async Task<IActionResult> UpdateAdminAsync(string id, [FromBody] string role)
 
 		{
 			try

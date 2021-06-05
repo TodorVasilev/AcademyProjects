@@ -79,7 +79,7 @@ namespace SmartGarage.Service.ServiceHelpes
 			}
 			if (updateInformation.Price != default)
 			{
-				service.Price =(decimal) updateInformation.Price;
+				service.Price = (decimal)updateInformation.Price;
 			}
 
 			return service;
@@ -104,16 +104,13 @@ namespace SmartGarage.Service.ServiceHelpes
 
 		public static List<User> SortBy(this List<User> customerToOrder, string CustomerName, string OrderDate)
 		{
-		
+
 			customerToOrder = (CustomerName, OrderDate) switch
 			{
 				("asc", null) => customerToOrder.OrderBy(u => u.FirstName).ToList(),
 				("desc", null) => customerToOrder.OrderByDescending(u => u.FirstName).ToList(),
 				(null, "asc") => customerToOrder.SelectMany(c => c.Vehicles.SelectMany(c => c.Orders)).OrderBy(o => o.ArrivalDate).Select(o => o.Vehicle.User).Distinct().ToList(),
 				(null, "desc") => customerToOrder.SelectMany(c => c.Vehicles.SelectMany(c => c.Orders)).OrderByDescending(o => o.ArrivalDate).Select(o => o.Vehicle.User).Distinct().ToList(),
-			
-			
-			//	(null, "desc") => customerToOrder.OrderByDescending(u => u.Vehicles.SelectMany(v => v.Orders.Select(o => o.ArrivalDate))).ToList(),
 				_ => customerToOrder.OrderBy(u => u.FirstName).ToList()
 			};
 			return customerToOrder;
