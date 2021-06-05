@@ -35,13 +35,13 @@
 </div>
 
 @section Scripts {
-@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-<script>
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
 
-    $("#editService").validate({
-        submitHandler: function (form) {
-            form.submit();
-        }
-    });
-</script>
+        $("#editService").validate({
+            submitHandler: function (form) {
+                form.submit();
+            }
+        });
+    </script>
 }

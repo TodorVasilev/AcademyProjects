@@ -1,114 +1,88 @@
 ﻿@model ServiceOrderViewModel
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery AntiForgery
 
+<body style="background-image: url('https://localhost:5001/images/Vehicles.jpg')">
+    <div class="container-fluid table-dark mt-3 mb-3" style="border:10px solid #212529; width:700px">
+        <h3 class="text-center">Order</h3>
+        <hr />
+        <div>
+            <div class="col-sm-8">
+                <h5><b style="margin-right:100px;">@Html.DisplayNameFor(model => model.CustomerName) </b> @Html.DisplayFor(model => model.CustomerName)</h5>
+            </div>
+            <div class="col-sm-8">
+                <h5><b style="margin-right:185px;"> @Html.DisplayNameFor(model => model.OrderStatus) </b> @Html.DisplayFor(model => model.OrderStatus)</h5>
+            </div>
+            <div class="col-sm-8">
+                <h5><b style="margin-right:140px;">@Html.DisplayNameFor(model => model.ArrivalDate)</b>  @Html.DisplayFor(model => model.ArrivalDate)</h5>
+            </div>
+            <div class="col-sm-8 mb-4">
+                <h5><b style="margin-right:53px;"> @Html.DisplayNameFor(model => model.VehicleNumberPlate) </b>  @Html.DisplayFor(model => model.VehicleNumberPlate)</h5>
+            </div>
+        </div>
+        <form asp-action="AddServiceToOrder" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger" id="create"></div>
+            <div>
+                <label asp-for="AvailableServices">Available Services:</label>
+            </div>
+            <div class="form-group">
+                <select asp-for="AvailableServiceId" asp-items="Model.AvailableServices.ToSelectList()" class="form-control" id="Make"></select>
+                <span asp-validation-for="AvailableServiceId" class="text-danger"></span>
+            </div>
+            <div class="form-group ">
+                <input type="hidden" asp-for="OrderId" class="form-control" />
+                <span asp-validation-for="OrderId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add" class="btn btn-primary btn-block" />
+            </div>
+        </form>
+        <table class="table table-dark text-white table-responsive p-4 mb-3 col-md-12" style="height:300px; border: 3px solid black;">
+            <thead>
+                <tr class="active col-12" style="line-height: 3px;">
+                    <th class="col-sm-4">
+                        <p>#</p>
+                    </th>
+                    <th class="col-sm-4">
+                        <p>Description</p>
+                    </th>
+                    <th class="col-sm-4">
+                        <p>Price</p>
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int count = 1;
 
-<style>
-	tbody {
-		flex: 1 1 auto;
-		display: block;
-		overflow-y: auto;
-		overflow-x: hidden;
-	}
-</style>
+                    foreach (var item in Model.UsedServices)
+                    {
+                        <tr class="table-active">
+                            <td class="w-25">@count</td>
+                            <td>@item.Name</td>
+                            <td>@Math.Round(item.Price, 2) Euro</td>
+                            <td>
+                                <a class="btn btn-danger text-white" href="/Order/DeleteService?orderId=@Model.OrderId&serviceId=@item.Id">Delete</a>
+                            </td>
+                        </tr>
+                        count++;
+                    }
+                }
+            </tbody>
+        </table>
+        <div class="col-sm-12">
+            <h5><b style="margin-right:30px;"> @Html.DisplayNameFor(model => model.TotalPrice) </b> @Html.DisplayFor(model => model.TotalPrice) EUR  <a class="btn btn-primary" style="margin-bottom:10px; margin-left:268px;" asp-action="Index">Back to list</a></h5>
+        </div>
+    </div>
 
-<div class="container col-md-5 mt-md-2 mb-md-5" enctype="multipart/form-data" asp-action="EditServices">
-	<h4> Order</h4>
-	<hr />
-	<dl class="row">
-		<dt class="col-sm-5">
-			@Html.DisplayNameFor(model => model.CustomerName)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.CustomerName)
-		</dd>
-		<dt class="col-sm-5">
-			@Html.DisplayNameFor(model => model.OrderStatus)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.OrderStatus)
-		</dd>
-		<dt class="col-sm-5">
-			@Html.DisplayNameFor(model => model.ArrivalDate)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.ArrivalDate)
-		</dd>
+    @section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        <script>
 
-		<dt class="col-sm-5">
-			@Html.DisplayNameFor(model => model.VehicleNumberPlate)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.VehicleNumberPlate)
-		</dd>
-	</dl>
-	<form asp-action="AddServiceToOrder" method="post">
-		<div asp-validation-summary="ModelOnly" class="text-danger" id="create"> </div>
-		<div>
-			<label asp-for="AvailableServices"> Available Services:</label>
-		</div>
-		<div class="form-group">
-			<select asp-for="AvailableServiceId" asp-items="Model.AvailableServices.ToSelectList()" class="form-control" id="Make"> </select>
-			<span asp-validation-for="AvailableServiceId" class="text-danger"> </span>
-		</div>
-		<div class="form-group ">
-			<input type="hidden" asp-for="OrderId" class="form-control" />
-			<span asp-validation-for="OrderId" class="text-danger"> </span>
-		</div>
-		<div class="form-group">
-			<input type="submit" value="Add" class="btn btn-primary btn-block" />
-		</div>
-	</form>
-	<table class="table table-dark table-hover text-white table-responsive p-4 mb-3 col-md-10" style="height:300px;">
-		<thead>
-			<tr class="active" style="line-height: 3px;">
-				<th>
-					<p> Description</p>
-				</th>
-				<th> </th>
-				<th>
-					<p> Price</p>
-				</th>
-				<th> </th>
-				<th> </th>
-			</tr>
-		</thead>
-		<tbody>
-			@{ int count = 1;
-
-				foreach (var item in Model.UsedServices)
-				{
-					<tr class="table-active">
-						<td class="w-25">@count </td>
-						<td>@item.Name </td>
-						<td>@Math.Round(item.Price, 2) Euro</td>
-						<td>
-							<a class="btn btn-danger text-white" href="/Order/DeleteService?orderId=@Model.OrderId&serviceId=@item.Id"> Delete</a>
-						</td>
-					</tr>
-					count++;
-				}
-			}
-		</tbody>
-	</table>
-	<dl class="row">
-		<dt class="col-sm-5">
-			@Html.DisplayNameFor(model => model.TotalPrice)
-		</dt>
-		<dd class="col-sm-10">
-			@Html.DisplayFor(model => model.TotalPrice) Euro
-		</dd>
-	</dl>
-
-
-</div>
-@section Scripts {
-	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-	<script>
-
-		$("#create").validate({
-			submitHandler: function (form) {
-				form.submit();
-			}
-		});
-	</script>
-}
+            $("#create").validate({
+                submitHandler: function (form) {
+                    form.submit();
+                }
+            });
+        </script>
+    }
+</body>
