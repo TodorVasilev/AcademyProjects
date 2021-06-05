@@ -5,9 +5,6 @@ using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.Helpers;
 using SmartGarage.Service.QueryObjects;
 using SmartGarage.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Controllers
@@ -63,6 +60,19 @@ namespace SmartGarage.Controllers
 				TempData["Success"] = "Update is completed";
 			}
 			return View();
+		}
+
+		[HttpGet()]
+		public async Task<IActionResult> Details(int id)
+		{
+			var order = await service.GetById(id);
+
+			if (order == null)
+			{
+				return NotFound();
+			}
+
+			return View(order);
 		}
 	}
 }

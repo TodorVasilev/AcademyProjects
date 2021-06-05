@@ -24,31 +24,31 @@ namespace SmartGarage.Service.DTOs.GetDTOs
 
         public int Id { get; set; }
 
-        [Display(Name = "User name")]
+        [Display(Name = "User name:")]
         public string UserName { get; set; }
 
-        [Display(Name = "First name")]
+        [Display(Name = "First name:")]
         public string FirstName { get; set; }
 
-        [Display(Name = "Family name")]
+        [Display(Name = "Family name:")]
         public string LastName { get; set; }
 
         [DataType(DataType.PhoneNumber)]
-        [Display(Name = "Phone number")]
+        [Display(Name = "Phone number:")]
         public string PhoneNumber { get; set; }
 
-        [Display(Name = "Age")]
+        [Display(Name = "Age:")]
         public int Age { get; set; }
 
-        [Display(Name = "Driving license number")]
+        [Display(Name = "Driving license number:")]
         public string DrivingLicenseNumber { get; set; }
 
 
-        [Display(Name = "Address")]
+        [Display(Name = "Address:")]
         public string Address { get; set; }
 
         [EmailAddress]
-        [Display(Name = "E-mail")]
+        [Display(Name = "E-mail:")]
         public string Email { get; set; }
     }
 }
