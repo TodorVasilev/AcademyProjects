@@ -29,6 +29,22 @@ namespace SmartGarage.Service
 		{
 			var userToUpdate = await this.context.Users.FindAsync(id);
 
+			if (userToUpdate.Email!=updateUserDTO.Email)
+			{
+				var test = this.context.Users.AnyAsync(u => u.Email == updateUserDTO.Email);
+				if (test.Result)
+				{
+					return false;
+				}				
+			}
+			if (userToUpdate.UserName != updateUserDTO.UserName)
+			{
+				var test = this.context.Users.AnyAsync(u => u.Email == updateUserDTO.UserName);
+				if (test.Result)
+				{
+					return false;
+				}
+			}
 			if (userToUpdate == null || userToUpdate.IsDeleted == true)
 			{
 				return false;
