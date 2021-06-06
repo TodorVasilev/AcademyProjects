@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace SmartGarage.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     public class ManufacturerController : Controller
     {
         private readonly IManufacturerService service;

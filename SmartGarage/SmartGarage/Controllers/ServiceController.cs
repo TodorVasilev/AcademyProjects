@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace SmartGarage.Controllers
 {
-
+	[ApiExplorerSettings(IgnoreApi = true)]
 	public class ServiceController : Controller
 	{
 		private readonly IServiceService service;
