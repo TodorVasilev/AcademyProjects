@@ -30,31 +30,31 @@
                 foreach (var item in Model.ItemsCollection)
                 {
 
-                    <tr style="line-height: 37px;" class="table-active">
-                        <th scope="row">
-                            @count
-                        </th>
-                        <td>@Html.DisplayFor(modelItem => item.ArrivalDate) </td>
-                        <td>@Html.DisplayFor(modelItem => item.FinishDate)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Garage)</td>
-                        <td>@Html.DisplayFor(modelItem => item.OrderStatus)</td>
-                        <td>@Html.DisplayFor(modelItem => item.VehicleNumberPlate)</td>
-                        @if (User.IsInRole("Employee") || User.IsInRole("Admin"))
-                        {
-                            <td>@Html.DisplayFor(modelItem => item.CustomerName)</td>
+				<tr style="line-height: 37px;" class="table-active">
+					<th scope="row">
+						@count
+					</th>
+					<td>@Html.DisplayFor(modelItem => item.ArrivalDate) </td>
+					<td>@Html.DisplayFor(modelItem => item.FinishDate)</td>
+					<td>@Html.DisplayFor(modelItem => item.Garage)</td>
+					<td>@Html.DisplayFor(modelItem => item.OrderStatus)</td>
+					<td>@Html.DisplayFor(modelItem => item.VehicleNumberPlate)</td>
+					@if (User.IsInRole("Employee") || User.IsInRole("Admin"))
+					{
+						<td>@Html.DisplayFor(modelItem => item.CustomerName)</td>
 
                         }
                         <td>
-                            <a type="button" class="btn btn-outline-info text-white" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            <a type="button" class="btn btn-outline-info btn-sm text-white" asp-action="Details" asp-route-id="@item.Id">Details</a>
                         </td>
                         <td>
-                            <a type="button" class="btn btn-outline-success text-white" asp-action="EditServices" asp-route-id="@item.Id">AddServices</a>
+                            <a type="button" class="btn btn-outline-success btn-sm text-white" asp-action="EditServices" asp-route-id="@item.Id">AddServices</a>
                         </td>
                         <td>
-                            <a type="button" class="btn btn-outline-danger text-white" asp-action="SendPdf" asp-route-id="@item.Id">SendPdf</a>
+                            <a type="button" class="btn btn-outline-danger btn-sm text-white" asp-action="SendPdf" asp-route-id="@item.Id">SendPdf</a>
                         </td>
                         <td>
-                            <a onclick="showInPopup('@Url.Action("Edit","Order",new {id = item.Id }, Context.Request.Scheme)', 'Update Order')" class="btn btn-outline-warning text-white">Edit</a>
+                            <a onclick="showInPopup('@Url.Action("Edit","Order",new {id = item.Id }, Context.Request.Scheme)', 'Update Order')" class="btn btn-outline-warning text-white btn-sm">Edit</a>
                         </td>
                     </tr>
                     count++;
