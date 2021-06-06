@@ -5,6 +5,7 @@ using SmartGarage.Service.Contracts;
 using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;
+using SmartGarage.Service.ServiceContracts;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,18 +20,21 @@ namespace SmartGarage.Service
 		private readonly IUserService userService;
 		private readonly IUserHelper userHelperService;
 		private readonly IVehicleService vehicleService;
+		private readonly IEmailsService emailsService;
 
 		public OrderService(SmartGarageContext context,
 		ICurrencyService currencyService,
 		IUserService userService,
 		IUserHelper userHelperService,
-		IVehicleService vehicleService)
+		IVehicleService vehicleService,
+		IEmailsService emailsService)
 		{
 			this.context = context;
 			this.currencyService = currencyService;
 			this.userService = userService;
 			this.userHelperService = userHelperService;
 			this.vehicleService = vehicleService;
+			this.emailsService = emailsService;
 		}
 
 		public async Task<List<GetOrderDTO>> GetAll(User user, string filterByName)
@@ -110,23 +114,30 @@ namespace SmartGarage.Service
 		}
 		public async Task<bool> UpdateAsync(int id, UpdateOrderDTO updateOrder)
 		{
-			var orderToUpdate = await context.Orders.FindAsync(id);
+			var orderToUpdate = await context.Orders
+			.Include(o=>o.OrderStatus)
+			.Include(o=>o.ServiceOrder)
+				.ThenInclude(s=>s.Service)
+			.Include(o=>o.Garage)
+			.Include(o => o.Vehicle)
+				.ThenInclude(v => v.User)
+			.FirstOrDefaultAsync(u => u.Id == id);
 
 			if (orderToUpdate == null || orderToUpdate.IsDeleted == true)
 			{
 				return false;
 			}
-			
-			if (updateOrder.OrderStatusId !=null)
+
+			if (updateOrder.OrderStatusId != null)
 			{
 				orderToUpdate.OrderStatusId = (int)updateOrder.OrderStatusId;
 			}
 
-			if (orderToUpdate.OrderStatusId==3)
+			if (orderToUpdate.OrderStatusId == 3)
 			{
 				orderToUpdate.FinishDate = System.DateTime.Now;
+				await emailsService.SendPdfWithOrderDetails(new GetOrderDTO(orderToUpdate), orderToUpdate.Vehicle.User.Email);
 			}
-
 			if (updateOrder.VehicleId != 0)
 			{
 				orderToUpdate.VehicleId = (int)updateOrder.VehicleId;
@@ -147,7 +158,6 @@ namespace SmartGarage.Service
 			var user = await this.context.Users.FirstOrDefaultAsync(u => u.Email == createOrderDTO.Email);
 			if (user == null)
 			{
-				user.IsDeleted = false;
 				var createUser = new CreateUserDTO()
 				{
 					Address = createOrderDTO.Address,
@@ -161,6 +171,10 @@ namespace SmartGarage.Service
 				};
 				await userHelperService.CreateUserAsync(createUser);
 				user = await this.context.Users.FirstOrDefaultAsync(u => u.Email == createOrderDTO.Email);
+			}
+			else
+			{
+				user.IsDeleted = false;
 			}
 
 			var vehicle = await this.context.Vehicles.FirstOrDefaultAsync(v => v.NumberPlate == createOrderDTO.NumberPlate);
@@ -203,7 +217,7 @@ namespace SmartGarage.Service
 
 		public async Task<bool> AddService(ServiceOrder serviceOrder)
 		{
-			if (serviceOrder.OrderId==0|| serviceOrder.ServiceId==0)
+			if (serviceOrder.OrderId == 0 || serviceOrder.ServiceId == 0)
 			{
 				return false;
 			}
