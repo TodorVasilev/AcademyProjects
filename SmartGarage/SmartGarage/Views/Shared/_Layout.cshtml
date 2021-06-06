@@ -46,18 +46,11 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-white " data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Customer</a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item"style="width:160px" asp-controller="User"
+                                    <a class="dropdown-item" style="width:160px" asp-controller="User"
                                        asp-action="Index">All Customers</a>
                                     <a class="dropdown-item" style="width:160px" asp-area="Identity" asp-page="/Account/ForgotPassword">Forgoten Password</a>
-                                    <a class="dropdown-item" style="width:160px" onclick="showInPopup('Identity/Account/Register')" >Register User</a>
+                                    <a class="dropdown-item" style="width:160px" onclick="showInPopup('Identity/Account/Register')">Register User</a>
                                 </div>
-                            </li>
-                        }
-                        @if (User.IsInRole("Customer"))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link link text-white" asp-area="Identity"
-                                   asp-page="/Account/ChangePassword">Customer Pass Reset</a>
                             </li>
                         }
                         @if (User.IsInRole("Employee") || User.IsInRole("Admin") || User.IsInRole("Customer"))
@@ -70,6 +63,12 @@
                                 <a class="nav-link link text-white" asp-area="" asp-controller="Service"
                                    asp-action="Index">Service </a>
                             </li>
+                            @if (User.IsInRole("Customer"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-white" onclick="showInPopup('Identity/Account/ChangePassword')">Reset Password</a>
+                                </li>
+                            }
                         }
                     </ul>
                 </div>
