@@ -9,7 +9,7 @@
 			<p>
 				<input type="submit" value="Search" class="btn btn-outline-success" id="search" />
 				<input type="text" name="numberPlate" placeholder="NumberPlate" id="numberPlate" />
-				<input type="datetime" name="date" placeholder="DD/MM/YYYY" id="date" />
+				<input type="date" name="date" placeholder="DD/MM/YYYY" id="date" />
 				@if (User.IsInRole("Customer"))
 				{
 					<a class="btn btn-outline-primary" style="" asp-action="Index" role="button">All Services</a>
