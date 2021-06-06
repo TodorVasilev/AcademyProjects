@@ -37,16 +37,19 @@ namespace SmartGarage.Service.DTOs.GetDTOs
         [DisplayName("Customer Name:")]
         public string CustomerName { get; set; }
 
+        [JsonIgnore]
         public int GarageId { get; set; }
 
         [DisplayName("Garage:")]
         public string Garage { get; set; }
 
+        [JsonIgnore]
         public int OrderStatusId { get; set; }
 
         [DisplayName("Status:")]
         public string OrderStatus { get; set; }
 
+        [JsonIgnore]
         public int VehicleId { get; set; }
 
         [DisplayName("Vehicle Number Plate:")]
@@ -64,8 +67,10 @@ namespace SmartGarage.Service.DTOs.GetDTOs
         [DisplayName("Total Price:")]
         public decimal TotalPrice { get; set; }
 
+       
         public string Currency { get; set; }
 
+        [JsonIgnore]
         public string UserEmail { get; set; }
     }
 }

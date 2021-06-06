@@ -33,7 +33,7 @@ namespace SmartGarage.Service
 			this.vehicleService = vehicleService;
 		}
 
-		public async Task<List<GetOrderDTO>> GetAll(User user, string name)
+		public async Task<List<GetOrderDTO>> GetAll(User user, string filterByName)
 		{
 			var orders = context.Orders
 			  .Include(o => o.ServiceOrder)
@@ -44,10 +44,10 @@ namespace SmartGarage.Service
 					.ThenInclude(v => v.User)
 			  .AsQueryable();
 
-			if (name != default)
+			if (filterByName != default)
 			{
-				orders = orders.Where(o => o.Vehicle.User.FirstName.ToUpper().Contains(name.ToUpper()) ||
-				o.Vehicle.User.LastName.ToUpper().Contains(name.ToUpper()));
+				orders = orders.Where(o => o.Vehicle.User.FirstName.ToUpper().Contains(filterByName.ToUpper()) ||
+				o.Vehicle.User.LastName.ToUpper().Contains(filterByName.ToUpper()));
 			}
 
 			if (user.CurrentRole == "CUSTOMER")
@@ -147,6 +147,7 @@ namespace SmartGarage.Service
 			var user = await this.context.Users.FirstOrDefaultAsync(u => u.Email == createOrderDTO.Email);
 			if (user == null)
 			{
+				user.IsDeleted = false;
 				var createUser = new CreateUserDTO()
 				{
 					Address = createOrderDTO.Address,

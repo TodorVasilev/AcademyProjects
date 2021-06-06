@@ -16,13 +16,13 @@ namespace SmartGarage.Api_Controllers
 {
 	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 	[ApiController]
-	[Route("api/[controller]")]
-	public class OrdersController : ControllerBase
+	[Route("api/orders")]
+	public class OrdersApiController : ControllerBase
 	{
 		private readonly IOrderService service;
 		private readonly UserManager<User> userManager;
 
-		public OrdersController(IOrderService service, UserManager<User> userManager)
+		public OrdersApiController(IOrderService service, UserManager<User> userManager)
 		{
 			this.service = service;
 			this.userManager = userManager;
@@ -31,17 +31,18 @@ namespace SmartGarage.Api_Controllers
 		[HttpGet()]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		[AllowAnonymous]
-		public async Task<IActionResult> Get([FromQuery] string name, [FromQuery] int pageSize = 5, [FromQuery] int pageNumber = 1)
+		[Authorize(Roles = "Admin,Employee,Customer")]
+		public async Task<IActionResult> Get([FromQuery] string filterByName, [FromQuery] int pageSize = 5, [FromQuery] int pageNumber = 1)
 		{
 			var user = await userManager.FindByNameAsync(User.Identity.Name);
 
-			return Ok(PaginatedList<GetOrderDTO>.CreateAsync(await service.GetAll(user, name), pageNumber, pageSize));
+			return Ok(PaginatedList<GetOrderDTO>.CreateAsync(await service.GetAll(user, filterByName), pageNumber, pageSize));
 		}
 
 		[HttpGet("id")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Roles = "Admin,Employee,Customer")]
 		public async Task<IActionResult> GetByIdAsync(int id)
 		{
 			var order = await this.service.GetAsync(id);
@@ -55,6 +56,7 @@ namespace SmartGarage.Api_Controllers
 		[HttpDelete("id")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Roles = "Admin,Employee")]
 		public async Task<IActionResult> DeleteAsync(int id)
 		{
 			var isDelete = await this.service.DeleteAsync(id);
@@ -68,6 +70,7 @@ namespace SmartGarage.Api_Controllers
 		[HttpPut("id")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Roles = "Admin,Employee")]
 		public async Task<IActionResult> UpdateAsync(int id, [FromBody] UpdateOrderDTO updateOrder)
 		{
 			var isUpdated = await this.service.UpdateAsync(id, updateOrder);
@@ -81,6 +84,7 @@ namespace SmartGarage.Api_Controllers
 		[HttpPost("")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[Authorize(Roles = "Admin,Employee")]
 		public async Task<IActionResult> CreateAsync([FromBody] CreateOrderDTO createOrder)
 		{
 			var isUpdated = await this.service.CreateAsync(createOrder);
