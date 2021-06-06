@@ -9,8 +9,8 @@
 		{
         <p>
             <input type="text" name="name" placeholder="Search by Name" id="name" />
-            <input type="submit" value="Search" class="btn btn-outline-success" id="search" />
-            <a onclick="showInPopup('@Url.Action("Create","Order",null,Context.Request.Scheme)', 'Create Order')" class="btn btn-outline-success float-right text-white">Create New</a>
+            <input type="submit" value="Search" class="btn btn-outline-success text-white" id="search" />
+            <a onclick="showInPopup('@Url.Action("Create","Order",null,Context.Request.Scheme)', 'Create Order')" class="btn btn-outline-success mr-3 mt-1 float-right text-white">Create New</a>
         </p>
 		}
 		<div id="partialView">

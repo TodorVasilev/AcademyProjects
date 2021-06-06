@@ -1,4 +1,5 @@
-﻿using SmartGarage.Service.Helpers;
+﻿using SmartGarage.Service.DTOs.GetDTOs;
+using SmartGarage.Service.Helpers;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Service.ServiceContracts
@@ -10,5 +11,7 @@ namespace SmartGarage.Service.ServiceContracts
         Task ForgotenPassword(string email, string subject, string url);
 
         Task RecieveEmail(RecieveEmailViewModel recieveEmailModel);
+
+        Task SendPdfWithOrderDetails(GetOrderDTO order, string email);
     }
 }

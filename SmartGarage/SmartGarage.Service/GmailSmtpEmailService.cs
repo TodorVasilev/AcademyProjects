@@ -1,4 +1,5 @@
-﻿using SmartGarage.Service.Helpers;
+﻿using SmartGarage.Service.DTOs.GetDTOs;
+using SmartGarage.Service.Helpers;
 using SmartGarage.Service.ServiceContracts;
 using System.Net;
 using System.Net.Mail;
@@ -33,7 +34,7 @@ namespace SmartGarage.Service
             }
         }
 
-        public async Task SendPDF(string email)
+        public async Task SendPdfWithOrderDetails(GetOrderDTO order, string email)
         {
             using (MailMessage mail = new MailMessage())
             {
@@ -48,7 +49,7 @@ namespace SmartGarage.Service
                     smtp.Credentials = new NetworkCredential(fromEmail, password);
                     smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                     smtp.EnableSsl = true;
-                    mail.Attachments.Add(new Attachment(await new PdfService().GeneratePdf(), "TopPDF.pdf"));
+                    mail.Attachments.Add(new Attachment(await new PdfService().GeneratePdf(order), "OrderDetails.pdf"));
                     await smtp.SendMailAsync(mail);
                 }
             }
