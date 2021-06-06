@@ -5,9 +5,9 @@
 		<thead>
 			<tr style="line-height: 3px; width:auto" class="active">
 				<th scope="col">#</th>
-				<th>Username</th>
-				<th>FirstName</th>
-				<th>LastName</th>
+				<th>User Name</th>
+				<th>First Name</th>
+				<th>Last Name</th>
 				<th>Email</th>
 				<th></th>
 				<th></th>
@@ -30,13 +30,13 @@
 							<td>@Html.DisplayFor(modelItem => item.LastName)</td>
 							<td>@Html.DisplayFor(modelItem => item.Email)</td>
 							<td>
-								<a onclick="showInPopup('@Url.Action("Details", "User", new { Id = item.Id }, Context.Request.Scheme)', 'User Details')" class="btn btn-outline-info text-white btn-sm">Details</a>
+								<a onclick="showInPopup('@Url.Action("Details", "User", new { Id = item.Id }, Context.Request.Scheme)', 'User Details')" class="btn btn-outline-info text-white">Details</a>
 							</td>
 							<td>
-								<a onclick="showInPopup('@Url.Action("Delete", "User", new { Id = item.Id }, Context.Request.Scheme)', 'Delete User')" class="btn btn-outline-danger text-white btn-sm">Delete</a>
+								<a onclick="showInPopup('@Url.Action("Delete", "User", new { Id = item.Id }, Context.Request.Scheme)', 'Delete User')" class="btn btn-outline-danger text-white">Delete</a>
 							</td>
 							<td>
-								<a onclick="showInPopup('@Url.Action("Edit", "User", new { Id = item.Id }, Context.Request.Scheme)', 'Edit User')" class="btn btn-outline-info text-white btn-sm">Edit</a>
+								<a onclick="showInPopup('@Url.Action("Edit", "User", new { Id = item.Id }, Context.Request.Scheme)', 'Edit User')" class="btn btn-outline-info text-white">Edit</a>
 							</td>
 						</tr>
 					count++;
@@ -51,7 +51,7 @@
 	var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
 <nav aria-label="...">
-	<ul class="pagination">
+	<ul class="pagination pb-3">
 		@if (Model.PageIndex > 4 && Model.PageIndex + 3 < Model.TotalPages)
 		{
 			<li class="page-item disabled">
