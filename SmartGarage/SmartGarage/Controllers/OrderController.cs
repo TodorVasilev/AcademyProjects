@@ -8,6 +8,7 @@ using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;
 using SmartGarage.Service.Helpers;
+using SmartGarage.Service.ServiceContracts;
 using SmartGarage.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -21,13 +22,15 @@ namespace SmartGarage.Controllers
 		private readonly IOrderService orderService;
 		private readonly UserManager<User> userManager;
 		private readonly IServiceService serviceService;
+        private readonly IEmailsService emailsService;
 
-		public OrderController(IOrderService orderService, UserManager<User> userManager, IServiceService serviceService)
+        public OrderController(IOrderService orderService, UserManager<User> userManager, IServiceService serviceService, IEmailsService emailsService)
 		{
 			this.orderService = orderService;
 			this.userManager = userManager;
 			this.serviceService = serviceService;
-		}
+            this.emailsService = emailsService;
+        }
 
 		public async Task<IActionResult> Index()
 		{
@@ -186,5 +189,11 @@ namespace SmartGarage.Controllers
 			await orderService.DeleteService(serviceOrder);
 			return RedirectToAction("EditServices", new { id = serviceOrder.OrderId });
 		}
+
+		public async Task SendPdf(int id)
+        {
+			var orderModel = await orderService.GetAsync(id);
+			await emailsService.SendPdfWithOrderDetails(orderModel,orderModel.UserEmail);
+        }
 	}
 }
