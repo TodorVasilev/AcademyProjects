@@ -20,15 +20,15 @@
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark border-bottom box-shadow">
-            <div class="container-fluid">
-                <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action="Index">SmartGarage</a>
+            <div class="container">
+                <a class="text-white" asp-area="" asp-controller="Home" asp-action="Index">SmartGarage</a>
                 <button class="navbar-toggler flex-grow-1" type="button" data-toggle="collapse" data-target=".navbar-collapse"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <p style="margin-right:100px"><partial name="_LoginPartial" /></p>
-                    <ul class="navbar-nav flex-grow-1 d-flex justify-content-center" style="margin-left:270px">
+                    <p ><partial name="_LoginPartial" /></p>
+                    <ul class="navbar-nav flex-grow-1">
                         @if (User.IsInRole("Employee") || User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
