@@ -122,14 +122,13 @@ namespace SmartGarage.Controllers
 					UserName = updateUserViewModel.UserName,
 				};
 
-
 				var isUpdated = await service.UpdateUserAsync(id, updateInformation);
 				if (isUpdated)
 				{
 					return RedirectToAction(nameof(Index));
 				}
 				TempData["Error"] = "Email or User name is already in use.";
-				return RedirectToAction("Edit", "User");
+				return RedirectToAction("Index", "User");
 
 			}
 
