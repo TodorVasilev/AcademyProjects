@@ -33,9 +33,11 @@ namespace SmartGarage
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
+
+
 			services.AddDbContext<SmartGarageContext>(options =>
-		   options.UseSqlServer(
-			   Configuration.GetConnectionString("DefaultConnection")));
+			options.UseSqlServer(Configuration.GetConnectionString("MyDbConnection")));
+
 
 			services.AddIdentity<User, Role>(options =>
 			{
