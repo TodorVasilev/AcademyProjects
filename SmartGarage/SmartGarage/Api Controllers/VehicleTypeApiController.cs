@@ -21,8 +21,14 @@ namespace SmartGarage.Api_Controllers
             this.service = service;
         }
 
+        /// <summary>
+        /// Gets all Vehicle types based on some specified pagination information.
+        /// </summary>
+        /// <param name="pageSize">The page size.</param>
+        /// <param name="pageNumber">The page number.</param>
+        /// <returns></returns>
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin,Employee")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get([FromQuery] int pageSize = 5, [FromQuery] int pageNumber = 1)

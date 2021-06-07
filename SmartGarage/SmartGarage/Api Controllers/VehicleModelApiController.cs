@@ -30,7 +30,7 @@ namespace SmartGarage.Api_Controllers
         /// <param name="pageNumber">The page number.</param>
         /// <returns></returns>
         [HttpGet]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin,Employee")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get([FromQuery] int pageSize = 5, [FromQuery] int pageNumber = 1)
@@ -44,7 +44,7 @@ namespace SmartGarage.Api_Controllers
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin,Employee")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get(int id)
@@ -66,7 +66,7 @@ namespace SmartGarage.Api_Controllers
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin,Employee")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -96,7 +96,7 @@ namespace SmartGarage.Api_Controllers
         /// <param name="vehicleModelInformation">The vehicle information.</param>
         /// <returns></returns>
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin,Employee")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post([FromBody] VehicleModelDTO vehicleModelInformation)

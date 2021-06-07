@@ -47,7 +47,7 @@ namespace SmartGarage.Api_Controllers
         /// <param name="userID">The user identifier.</param>
         /// <returns></returns>
         [HttpGet("User")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Customer")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get([FromQuery] CustomerServicesFilterQueryObject filterObject, int userID)
@@ -63,7 +63,7 @@ namespace SmartGarage.Api_Controllers
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin,Employee")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Get(int id)
@@ -84,7 +84,7 @@ namespace SmartGarage.Api_Controllers
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         [HttpDelete("{id}")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin,Employee")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Delete(int id)
@@ -106,7 +106,7 @@ namespace SmartGarage.Api_Controllers
         /// <param name="id">The identifier.</param>
         /// <returns></returns>
         [HttpPut("{id}")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin,Employee")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> Put([FromBody] UpdateServiceDTO updateInformation, int id)
@@ -127,7 +127,7 @@ namespace SmartGarage.Api_Controllers
         /// <param name="serviceInformation">The vehicle information.</param>
         /// <returns></returns>
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin,Employee")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Post([FromBody] CreateServiceDTO serviceInformation)
@@ -142,8 +142,6 @@ namespace SmartGarage.Api_Controllers
             {
                 return BadRequest();
             }
-
-
         }
     }
 }
