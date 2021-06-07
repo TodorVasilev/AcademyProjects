@@ -22,19 +22,21 @@ namespace SmartGarage.Controllers
 
         public SmartGarageContext Context { get; }
 
+        // GET: Manufacturers
         [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Index(int pageNumber = 1)
         {
             var pageSize = 10;
             var manufacturers = await service.GetAll();
 
-            if(manufacturers.Count == 0)
+            if (manufacturers.Count == 0)
             {
                 return Ok();
             }
             return View(PaginatedList<GetManufacturerDTO>.CreateAsync(manufacturers, pageNumber, pageSize));
         }
 
+        //GET: Manufacturers/Details/5       
         [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Details(int id)
         {
@@ -48,6 +50,7 @@ namespace SmartGarage.Controllers
             return View(manufacturer);
         }
 
+        //GET: Manufacturers/Edit/5     
         [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Edit(int id)
         {
@@ -61,6 +64,7 @@ namespace SmartGarage.Controllers
             return View(manufacturer);
         }
 
+        //POST: Manufacturers/Edit/5   
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Employee")]
@@ -85,11 +89,13 @@ namespace SmartGarage.Controllers
             return View(manufacturer);
         }
 
+        // GET: Manufacturers/Create
         public IActionResult Create()
         {
             return View();
         }
 
+        // POST: Manufcaturers/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Employee")]

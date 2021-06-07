@@ -59,7 +59,7 @@ namespace SmartGarage.Service
 			return true;
 		}
 
-		//Gets all services possibly filtered by some creteria, based on some specified pagination information.
+		//Gets all services possibly filtered by some creteria.
 		public async Task<List<GetServiceDTO>> GetAll(ServiceFilterQueryObject filterObject)
 		{
 			var services = context.Services

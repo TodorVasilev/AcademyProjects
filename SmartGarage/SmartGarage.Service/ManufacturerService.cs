@@ -36,7 +36,7 @@ namespace SmartGarage.Service
             return new GetManufacturerDTO(manufacturer);
         }
 
-        //Gets all manufacturers based on some specified pagination information.
+        //Gets all manufacturers.
         public async Task<List<GetManufacturerDTO>> GetAll()
         {
             var manufacturers = context.Manufacturers

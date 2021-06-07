@@ -48,7 +48,7 @@ namespace SmartGarage.Service
             return new GetVehicleDTO(vehicle);
         }
 
-        //Gets all vehicles possibly filtered by their name, based on some specified pagination information.
+        //Gets all vehicles possibly filtered by their name.
         public async Task<List<GetVehicleDTO>> GetAll(string name)
         {
             var vehicles = context.Vehicles

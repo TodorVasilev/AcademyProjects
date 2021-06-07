@@ -58,6 +58,7 @@ namespace SmartGarage.Controllers
             return PartialView("Vehicle_Table_Partial", PaginatedList<GetVehicleDTO>.CreateAsync(await service.GetAll(name), pageNumber, pageSize));
         }
 
+        // GET: Vehicles/Details/5
         [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Details(int id)
         {
@@ -71,6 +72,7 @@ namespace SmartGarage.Controllers
             return View(vehicle);
         }
 
+        // GET: Vehicles/Details/5
         [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Edit(int id)
         {
@@ -96,6 +98,7 @@ namespace SmartGarage.Controllers
             return View(vehicleToUpdate);
         }
 
+        // POST: Vehicles/Details/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Employee")]
@@ -121,6 +124,7 @@ namespace SmartGarage.Controllers
             }
         }
 
+        // GET: Vehicles/Create
         public async Task<IActionResult> Create()
         {
             var model = new VehicleViewModel
@@ -132,6 +136,7 @@ namespace SmartGarage.Controllers
             return View(model);
         }
 
+        // POST: Vehicles/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Employee")]
@@ -150,6 +155,7 @@ namespace SmartGarage.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        // GET: Vehicles/Delete/5
         [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -163,6 +169,7 @@ namespace SmartGarage.Controllers
             return View(vehicleToRemove);
         }
 
+        // POST: Vehicles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Employee")]

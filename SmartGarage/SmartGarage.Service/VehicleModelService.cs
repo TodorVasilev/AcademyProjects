@@ -44,7 +44,7 @@ namespace SmartGarage.Service
             return new GetVehicleModelDTO(vehicleModel);
         }
 
-        //Gets all vehicle models, based on some specified pagination information.
+        //Gets all vehicle models.
         public async Task<List<GetVehicleModelDTO>> GetAll()
         {
             var vehicleModels = context.VehicleModels

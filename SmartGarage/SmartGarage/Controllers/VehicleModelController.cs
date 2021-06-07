@@ -25,6 +25,7 @@ namespace SmartGarage.Controllers
             this.manufacturerService = manufacturerService;
         }
 
+        // GET: VehicleModels
         [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Index(int pageNumber = 1)
         {
@@ -32,6 +33,7 @@ namespace SmartGarage.Controllers
             return View(PaginatedList<GetVehicleModelDTO>.CreateAsync(await service.GetAll(), pageNumber, pageSize));
         }
 
+        // GET: VehicleModels/Create
         [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Create()
         {
@@ -44,6 +46,7 @@ namespace SmartGarage.Controllers
             return View(viewModel);
         }
 
+        // POST: VehicleModels/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Employee")]
@@ -74,6 +77,7 @@ namespace SmartGarage.Controllers
             }
         }
 
+        // GET: VehicleModels/Edit/5
         [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Edit(int id)
         {
@@ -97,6 +101,7 @@ namespace SmartGarage.Controllers
             return View(viewModel);
         }
 
+        // POST: VehicleModels/Edit/5
         [HttpPost]
         [AutoValidateAntiforgeryToken]
         [Authorize(Roles = "Admin,Employee")]

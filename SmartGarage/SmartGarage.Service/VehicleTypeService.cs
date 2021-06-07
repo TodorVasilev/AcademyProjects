@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace SmartGarage.Service
 {
+    /// <summary>
+    /// This class is responsible for CRUD operations performed on the vehicles types.
+    /// </summary>
     public class VehicleTypeService : IVehicleTypeService
     {
         private readonly SmartGarageContext context;
@@ -17,7 +20,7 @@ namespace SmartGarage.Service
             this.context = context;
         }
 
-        //Gets all vehicle types, based on some specified pagination information.
+        //Gets all vehicle types.
         public async Task<List<VehicleType>> GetAll()
         {
             return await context.VehicleTypes
