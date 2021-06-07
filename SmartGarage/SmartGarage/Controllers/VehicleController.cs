@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SmartGarage.Data.Models;
 using SmartGarage.Service.Contracts;
@@ -19,20 +20,34 @@ namespace SmartGarage.Controllers
         private readonly IVehicleService service;
         private readonly IManufacturerService manufacturerService;
         private readonly IVehicleModelService vehicleModelService;
+        private readonly UserManager<User> userManager;
 
-        public VehicleController(IVehicleService service, IManufacturerService manufacturerService, IVehicleModelService vehicleModelService)
+        public VehicleController(IVehicleService service,
+            IManufacturerService manufacturerService,
+            IVehicleModelService vehicleModelService,
+            UserManager<User> userManager)
         {
             this.service = service;
             this.manufacturerService = manufacturerService;
             this.vehicleModelService = vehicleModelService;
+            this.userManager = userManager;
         }
 
-        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Index()
         {
+            var user = await userManager.FindByNameAsync(User.Identity.Name);
+
             int pageNumber = 1;
             string name = default;
             var pageSize = 10;
+            var vehicles = await service.GetAll(name);
+
+            if (user.CurrentRole == "CUSTOMER")
+            {
+                vehicles = vehicles.Where(v => v.UserId == user.Id).ToList();
+
+                return View(PaginatedList<GetVehicleDTO>.CreateAsync(vehicles, pageNumber, pageSize));
+            }
             return View(PaginatedList<GetVehicleDTO>.CreateAsync(await service.GetAll(name), pageNumber, pageSize));
         }
 
