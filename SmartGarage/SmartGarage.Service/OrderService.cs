@@ -16,23 +16,19 @@ namespace SmartGarage.Service
 	public class OrderService : IOrderService
 	{
 		private readonly SmartGarageContext context;
-
 		private readonly ICurrencyService currencyService;
-		private readonly IUserService userService;
 		private readonly IUserHelper userHelperService;
 		private readonly IVehicleService vehicleService;
 		private readonly IEmailsService emailsService;
 
 		public OrderService(SmartGarageContext context,
 		ICurrencyService currencyService,
-		IUserService userService,
 		IUserHelper userHelperService,
 		IVehicleService vehicleService,
 		IEmailsService emailsService)
 		{
 			this.context = context;
 			this.currencyService = currencyService;
-			this.userService = userService;
 			this.userHelperService = userHelperService;
 			this.vehicleService = vehicleService;
 			this.emailsService = emailsService;
@@ -156,7 +152,9 @@ namespace SmartGarage.Service
 
 		public async Task<bool> CreateAsync(CreateOrderDTO createOrderDTO)
 		{
-			if (createOrderDTO.GarageName == default)
+
+			var garage = await this.context.Garages.FirstOrDefaultAsync(g => g.Name == createOrderDTO.GarageName);
+			if (garage == null)
 			{
 				return false;
 			}
@@ -164,19 +162,7 @@ namespace SmartGarage.Service
 			var user = await this.context.Users.FirstOrDefaultAsync(u => u.Email == createOrderDTO.Email);
 			if (user == null)
 			{
-				var createUser = new CreateUserDTO()
-				{
-					Address = createOrderDTO.Address,
-					Age = createOrderDTO.Age,
-					DrivingLicenseNumber = createOrderDTO.DrivingLicenseNumber,
-					Email = createOrderDTO.Email,
-					FirstName = createOrderDTO.FirstName,
-					LastName = createOrderDTO.LastName,
-					PhoneNumber = createOrderDTO.PhoneNumber,
-					UserName = createOrderDTO.UserName
-				};
-				await userHelperService.CreateUserAsync(createUser);
-				user = await this.context.Users.FirstOrDefaultAsync(u => u.Email == createOrderDTO.Email);
+				user = await CreateUserAsync(createOrderDTO, user);
 			}
 			else
 			{
@@ -200,12 +186,11 @@ namespace SmartGarage.Service
 			}
 			else
 			{
+				if (vehicle.UserId != user.Id)
+				{
+					return false;
+				}
 				vehicleId = vehicle.Id;
-			}
-			var garage = await this.context.Garages.FirstOrDefaultAsync(g => g.Name == createOrderDTO.GarageName);
-			if (garage == null)
-			{
-				return false;
 			}
 			var newOrder = new Order
 			{
@@ -220,6 +205,7 @@ namespace SmartGarage.Service
 
 			return true;
 		}
+
 
 		public async Task<bool> AddService(ServiceOrder serviceOrder)
 		{
@@ -244,6 +230,23 @@ namespace SmartGarage.Service
 			await this.context.SaveChangesAsync();
 
 			return true;
+		}
+		private async Task<User> CreateUserAsync(CreateOrderDTO createOrderDTO, User user)
+		{
+			var createUser = new CreateUserDTO()
+			{
+				Address = createOrderDTO.Address,
+				Age = createOrderDTO.Age,
+				DrivingLicenseNumber = createOrderDTO.DrivingLicenseNumber,
+				Email = createOrderDTO.Email,
+				FirstName = createOrderDTO.FirstName,
+				LastName = createOrderDTO.LastName,
+				PhoneNumber = createOrderDTO.PhoneNumber,
+				UserName = createOrderDTO.UserName
+			};
+			await userHelperService.CreateUserAsync(createUser);
+			user = await this.context.Users.FirstOrDefaultAsync(u => u.Email == createOrderDTO.Email);
+			return user;
 		}
 	}
 }

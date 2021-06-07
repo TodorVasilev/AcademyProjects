@@ -6,6 +6,10 @@ namespace SmartGarage.Service.DTOs.GetDTOs
 {
     public class GetVehicleDTO
     {
+		public GetVehicleDTO()
+		{
+
+		}
         public GetVehicleDTO(Vehicle vehicle)
         {
             this.Id = vehicle.Id;
@@ -21,36 +25,36 @@ namespace SmartGarage.Service.DTOs.GetDTOs
         }
 
         [Required]
-        public int Id { get; }
+        public int Id { get; set; }
 
-        public string OwnerUserName { get; }
-
-        [JsonIgnore]
-        [Required]
-        public int UserId { get; }
-
-        [Required]
-        public string Owner { get; }
+        public string OwnerUserName { get; set; }
 
         [JsonIgnore]
         [Required]
-        public int VehicleModelId { get; }
+        public int UserId { get; set; }
 
         [Required]
-        public string VehicleModel { get; }
+        public string Owner { get; set; }
+
+        [JsonIgnore]
+        [Required]
+        public int VehicleModelId { get; set; }
 
         [Required]
-        public string Manufacturer { get; }
+        public string VehicleModel { get; set; }
 
         [Required]
-        public string Colour { get; }
+        public string Manufacturer { get; set; }
+
+        [Required]
+        public string Colour { get; set; }
 
         [Required]
         [StringLength(8, MinimumLength = 6, ErrorMessage = "{0} must be between {1} and {2} symbols.")]
-        public string NumberPlate { get; }
+        public string NumberPlate { get; set; }
 
         [StringLength(17, ErrorMessage = "{0} must be exactly {1} symbols.")]
         [Required]
-        public string VIN { get; }
+        public string VIN { get; set; }
     }
 }
