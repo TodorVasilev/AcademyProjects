@@ -7,13 +7,13 @@
 
 <div class="container text-center">
     <div class="col-md-12 p-0">
-        <h5>
+        <h3>
             @Html.DisplayFor(model => model.Name)
-        </h5>
-        <table class="table table-dark text-white">
+        </h3>
+        <table class="table text-black">
             <thead>
                 <tr>
-                    <th>#</th>
+                    <th class="pl-5">#</th>
                     <th>Model</th>
                 </tr>
             </thead>
@@ -23,14 +23,14 @@
                     if (i % 2 != 0)
                     {
                         <tr class="table-active">
-                            <th scope="row">@(i+1)</th>
+                            <th class="pl-5" scope="row">@(i+1)</th>
                             <td>@Model.Models[i].Name</td>
                         </tr>
                     }
                     else
                     {
                         <tr>
-                            <th scope="row">@(i+1)</th>
+                            <th class="pl-5" scope="row">@(i+1)</th>
                             <td>@Model.Models[i].Name</td>
                         </tr>
                     }

@@ -8,9 +8,9 @@
 
         @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
         {
-            <p class="text-white">
-                Customer name: <input type="text" name="name" id="name" />
-                <input type="submit" value="Filter" id="search" />
+            <p class="text-white p-1">
+                <input type="submit" value="Search" class="btn btn-outline-success" id="search" />
+                <input type="text" name="name" placeholder="Search by Name" id="name" />
             </p>
         }
         <div id="partialView">

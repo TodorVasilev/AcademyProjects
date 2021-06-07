@@ -37,7 +37,7 @@ namespace SmartGarage.Controllers
 		{
 			string name = default;
 			int pageNumber = 1;
-			var pageSize = 10;
+			var pageSize = 6;
 			var user = await userManagerWrapper.FindByNameAsync(User.Identity.Name);
 
 			var orders = await orderService.GetAll(user, name);
@@ -48,7 +48,7 @@ namespace SmartGarage.Controllers
 		[HttpGet("Order/Search")]
 		public async Task<IActionResult> IndexPartial(string name, int pageNumber = 1)
 		{
-			var pageSize = 10;
+			var pageSize = 6;
 			var user = await userManagerWrapper.FindByNameAsync(User.Identity.Name);
 
 			var orders = await orderService.GetAll(user, name);

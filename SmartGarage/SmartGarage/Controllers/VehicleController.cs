@@ -39,7 +39,7 @@ namespace SmartGarage.Controllers
 
             int pageNumber = 1;
             string name = default;
-            var pageSize = 10;
+            var pageSize = 8;
             var vehicles = await service.GetAll(name);
 
             if (user.CurrentRole == "CUSTOMER")
@@ -54,7 +54,7 @@ namespace SmartGarage.Controllers
         [HttpGet("Vehicle/Filter")]
         public async Task<IActionResult> PartialView(string name, int pageNumber = 1)
         {
-            var pageSize = 10;
+            var pageSize = 8;
             return PartialView("Vehicle_Table_Partial", PaginatedList<GetVehicleDTO>.CreateAsync(await service.GetAll(name), pageNumber, pageSize));
         }
 

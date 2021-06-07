@@ -32,7 +32,7 @@ namespace SmartGarage.Controllers
 			var filterForCustomer = new CustomerServicesFilterQueryObject();
 
 			int pageNumber = 1;
-			var pageSize = 10;
+			var pageSize = 6;
 
 			var user = await userManager.GetUserAsync(HttpContext.User);
 
@@ -53,7 +53,7 @@ namespace SmartGarage.Controllers
 				VisitDate = date
 			};
 
-			var pageSize = 10;
+			var pageSize = 6;
 
 			var user = await userManager.GetUserAsync(HttpContext.User);
 
@@ -67,7 +67,7 @@ namespace SmartGarage.Controllers
 		public async Task<IActionResult> Index()
 		{
 			int pageNumber = 1;
-			var pageSize = 10;
+			var pageSize = 6;
 			var filterService = new ServiceFilterQueryObject();
 
 			var services = await service.GetAll(filterService);
@@ -78,7 +78,7 @@ namespace SmartGarage.Controllers
 		[HttpGet("Service/Search")]
 		public async Task<IActionResult> PartialForAdminEmployee(decimal? price, string name, int pageNumber = 1)
 		{
-			var pageSize = 10;
+			var pageSize = 6;
 			var filterService = new ServiceFilterQueryObject
 			{
 				Name = name,

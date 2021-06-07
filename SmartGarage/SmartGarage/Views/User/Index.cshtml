@@ -4,7 +4,7 @@
 }
 
 <body>
-    <div class="container mt-3 pt-2" style="background-color:#212529;">
+    <div class="container col-7 mt-3 pt-2" style="background-color:#212529;">
         @if (TempData["Error"] != null)
         {
             <div class="alert" style="background:red;" role="alert">
@@ -12,14 +12,15 @@
             </div>
         }
         <div class="pt-1">
-            <a class="btn btn-success float-lg-right" onclick="showInPopup('Identity/Account/Register')">Register User</a>
-            <input type="submit" value="Search" class="btn btn-outline-success" id="search" />
+            
         </div>
         <div>
+            <input type="submit" value="Search" class="btn btn-outline-success" id="search" />
             <input type="text" name="name" placeholder="Name" id="name" />
             <input type="text" name="phoneNumber" placeholder="Phone Number" id="phoneNumber" />
             <input type="text" name="Email" placeholder="user@gmail.com" id="email" />
             <input type="text" name="Vehicle" placeholder="Vehicle Brand" id="vehicle" />
+            <a class="btn btn-outline-success text-white float-md-right mr-1" onclick="showInPopup('Identity/Account/Register')">Register User</a>
         </div>
         <div>
             <label class="control-label text-white-50"> Order From</label>

@@ -22,7 +22,7 @@ namespace SmartGarage.Controllers
 		public async Task<IActionResult> Index()
 		{
 			int pageNumber = 1;
-			var pageSize = 10;
+			var pageSize = 8;
 			var filer = new UserSevicesFilterQueryObject();
 			var order = new UserOrderQueryObject();
 
@@ -34,7 +34,7 @@ namespace SmartGarage.Controllers
 		[HttpGet("User/Search")]
 		public async Task<IActionResult> IndexPartial(UserSevicesFilterQueryObject filer, UserOrderQueryObject order, int pageNumber = 1)
 		{
-			var pageSize = 10;
+			var pageSize = 8;
 
 			var users = await service.GetAllCustomerAsync(filer, order);
 
