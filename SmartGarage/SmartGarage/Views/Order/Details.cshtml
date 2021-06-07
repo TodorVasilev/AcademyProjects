@@ -1,0 +1,110 @@
+﻿@model GetOrderDTO
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    tbody {
+        flex: 1 1 auto;
+        display: block;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    tr {
+        width: 100%;
+        display: table;
+        table-layout: fixed;
+    }
+</style>
+<body style="background-image: url('https://localhost:5001/images/Vehicles.jpg')">
+    <div class="container-fluid table-dark mt-3" style="border:10px solid #212529; width:700px">
+        <div class="dropdown float-right mt-3">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Currency
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="/Order/Details/@Model.Id?currency=USD">USD</a>
+                <a class="dropdown-item" href="/Order/Details/@Model.Id?currency=GBP">GBP</a>
+                <a class="dropdown-item" href="/Order/Details/@Model.Id?currency=EUR">EUR</a>
+            </div>
+        </div>
+        <h3 class="mt-3 mb-0">Order</h3>
+        <div>
+            <div class="container mt-4 col-10">
+            </div>
+            <div class="table-dark" style="border-top:3px solid #212529" id="pesho">
+                <div class="col-sm-8">
+                    <h5><b style="margin-right:100px;">@Html.DisplayNameFor(model => model.CustomerName) </b> @Html.DisplayFor(model => model.CustomerName)</h5>
+                </div>
+                <div class="col-sm-8">
+                    <h5><b style="margin-right:185px;"> @Html.DisplayNameFor(model => model.OrderStatus) </b> @Html.DisplayFor(model => model.OrderStatus)</h5>
+                </div>
+                <div class="col-sm-8">
+                    <h5><b style="margin-right:140px;">@Html.DisplayNameFor(model => model.ArrivalDate)</b>  @Html.DisplayFor(model => model.ArrivalDate)</h5>
+                </div>
+                <div class="col-sm-8">
+                    <h5><b style="margin-right:143px;">@Html.DisplayNameFor(model => model.FinishDate)</b>  @Html.DisplayFor(model => model.FinishDate)</h5>
+                </div>
+                <div class="col-sm-8 mb-4">
+                    <h5><b style="margin-right:53px;"> @Html.DisplayNameFor(model => model.VehicleNumberPlate) </b>  @Html.DisplayFor(model => model.VehicleNumberPlate)</h5>
+                </div>
+                <div class="text">
+                    <h4 style="margin-left:200px">@Html.DisplayNameFor(model => model.Services)</h4>
+                </div>
+                <div class="col-sm-10">
+                    <table class="table w-100" id="table" style="border: 5px solid;">
+                        <thead>
+                            <tr>
+                                <th class="w-25 text-white">#</th>
+                                <th class="text-white">Description</th>
+                                <th class="text-white">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody style="height: 350px;overflow-y: scroll; border-top: 5px solid;">
+                            @{ int count = 1;
+
+                                foreach (var item in Model.Services)
+                                {
+                                    <tr class="table-active">
+                                        <td class="w-25 text-white">@count</td>
+                                        <td class="text-white">@item.Name</td>
+                                        <td class="text-white">@Math.Round(item.Price, 2)  @Model.Currency</td>
+                                    </tr>
+                                    count++;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="container-fluid p-0 ml-3">
+                    <h4>@Html.DisplayNameFor(model => model.TotalPrice)  @Html.DisplayFor(model => model.TotalPrice) @Model.Currency</h4>
+                </div>
+            </div>
+            <div class="container-fluid p-0">
+               <a class="btn btn-primary" style="margin-bottom:10px; margin-left:407px;" asp-action="Index">Back to list</a>  <button class="btn btn-success" style="margin-bottom:10px" ; onclick="downloadPdf()">Download Page</button>
+            </div>
+        </div>
+
+        <script src="/js/html2pdf.bundle.min.js"></script>
+        <script>
+            const downloadPdf = () => {
+                var element = document.getElementById('pesho');
+                var opt = {
+                    margin: 1,
+                    filename: 'myfiles.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 1 },
+                    jsPDF: { unit: 'in', format: 'A4', orientation: 'portrait' },
+                };
+                html2pdf().from(element).set(opt).save();
+            }
+        </script>
+    </div>
+</body>
+
+
+
+
+

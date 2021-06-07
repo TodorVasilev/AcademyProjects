@@ -1,0 +1,41 @@
+﻿@model GetManufacturerDTO
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = null;
+}
+
+<div class="container text-center">
+    <div class="col-md-12 p-0">
+        <h5>
+            @Html.DisplayFor(model => model.Name)
+        </h5>
+        <table class="table table-dark text-white">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Model</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Models.Count; i++)
+                {
+                    if (i % 2 != 0)
+                    {
+                        <tr class="table-active">
+                            <th scope="row">@(i+1)</th>
+                            <td>@Model.Models[i].Name</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <th scope="row">@(i+1)</th>
+                            <td>@Model.Models[i].Name</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

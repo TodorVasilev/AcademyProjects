@@ -1,0 +1,66 @@
+﻿@model VehicleViewModel
+
+@{ 
+    Layout = "~/Views/Shared/_LayoutForPopup.cshtml";
+}
+
+<div class="container" enctype="multipart/form-data" asp-action="Edit">
+    <form asp-action="Edit">
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger text-center" role="alert">
+                <p>@TempData["Error"]</p>
+            </div>
+        }
+        <div asp-validation-summary="ModelOnly" class="text-danger" id="edit"></div>
+        <div>
+            <label asp-for="Manufacturers"></label>
+        </div>
+        <div class="form-group">
+            <select asp-for="ManufacturerId" asp-items="Model.Manufacturers.ToSelectList()" class="form-control" id="Make"></select>
+            <span asp-validation-for="ManufacturerId" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="Models"></label>
+        </div>
+        <div class="form-group">
+            <select asp-for="VehicleModelId" asp-items="Model.Models.ToSelectList()" class="form-control" id="Model"></select>
+            <span asp-validation-for="VehicleModelId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="UserId" class="control-label">Customer</label>
+            <input asp-for="UserId" class="form-control" />
+            <span asp-validation-for="UserId" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="NumberPlate" class="control-label">Number Plate</label>
+            <input asp-for="NumberPlate" class="form-control" />
+            <span asp-validation-for="NumberPlate" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="VIN" class="control-label"></label>
+            <input asp-for="VIN" class="form-control" />
+            <span asp-validation-for="VIN" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Colour" class="control-label"></label>
+            <input asp-for="Colour" class="form-control" />
+            <span asp-validation-for="Colour" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Update" class="btn btn-primary btn-block" />
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+
+        $("#edit").validate({
+            submitHandler: function (form) {
+                form.submit();
+            }
+        });
+    </script>
+}

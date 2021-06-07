@@ -1,0 +1,180 @@
+﻿@model PaginatedList<GetManufacturerDTO>
+<body>
+    <div class="container col-4 mt-md-4 pt-3 mb-4 pb-1" style="background-color:#212529">
+        <table class="table table-dark table-hover text-white">
+            <thead>
+                <tr class="active" style="line-height: 3px;">
+                    <th>
+                        <p>#</p>
+                    </th>
+                    <th>
+                        <p>Name</p>
+                    </th>
+                    <th style="width:170px">
+                        <a onclick="showInPopup('@Url.Action("Create","Manufacturer",null,Context.Request.Scheme)', 'New Manufacturer')" class="btn btn-outline-success text-white">Create New</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int count = 1 + (Model.PageIndex - 1) * Model.PageSize;
+
+                    foreach (var item in Model.ItemsCollection)
+                    {
+                        if (count % 2 != 0)
+                        {
+                            <tr class="table-active" style="line-height: 37px;">
+                                <th scope="row">
+                                    @count
+                                </th>
+                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                <td>
+                                    <a onclick="showInPopup('@Url.Action("Edit","Manufacturer",new {id = item.Id }, Context.Request.Scheme)', 'Update Manufacturer')" class="btn btn-outline-warning text-white">Edit</a>
+                                    <a onclick="showInPopup('@Url.Action("Details","Manufacturer",new {id = item.Id }, Context.Request.Scheme)', 'Manufacturer')" class="btn btn-outline-info text-white">Details</a>
+                                </td>
+                            </tr>
+                        }
+                        else
+                        {
+                            <tr style="line-height: 37px;">
+                                <th scope="row">
+                                    @count
+                                </th>
+                                <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                                <td>
+                                    <a onclick="showInPopup('@Url.Action("Edit","Manufacturer",new {id = item.Id }, Context.Request.Scheme)', 'Update Manufacturer')" class="btn btn-outline-warning text-white">Edit</a>
+                                    <a onclick="showInPopup('@Url.Action("Details","Manufacturer",new {id = item.Id }, Context.Request.Scheme)', 'Manufacturer')" class="btn btn-outline-info text-white">Details</a>
+                                </td>
+                            </tr>
+                        }
+                        count++;
+                    }
+                }
+            </tbody>
+        </table>
+
+        @{
+            var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+            var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+        }
+        <nav aria-label="...">
+            <ul class="pagination">
+                @if (Model.PageIndex > 4 && Model.PageIndex + 3 < Model.TotalPages)
+                {
+                    <li class="page-item disabled">
+                        <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex-1)" class="btn btn-outline-success text-white @prevDisabled">Previous</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="btn btn-outline-success text-white" asp-action="Index" asp-route-pageNumber="">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="btn btn-outline-success text-white" href="#!">...</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="btn btn-outline-success text-whitek" asp-action="Index" asp-route-pageNumber="@(Model.PageIndex-1)">@(Model.PageIndex-1)</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="btn btn-outline-success text-white active" asp-action="Index" asp-route-pageNumber="@Model.PageIndex">@Model.PageIndex</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="btn btn-outline-success text-white" asp-action="Index" asp-route-pageNumber="@(Model.PageIndex+1)">@(Model.PageIndex+1)</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="btn btn-outline-success text-white" href="#!">...</a>
+                    </li>
+                    <li class="btn btn-outline-success text-white">
+                        <a class="btn btn-outline-success text-white" asp-action="Index" asp-route-pageNumber="@Model.TotalPages">@Model.TotalPages</a>
+                    </li>
+                    <li class="btn btn-outline-success text-white">
+                        <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex+1)" class="btn btn-outline-success text-white @nextDisabled">Next</a>
+                    </li>
+
+                }
+                else if (Model.PageIndex > 4 && Model.PageIndex + 3 >= Model.TotalPages)
+                {
+                    <li class="page-item disabled">
+                        <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex-1)" class="btn btn-outline-success text-white @prevDisabled">Previous</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="btn btn-outline-success text-white" asp-action="Index" asp-route-pageNumber="">1</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="btn btn-outline-success text-white" href="#!">...</a>
+                    </li>
+                    @for (int i = Model.TotalPages - 3; i <= Model.TotalPages; i++)
+                    {
+                        @if (Model.PageIndex == i)
+                        {
+                            <li class="page-item">
+                                <a class="btn btn-outline-success text-white active" asp-action="Index" asp-route-pageNumber="@i">@i</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item">
+                                <a class="btn btn-outline-success text-white" asp-action="Index" asp-route-pageNumber="@i">@i</a>
+                            </li>
+                        }
+                    }
+                    <li class="page-item">
+                        <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex+1)" class="btn btn-outline-success text-white @nextDisabled">Next</a>
+                    </li>
+                }
+                else if (Model.TotalPages > 4 && Model.PageIndex < 5)
+                {
+                    <li class="page-item disabled">
+                        <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex-1)" class="btn btn-outline-success text-white @prevDisabled">Previous</a>
+                    </li>
+                    @for (int i = 1; i <= 4; i++)
+                    {
+                        @if (Model.PageIndex == i)
+                        {
+                            <li class="page-item">
+                                <a class="btn btn-outline-success text-white active" asp-action="Index" asp-route-pageNumber="@i">@i</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item">
+                                <a class="btn btn-outline-success text-white" asp-action="Index" asp-route-pageNumber="@i">@i</a>
+                            </li>
+                        }
+                    }
+                    <li class="page-item">
+                        <a class="btn btn-outline-success text-white" href="#!">...</a>
+                    </li>
+                    <li>
+                        <a class="btn btn-outline-success text-white" asp-action="Index" asp-route-pageNumber="@Model.TotalPages">@Model.TotalPages</a>
+                    </li>
+                    <li class="page-item">
+                        <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex+1)" class="btn btn-outline-success text-white @nextDisabled">Next</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="page-item disabled">
+                        <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex-1)" class="btn btn-outline-success text-white @prevDisabled">Previous</a>
+                    </li>
+                    @for (int i = 1; i <= Model.TotalPages; i++)
+                    {
+                        @if (Model.PageIndex == i)
+                        {
+                            <li class="page-item">
+                                <a class="btn btn-outline-success text-white active" asp-action="Index" asp-route-pageNumber="@i">@i</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="page-item">
+                                <a class="btn btn-outline-success text-white" asp-action="Index" asp-route-pageNumber="@i">@i</a>
+                            </li>
+                        }
+                    }
+                    <li class="page-item">
+                        <a asp-action="Index" asp-route-pageNumber="@(Model.PageIndex+1)" class="btn btn-outline-success text-white @nextDisabled">Next</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</body>
