@@ -6,6 +6,7 @@ using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;
 using SmartGarage.Service.ServiceContracts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -64,7 +65,7 @@ namespace SmartGarage.Service
 				.ToListAsync();
 		}
 
-		public async Task<GetOrderDTO> GetAsync(int id, string currency = "EUR")
+		public async Task<GetOrderDTO> GetAsync(int id, User user, string currency = "EUR")
 		{
 			var order = await this.context.Orders
 				.Include(o => o.ServiceOrder)
@@ -74,6 +75,11 @@ namespace SmartGarage.Service
 				.Include(o => o.Vehicle)
 						.ThenInclude(v => v.User)
 				.FirstOrDefaultAsync(o => o.Id == id);
+
+			if (user.CurrentRole == "CUSTOMER" && order.Vehicle.UserId != user.Id)
+			{
+				throw new ArgumentException("Not  authorized");
+			}
 
 			if (order == null || order.IsDeleted == true)
 			{
@@ -115,10 +121,10 @@ namespace SmartGarage.Service
 		public async Task<bool> UpdateAsync(int id, UpdateOrderDTO updateOrder)
 		{
 			var orderToUpdate = await context.Orders
-			.Include(o=>o.OrderStatus)
-			.Include(o=>o.ServiceOrder)
-				.ThenInclude(s=>s.Service)
-			.Include(o=>o.Garage)
+			.Include(o => o.OrderStatus)
+			.Include(o => o.ServiceOrder)
+				.ThenInclude(s => s.Service)
+			.Include(o => o.Garage)
 			.Include(o => o.Vehicle)
 				.ThenInclude(v => v.User)
 			.FirstOrDefaultAsync(u => u.Id == id);

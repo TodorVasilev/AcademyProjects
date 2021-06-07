@@ -9,6 +9,7 @@ using SmartGarage.Service.DTOs.CreateDTOs;
 using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.DTOs.UpdateDTOs;
 using SmartGarage.Service.Helpers;
+using System;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -20,12 +21,13 @@ namespace SmartGarage.Api_Controllers
 	public class OrdersApiController : ControllerBase
 	{
 		private readonly IOrderService service;
-		private readonly UserManager<User> userManager;
 
-		public OrdersApiController(IOrderService service, UserManager<User> userManager)
+		private readonly IUserManagerWrapper userManagerWrapper;
+
+		public OrdersApiController(IOrderService service, IUserManagerWrapper userManagerWrapper)
 		{
 			this.service = service;
-			this.userManager = userManager;
+			this.userManagerWrapper = userManagerWrapper;
 		}
 
 		[HttpGet()]
@@ -34,7 +36,7 @@ namespace SmartGarage.Api_Controllers
 		[Authorize(Roles = "Admin,Employee,Customer")]
 		public async Task<IActionResult> Get([FromQuery] string filterByName, [FromQuery] int pageSize = 5, [FromQuery] int pageNumber = 1)
 		{
-			var user = await userManager.FindByNameAsync(User.Identity.Name);
+			var user = await userManagerWrapper.FindByNameAsync(User.Identity.Name);
 
 			return Ok(PaginatedList<GetOrderDTO>.CreateAsync(await service.GetAll(user, filterByName), pageNumber, pageSize));
 		}
@@ -42,15 +44,25 @@ namespace SmartGarage.Api_Controllers
 		[HttpGet("id")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		[Authorize(Roles = "Admin,Employee,Customer")]
 		public async Task<IActionResult> GetByIdAsync(int id)
 		{
-			var order = await this.service.GetAsync(id);
-			if (order == null)
+			var user = await userManagerWrapper.FindByNameAsync(User.Identity.Name);
+			try
 			{
-				return NotFound();
+				var order = await this.service.GetAsync(id, user);
+
+				if (order == null)
+				{
+					return NotFound();
+				}
+				return Ok(order);
 			}
-			return Ok(order);
+			catch (ArgumentException)
+			{
+				return Unauthorized("You are not Autorized.");
+			}
 		}
 
 		[HttpDelete("id")]

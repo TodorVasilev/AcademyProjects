@@ -21,22 +21,24 @@ namespace SmartGarage.Controllers
 	public class OrderController : Controller
 	{
 		private readonly IOrderService orderService;
-		private readonly UserManager<User> userManager;
-		private readonly IServiceService serviceService;  
+		private readonly IUserManagerWrapper userManagerWrapper;
+		private readonly IServiceService serviceService;
 
-        public OrderController(IOrderService orderService, UserManager<User> userManager, IServiceService serviceService)
+		public OrderController(IOrderService orderService,
+		IUserManagerWrapper userManagerWrapper,
+		IServiceService serviceService)
 		{
 			this.orderService = orderService;
-			this.userManager = userManager;
+			this.userManagerWrapper = userManagerWrapper;
 			this.serviceService = serviceService;
-        }
+		}
 
 		public async Task<IActionResult> Index()
 		{
-			string name=default;
+			string name = default;
 			int pageNumber = 1;
 			var pageSize = 10;
-			var user = await userManager.FindByNameAsync(User.Identity.Name);
+			var user = await userManagerWrapper.FindByNameAsync(User.Identity.Name);
 
 			var orders = await orderService.GetAll(user, name);
 
@@ -47,26 +49,33 @@ namespace SmartGarage.Controllers
 		public async Task<IActionResult> IndexPartial(string name, int pageNumber = 1)
 		{
 			var pageSize = 10;
-			var user = await userManager.FindByNameAsync(User.Identity.Name);
+			var user = await userManagerWrapper.FindByNameAsync(User.Identity.Name);
 
 			var orders = await orderService.GetAll(user, name);
 
-			return PartialView("Order_Table_Partial",PaginatedList<GetOrderDTO>.CreateAsync(orders, pageNumber, pageSize));
+			return PartialView("Order_Table_Partial", PaginatedList<GetOrderDTO>.CreateAsync(orders, pageNumber, pageSize));
 		}
-
 
 
 		[HttpGet()]
 		public async Task<IActionResult> Details(int id, [FromQuery] string currency = "EUR")
 		{
-			var order = await orderService.GetAsync(id, currency);
-
-			if (order == null)
+			try
 			{
-				return NotFound();
-			}
+				var user = await userManagerWrapper.FindByNameAsync(User.Identity.Name);
 
-			return View(order);
+				var order = await orderService.GetAsync(id, user, currency);
+
+				if (order == null)
+				{
+					return NotFound();
+				}
+				return View(order);
+			}
+			catch (Exception)
+			{
+				return Unauthorized();
+			}
 		}
 
 		public IActionResult Create()
@@ -118,29 +127,30 @@ namespace SmartGarage.Controllers
 		[HttpGet()]
 		public async Task<IActionResult> Edit(int id)
 		{
+			var user = await userManagerWrapper.FindByNameAsync(User.Identity.Name);
+			var orderModel = await orderService.GetAsync(id, user);
+
+			if (orderModel == null)
 			{
-				var orderModel = await orderService.GetAsync(id);
-
-				if (orderModel == null)
-				{
-					return NotFound();
-				}
-
-				var viewModel = new OrderEditViewModel
-				{
-					OrderStatusId = orderModel.OrderStatusId,
-					VehicleId = orderModel.VehicleId,
-				};
-
-				return View(viewModel);
+				return NotFound();
 			}
+
+			var viewModel = new OrderEditViewModel
+			{
+				OrderStatusId = orderModel.OrderStatusId,
+				VehicleId = orderModel.VehicleId,
+			};
+
+			return View(viewModel);
+
 		}
 
 		[Authorize(Roles = "Admin,Employee")]
 		[HttpGet()]
 		public async Task<IActionResult> EditServices(int id)
 		{
-			var order = await orderService.GetAsync(id);
+			var user = await userManagerWrapper.FindByNameAsync(User.Identity.Name);
+			var order = await orderService.GetAsync(id, user);
 			var model = new ServiceOrderViewModel
 			{
 				OrderId = order.Id,
@@ -187,6 +197,6 @@ namespace SmartGarage.Controllers
 			};
 			await orderService.DeleteService(serviceOrder);
 			return RedirectToAction("EditServices", new { id = serviceOrder.OrderId });
-		}		
+		}
 	}
 }

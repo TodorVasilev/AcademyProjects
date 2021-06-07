@@ -15,7 +15,7 @@ namespace SmartGarage.Service.Contracts
 
 		Task<List<GetOrderDTO>> GetAll(User user, string name);
 
-		Task<GetOrderDTO> GetAsync(int id, string currency = "EUR");
+		Task<GetOrderDTO> GetAsync(int id, User user, string currency = "EUR");
 
 		Task<bool> UpdateAsync(int id, UpdateOrderDTO updateOrder);
 
