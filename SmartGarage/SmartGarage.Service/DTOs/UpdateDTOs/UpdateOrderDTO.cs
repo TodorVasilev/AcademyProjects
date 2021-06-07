@@ -6,7 +6,7 @@ namespace SmartGarage.Service.DTOs.UpdateDTOs
     {
         public int? OrderStatusId { get; set; }
 
-        public int? VehicleId { get; set; }
+
       
     }
 }

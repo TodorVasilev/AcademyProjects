@@ -77,7 +77,7 @@ namespace SmartGarage.Service
 				throw new ArgumentException("Not  authorized");
 			}
 
-			if (order == null || order.IsDeleted == true)
+			if (order == null )
 			{
 				return null;
 			}
@@ -125,7 +125,7 @@ namespace SmartGarage.Service
 				.ThenInclude(v => v.User)
 			.FirstOrDefaultAsync(u => u.Id == id);
 
-			if (orderToUpdate == null || orderToUpdate.IsDeleted == true)
+			if (orderToUpdate == null )
 			{
 				return false;
 			}
@@ -139,11 +139,7 @@ namespace SmartGarage.Service
 			{
 				orderToUpdate.FinishDate = System.DateTime.Now;
 				await emailsService.SendPdfWithOrderDetails(new GetOrderDTO(orderToUpdate), orderToUpdate.Vehicle.User.Email);
-			}
-			if (updateOrder.VehicleId != 0)
-			{
-				orderToUpdate.VehicleId = (int)updateOrder.VehicleId;
-			}
+			}			
 
 			this.context.Update(orderToUpdate);
 			await this.context.SaveChangesAsync();

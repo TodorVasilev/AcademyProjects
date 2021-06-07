@@ -1,108 +1,96 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using SmartGarage.Data;
 using SmartGarage.Service;
+using SmartGarage.Service.Contracts;
 using SmartGarage.Service.DTOs.UpdateDTOs;
+using SmartGarage.Service.ServiceContracts;
 using System;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Test.ServiceTests.OrderServiceTests
 {
-    //[TestClass]
-    //public class UpdateOrder_Should
-    //{
-    //    [TestMethod]
-    //    public async Task UpdateOrder_When_ParamsAreValid()
-    //    {
-    //        //Arrange
-    //        var options = Util.GetOptions(nameof(UpdateOrder_When_ParamsAreValid));
-    //        var orderToUpdate = new UpdateOrderDTO
-    //        {
-    //            FinishDate = DateTime.Now,
-    //            GarageId = 1,
-    //            OrderStatusId = 3,
-    //            VehicleId = 1
-    //        };
+	[TestClass]
+	public class UpdateOrder_Should
+	{
+		[TestMethod]
+		public async Task UpdateOrder_When_ParamsAreValid()
+		{
+			//Arrange
+			var options = Util.GetOptions(nameof(UpdateOrder_When_ParamsAreValid));
+			var currencyServiceFake = new Mock<ICurrencyService>();
+			var userHelperMock = new Mock<IUserHelper>();
+			var vehicleServiceMock = new Mock<IVehicleService>();
+			var emailServiceMock = new Mock<IEmailsService>();
 
-    //        using (var arrCtx = new SmartGarageContext(options))
-    //        {
-    //            arrCtx.SeedData();
-    //            await arrCtx.SaveChangesAsync();
-    //        }
+			var orderToUpdate = new UpdateOrderDTO
+			{
+				OrderStatusId = 3,
+			};
 
-    //        //Act
-    //        using (var actCtx = new SmartGarageContext(options))
-    //        {
-    //            var sut = new OrderService(actCtx);
-    //            var result = await sut.UpdateAsync(1, orderToUpdate);
-    //            var test = actCtx.Orders.Find(1);
+			using (var arrCtx = new SmartGarageContext(options))
+			{
+				arrCtx.SeedData();
+				await arrCtx.SaveChangesAsync();
+			}
 
-    //            //Assert
-    //            Assert.IsTrue(result);
-    //            Assert.AreEqual(test.OrderStatusId, 3);
-    //        }
-    //    }
+			//Act
+			using (var actCtx = new SmartGarageContext(options))
+			{
+				var sut = new OrderService(actCtx,
+				currencyServiceFake.Object,
+				userHelperMock.Object,
+				vehicleServiceMock.Object,
+				emailServiceMock.Object);
 
-    //    [TestMethod]
-    //    public async Task Return_False_When_IsDeleted()
-    //    {
-    //        //Arrange
-    //        var options = Util.GetOptions(nameof(Return_False_When_IsDeleted));
-    //        var orderToUpdate = new UpdateOrderDTO
-    //        {
-    //            FinishDate = DateTime.Now,
-    //            GarageId = 1,
-    //            OrderStatusId = 3,
-    //            VehicleId = 1
-    //        };
+				var result = await sut.UpdateAsync(1, orderToUpdate);
+				var test = actCtx.Orders.Find(1);
 
-    //        using (var arrCtx = new SmartGarageContext(options))
-    //        {
-    //            arrCtx.SeedData();
-    //            await arrCtx.SaveChangesAsync();
-    //        }
+				//Assert
+				Assert.IsTrue(result);
+				Assert.AreEqual(test.OrderStatusId, 3);
+			}
+		}
 
-    //        //Act
-    //        using (var actCtx = new SmartGarageContext(options))
-    //        {
-    //            var test = actCtx.Orders.Find(1);
-    //            test.IsDeleted = true;
-    //            var sut = new OrderService(actCtx);
-    //            var result = await sut.UpdateAsync(1, orderToUpdate);
+		[TestMethod]
+		public async Task Return_False_When_ThereIsNoOrder()
+		{
+			//Arrange
+			var options = Util.GetOptions(nameof(Return_False_When_ThereIsNoOrder));
 
-    //            //Assert
-    //            Assert.IsFalse(result);
+			var currencyServiceFake = new Mock<ICurrencyService>();
+			var userHelperMock = new Mock<IUserHelper>();
+			var vehicleServiceMock = new Mock<IVehicleService>();
+			var emailServiceMock = new Mock<IEmailsService>();
 
-    //        }
-    //    }
+			var orderToUpdate = new UpdateOrderDTO
+			{
+				OrderStatusId = 2,
+			};
 
-    //    [TestMethod]
-    //    public async Task Return_False_When_ParamsAreNull()
-    //    {
-    //        //Arrange
-    //        var options = Util.GetOptions(nameof(Return_False_When_ParamsAreNull));
-    //        var orderToUpdate = new UpdateOrderDTO
-    //        {
+			using (var arrCtx = new SmartGarageContext(options))
+			{
+				arrCtx.SeedData();
+				await arrCtx.SaveChangesAsync();
+			}
 
-    //        };
+			//Act
+			using (var actCtx = new SmartGarageContext(options))
+			{
+				var test = actCtx.Orders.Find(1);
 
-    //        using (var arrCtx = new SmartGarageContext(options))
-    //        {
-    //            arrCtx.SeedData();
-    //            await arrCtx.SaveChangesAsync();
-    //        }
+				var sut = new OrderService(actCtx,
+				currencyServiceFake.Object,
+				userHelperMock.Object,
+				vehicleServiceMock.Object,
+				emailServiceMock.Object);
 
-    //        //Act
-    //        using (var actCtx = new SmartGarageContext(options))
-    //        {
-    //            var test = actCtx.Orders.Find(1);
-    //            test.IsDeleted = true;
-    //            var sut = new OrderService(actCtx);
-    //            var result = await sut.UpdateAsync(1, orderToUpdate);
+				var result = await sut.UpdateAsync(5, orderToUpdate);
 
-    //            //Assert
-    //            Assert.IsFalse(result);
+				//Assert
+				Assert.IsFalse(result);
 
-    //        }
-    //    }
-    //}
+			}
+		}
+	}
 }

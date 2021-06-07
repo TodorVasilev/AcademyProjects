@@ -106,7 +106,6 @@ namespace SmartGarage.Controllers
 				var updateInformation = new UpdateOrderDTO
 				{
 					OrderStatusId = orderEditViewModel.OrderStatusId,
-					VehicleId = orderEditViewModel.VehicleId,
 				};
 
 				try
