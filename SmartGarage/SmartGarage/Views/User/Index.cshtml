@@ -79,7 +79,14 @@
 			});
 
 			$(document).on("click", "#next", function () {
-
+				var name =$('#name').val();
+				var phoneNumber = $('#phoneNumber').val();
+				var email = $('#email').val();
+				var vehicle = $('#vehicle').val();
+				var startDate = $('#startDate').val();
+				var endDate = $('#endDate').val();
+				var orderName = $('#orderName').val();
+				var orderDate = $('#orderDate').val();
 				var page = $('#page').val();
 				$.ajax({
 					url: "/User/Search",
@@ -101,6 +108,14 @@
 					});
 			});
 			$(document).on("click", "#prev", function () {
+				var name = $('#name').val();
+				var phoneNumber = $('#phoneNumber').val();
+				var email = $('#email').val();
+				var vehicle = $('#vehicle').val();
+				var startDate = $('#startDate').val();
+				var endDate = $('#endDate').val();
+				var orderName = $('#orderName').val();
+				var orderDate = $('#orderDate').val();
 				var page = $('#page').val();
 				$.ajax({
 					url: "/User/Search",
