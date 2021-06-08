@@ -95,5 +95,51 @@ namespace SmartGarage.Test.ServiceTests.OrderServiceTests
 				Assert.IsInstanceOfType(result, typeof(List<GetOrderDTO>));
 			}
         }
+        [TestMethod]
+        public async Task GetAllFilteredOrders_When_ParamsAreValid()
+        {
+            //Arrange
+            var options = Util.GetOptions(nameof(GetAllFilteredOrders_When_ParamsAreValid));
+            var currencyServiceFake = new Mock<ICurrencyService>();
+            var userHelperMock = new Mock<IUserHelper>();
+            var vehicleServiceMock = new Mock<IVehicleService>();
+            var emailServiceMock = new Mock<IEmailsService>();
+
+            var orderToAdd = new Order
+            {
+                Id = 3,
+                ArrivalDate = DateTime.Now,
+                GarageId = 1,
+                OrderStatusId = 1,
+                VehicleId = 1,
+                IsDeleted = true,
+            };
+
+            using (var arrCtx = new SmartGarageContext(options))
+            {
+                arrCtx.SeedData();
+                await arrCtx.AddRangeAsync(orderToAdd);
+                await arrCtx.SaveChangesAsync();
+            }
+
+            //Act
+            using (var actCtx = new SmartGarageContext(options))
+            {
+                var adminUser = actCtx.Users.Find(1);
+
+
+                var sut = new OrderService(actCtx,
+                 currencyServiceFake.Object,
+                 userHelperMock.Object,
+                 vehicleServiceMock.Object,
+                 emailServiceMock.Object);
+
+                var result = await sut.GetAll(adminUser, "first");
+
+
+                Assert.AreEqual(result.Count, 2);
+                Assert.IsInstanceOfType(result, typeof(List<GetOrderDTO>));
+            }
+        }
     }
 }

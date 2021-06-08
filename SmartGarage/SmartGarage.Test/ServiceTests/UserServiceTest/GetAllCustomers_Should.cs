@@ -39,10 +39,10 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
         }
 
         [TestMethod]
-        public async Task ReturnNull_When_No_Customer()
+        public async Task ReturnEmptyList_When_No_Customer()
         {
             //Arrange
-            var options = Util.GetOptions(nameof(ReturnNull_When_No_Customer));
+            var options = Util.GetOptions(nameof(ReturnEmptyList_When_No_Customer));
             var userManagerFake = new Mock<IUserManagerWrapper>();
             var filter = new UserSevicesFilterQueryObject();
             var order = new UserOrderQueryObject();
@@ -62,7 +62,7 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
                 var result = await sut.GetAllCustomerAsync(filter, order);
 
                 //Assert
-                Assert.AreEqual(result, null);
+                Assert.AreEqual(result.Count, 0);
             }
         }
 
