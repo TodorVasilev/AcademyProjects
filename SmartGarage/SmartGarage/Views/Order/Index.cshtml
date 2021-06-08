@@ -10,6 +10,7 @@
         <p class="ml-3 pt-3">
             <input type="submit" value="Search" class="btn btn-outline-success text-success" id="search" />
             <input type="text" name="name" placeholder="Search by Name" id="name" />
+            <a onclick="showInPopup('@Url.Action("Create","Order",null,Context.Request.Scheme)', 'Create Order')" class="btn btn-outline-success float-right mr-3 text-white ml-2">Create New</a>
         </p>
 		}
 		<div id="partialView">

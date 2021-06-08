@@ -3,22 +3,6 @@
 }
 <head>
     <style>
-        #picture-text {
-            position: absolute;
-            top: 86%;
-            left: 20%;
-            transform: translate(-50%, -50%);
-            font-size: 2rem;
-        }
-
-        #btn-move {
-            position: absolute;
-            top: 95%;
-            left: 43%;
-            transform: translate(-50%, -50%);
-            font-size: 1rem;
-        }
-
         .centered {
             position: absolute;
             top: 50%;
@@ -85,7 +69,7 @@
 <body id="start">
     <div class="w-100 h-75" style="background-color:#f2f2f2">
         <div>
-            <div id="carouselExampleIndicators" class="carousel slide float-left col-lg-7 p-2" data-ride="carousel">
+            <div id="carouselExampleIndicators" class="carousel slide float-left col-lg-8 p-0" data-ride="carousel">
                 <ol class="carousel-indicators">
                     <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
                     <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -112,7 +96,9 @@
                 </a>
             </div>
         </div>
-        <p class="mt-5 ml-5 col-3" style="display:inline-block; font-size:27px;"> <b style="font-size:3rem">NEshto</b> <br>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+        <p class="mt-3 ml-5 mb-0 col-3" style="display:inline-block; font-size:27px;"> <b style="font-size:3rem;">Welcome</b><br>If you are searching for a place where you can take care of your car problems,
+        or just simply check the condition of your car... You are at the right place!!!<br><br> <b style="font-size:33px;" >SmartGarage</b> is one of the top rated car services in the whole country. And while you are waiting
+        for some of the best car mechanics to fix your car, you could take a place in our lovely cafe, and enjoy our coffee and deserts.</p>
 
         <div class="container text-center">
             @if (TempData["Success"] != null)
@@ -123,7 +109,7 @@
             }
         </div>
 
-        <div class="mt-5 container col-11" style="border-bottom:5px solid #333944"></div>
+        <div class="mt-5 container col-11" style="border-bottom:3px solid #333944"></div>
 
         <div class="container-fluid p-0 col-10 bg-light" id="cards">
             <div class="card-group" style="background-color:#f2f2f2">
@@ -131,7 +117,7 @@
                     <img class="card-img-top" src="~/images/cards1.png" alt="Card image cap" style="height:235px;">
                     <div class="card-body text-white" style="background-color:#cccccc">
                         <h5 class="card-title">Our Services</h5>
-                        <p class="card-text">This card has supporting titional content.</p>
+                        <p class="card-text">Here you can check our avaible services.</p>
                         <a class="btn btn-success mt-5" asp-controller="Service" asp-action="Index">Our Services</a>
                     </div>
                 </div>
@@ -139,7 +125,7 @@
                     <img class="card-img-top" src="~/images/ContactUs.webp" alt="Card image cap" style="height:235px;">
                     <div class="card-body text-white" style="background-color: #a6a6a6">
                         <h5 class="card-title">Contact us</h5>
-                        <p class="card-text">This is a wider card with supporting text belolonger.</p>
+                        <p class="card-text">Send us an E-mail if you have some questions.</p>
                         <a class="btn btn-success mt-5 text-white" asp-controller="Home" asp-action="ContactUs">Contact Us</a>
                     </div>
                 </div>
@@ -147,7 +133,7 @@
                     <img class="card-img-top" src="~/images/cards5.jpg" alt="Card image cap" style="height:235px;">
                     <div class="card-body text-white" style="background-color:#8c8c8c">
                         <h5 class="card-title">Our Team</h5>
-                        <p class="card-text">We are the best team ever.</p>
+                        <p class="card-text">Meet ouy lovely team.</p>
                         <a class="btn btn-success mt-5" href="#our-team">Our Team</a>
                     </div>
                 </div>
@@ -155,8 +141,7 @@
         </div>
         <div class="about-section mb-5" id="our-team">
             <h1>Our Team</h1>
-            <p>Some text about who we are and what we do.</p>
-            <p>Resize the browser window to see that this page is responsive by the way.</p>
+            <h4>This is just a small part of our big family.</h4>
         </div>
         <div class="row justify-content-center mb-0 w-100">
             <div class="column col-3" id="team-card">
@@ -165,7 +150,6 @@
                     <div class="container">
                         <h2>Todor Vasilev</h2>
                         <p class="title">CEO & Founder</p>
-                        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
                         <p>johndoe@example.com</p>
                         <a class="button mb-3 mt-0 mr-4 btn-info text-white" asp-controller="Home" asp-action="ContactUs">Contact Us</a>
                     </div>
@@ -176,9 +160,8 @@
                 <div class="card">
                     <img src="~/images/Plamen1.jpg" alt="Plamen Velikov" style="width:100%;">
                     <div class="container">
-                        <h2>Mike Ross</h2>
+                        <h2>Plamen Velikov</h2>
                         <p class="title">Art Director & Founder</p>
-                        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
                         <p>plamkata@example.com</p>
                         <a class="button mb-3 mt-0 mr-4 btn-info text-white" asp-controller="Home" asp-action="ContactUs">Contact Us</a>
                     </div>
@@ -187,11 +170,10 @@
 
             <div class="column col-3 img-fluid" id="team-card">
                 <div class="card">
-                    <img src="~/images/Bobi.jpg" alt="John" style="width:100%; height:272px">
+                    <img src="~/images/Bobi3.jpg" alt="Bobi" style="width:100%; height:544px">
                     <div class="container">
-                        <h2>Bobkata</h2>
+                        <h2>Bobi Turboto</h2>
                         <p class="title">CTO</p>
-                        <p>Some text that describes me lorem ipsum ipsum lorem.</p>
                         <p>bobkata@example.com</p>
                         <a class="button mt-0 mb-3 mr-4 btn-info text-white" asp-controller="Home" asp-action="ContactUs">Contact Us</a>
                     </div>

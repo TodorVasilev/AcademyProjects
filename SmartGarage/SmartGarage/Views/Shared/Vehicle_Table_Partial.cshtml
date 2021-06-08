@@ -3,7 +3,7 @@
 <table class="table table-dark table-hover text-white">
     <thead>
         <tr class="active" style="line-height: 2px;">
-            <th scope="row"">
+            <th >
                 <p style="width: 50px">#</p>
             </th>
             <th>
@@ -17,11 +17,9 @@
             </th>
             @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
             {
-                <th style="width:250px;">
-                    <a onclick="showInPopup('@Url.Action("Create", "Vehicle",null, Context.Request.Scheme)', 'Create Vehhicle')" class="btn btn-outline-success text-white">Create</a>
-                </th>
+                <th></th>
             }
-            else
+            @if (User.IsInRole("Customer"))
             {
                 <th>
                     <p>Number Plate</p>
