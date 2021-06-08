@@ -93,8 +93,6 @@ namespace SmartGarage.Test.ServiceTests.UserServiceTest
                     Assert.IsFalse(result);
                 }
             }
-
-
         }
     }
 }
