@@ -37,23 +37,5 @@ namespace SmartGarage.Test.ServiceTests.ServiceServiceTests
                 Assert.IsInstanceOfType(result[0], typeof(GetServiceDTO));
             }
         }
-
-        [TestMethod]
-        public async Task ReturnNull_When_ThereAreNoServices()
-        {
-            //Arrange
-            var options = Util.GetOptions(nameof(ReturnNull_When_ThereAreNoServices));
-            var filterObject = new ServiceFilterQueryObject();
-
-            //Act
-            using (var actCtx = new SmartGarageContext(options))
-            {
-                var sut = new ServiceService(actCtx);
-                var result = await sut.GetAll(filterObject);
-
-                //Assert
-                Assert.IsNull(result);
-            }
-        }
     }
 }
