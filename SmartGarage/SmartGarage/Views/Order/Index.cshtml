@@ -1,71 +1,75 @@
 ﻿@model PaginatedList<GetOrderDTO>
 @{
-	Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <body>
-	<div class="container mt-3 p-0" style="background-color:#212529;">
-		@if (User.IsInRole("Employee") || User.IsInRole("Admin"))
-		{
-        <p class="ml-3 pt-3">
-            <input type="submit" value="Search" class="btn btn-outline-success text-success" id="search" />
-            <input type="text" name="name" placeholder="Search by Name" id="name" />
-            <a onclick="showInPopup('@Url.Action("Create","Order",null,Context.Request.Scheme)', 'Create Order')" class="btn btn-outline-success float-right mr-3 text-white ml-2">Create New</a>
-        </p>
-		}
-		<div id="partialView">
-			<partial name="Order_Table_Partial" model="@Model" />
-		</div>
-	</div>
+    <div class="container mt-3 p-0" style="background-color:#212529;">
+        @if (User.IsInRole("Employee") || User.IsInRole("Admin"))
+        {
+            <p class="ml-3 pt-3">
+                <input type="submit" value="Search" class="btn btn-outline-success text-success" id="search" />
+                <input type="text" name="name" placeholder="Search by Name" id="name" />
+                <a onclick="showInPopup('@Url.Action("Create","Order",null,Context.Request.Scheme)', 'Create Order')" class="btn btn-outline-success float-right mr-3 text-white ml-2">Create New</a>
+            </p>
+        }
+        else
+        {
+             <p class="pt-1"></p>
+        }
+        <div id="partialView">
+            <partial name="Order_Table_Partial" model="@Model" />
+        </div>
+    </div>
 </body>
 
 @section Scripts {
-	<script>
-		$(document).ready(function () {
-			$(document).on("click", "#search", function () {
-				var name = $('#name').val();
-				$.ajax({
-					url: "/Order/Search",
-					type: "GET",
-					data: {
-						name: name
-					}
-				})
-					.done(function (partialViewResult) {
-						$("#partialView").html(partialViewResult);
-					});
-			});
-			$(document).on("click", "#next", function () {
-				var name = $('#name').val();
-				var page = $('#page').val();
-				$.ajax({
-					url: "/Order/Search",
-					type: "GET",
-					data: {
-						name: name,
-						pageNumber: parseInt(page) + 1
-					}
-				})
-					.done(function (partialViewResult) {
-						$("#partialView").html(partialViewResult);
-					});
-			});
-			$(document).on("click", "#prev", function () {
-				var name = $('#name').val();
-				var page = $('#page').val();
-				$.ajax({
-					url: "/Order/Search",
-					type: "GET",
-					data: {
-						name: name,
-						pageNumber: parseInt(page) - 1
-					}
-				})
-					.done(function (partialViewResult) {
-						$("#partialView").html(partialViewResult);
-					});
-			});
-		});
-	</script>
+    <script>
+        $(document).ready(function () {
+            $(document).on("click", "#search", function () {
+                var name = $('#name').val();
+                $.ajax({
+                    url: "/Order/Search",
+                    type: "GET",
+                    data: {
+                        name: name
+                    }
+                })
+                    .done(function (partialViewResult) {
+                        $("#partialView").html(partialViewResult);
+                    });
+            });
+            $(document).on("click", "#next", function () {
+                var name = $('#name').val();
+                var page = $('#page').val();
+                $.ajax({
+                    url: "/Order/Search",
+                    type: "GET",
+                    data: {
+                        name: name,
+                        pageNumber: parseInt(page) + 1
+                    }
+                })
+                    .done(function (partialViewResult) {
+                        $("#partialView").html(partialViewResult);
+                    });
+            });
+            $(document).on("click", "#prev", function () {
+                var name = $('#name').val();
+                var page = $('#page').val();
+                $.ajax({
+                    url: "/Order/Search",
+                    type: "GET",
+                    data: {
+                        name: name,
+                        pageNumber: parseInt(page) - 1
+                    }
+                })
+                    .done(function (partialViewResult) {
+                        $("#partialView").html(partialViewResult);
+                    });
+            });
+        });
+    </script>
 }
 

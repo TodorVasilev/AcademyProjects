@@ -30,7 +30,7 @@
                 if (count % 2 != 0)
                 {
                     <tr style="line-height: 37px;" class="table-active">
-                        <td>
+                        <td class="text-white">
                             @count
                         </td>
                         <td>@Html.DisplayFor(modelItem => item.Name)</td>
@@ -48,7 +48,7 @@
                 else
                 {
                     <tr>
-                        <th scope="row">
+                        <th>
                             @count
                         </th>
                         <td>@Html.DisplayFor(modelItem => item.Name)</td>
