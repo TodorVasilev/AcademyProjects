@@ -55,11 +55,11 @@ namespace SmartGarage.Controllers
 			var result = await service.UpdateAdminAsync(model.Email, model.Role);
 			if (result == false)
 			{
-				TempData["Error"] = "Wrong email or role.";
+				TempData["Error"] = "Wrong Email!";
 			}
 			else
 			{
-				TempData["Success"] = "Update is completed";
+				TempData["Success"] = "Update is completed!";
 			}
 			return View();
 		}

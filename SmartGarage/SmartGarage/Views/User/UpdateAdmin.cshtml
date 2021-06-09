@@ -2,48 +2,50 @@
 @{
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="container">
-	<div class="row">
-		<div class="col-md-4">
-			@if (TempData["Success"] != null)
-			{
-				<div class="alert alert-success" role="alert">
-					<p>@TempData["Success"]</p>
-				</div>
-			}
+<body style="background-image: url('https://localhost:5001/images/Vehicles.jpg');">
+	<div class="container col-md-3 table-dark table-bordered p-3" style="border: 7px solid #212529; margin-top:135px;">
+		<div class="row">
+			<div class="col-md-12">
+				@if (TempData["Success"] != null)
+				{
+					<div class="alert alert-success" role="alert">
+						<p>@TempData["Success"]</p>
+					</div>
+				}
 
-			@if (TempData["Error"] != null)
-			{
-				<div class="alert alert-danger" role="alert">
-					<p>@TempData["Error"]</p>
-				</div>
-			}
+				@if (TempData["Error"] != null)
+				{
+					<div class="alert alert-danger" role="alert">
+						<p>@TempData["Error"]</p>
+					</div>
+				}
 
-			<form asp-action="UpdateAdmin" id="editUser" method="post">
-				<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-				<div class="form-group">
-					<label asp-for="Email" class="control-label"></label>
-					<input asp-for="Email" class="form-control" />
-					<span asp-validation-for="Email" class="text-danger" id="Email"></span>
-				</div>
+				<form asp-action="UpdateAdmin" id="editUser" method="post">
+					<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+					<div class="form-group">
+						<label asp-for="Email" class="control-label"></label>
+						<input asp-for="Email" class="form-control box-shadow" style="box-shadow: 0 0 1px 2px #05abdc" />
+						<span asp-validation-for="Email" class="text-danger" id="Email"></span>
+					</div>
 
-				<label for="exampleFormControlSelect1">Role</label>
-				<select asp-for="Role" class="form-control" id="exampleFormControlSelect1">
-					<option>Employee</option>
-					<option>Customer</option>
-					<option>Admin</option>
-				</select>
-				<div class="form-group">
-					<input type="submit" value="Update" class="btn btn-primary" />
-				</div>
-			</form>
+					<label for="exampleFormControlSelect1">Role</label>
+					<select asp-for="Role" class="form-control box-shadow" style="box-shadow: 0 0 1px 2px #05abdc" id="exampleFormControlSelect1">
+						<option>Employee</option>
+						<option>Customer</option>
+						<option>Admin</option>
+					</select>
+					<div class="form-group">
+						<input type="submit" value="Update" class="btn btn-primary" />
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div>
+			<a class="btn btn-primary" asp-action="Index">Back to List</a>
 		</div>
 	</div>
-
-	<div>
-		<a class="btn btn-primary" asp-action="Index">Back to List</a>
-	</div>
-</div>
+</body>
 
 @section Scripts {
 	@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
