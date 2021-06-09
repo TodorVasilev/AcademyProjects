@@ -37,10 +37,7 @@ namespace SmartGarage.Controllers
 			var user = await userManager.GetUserAsync(HttpContext.User);
 
 			var services = await service.GetAllLinkedToCustomer(filterForCustomer, user.Id);
-			if (services == null)
-			{
-				return View();
-			}
+	
 			return View(PaginatedList<GetServiceDTO>.CreateAsync(services, pageNumber, pageSize));
 
 		}

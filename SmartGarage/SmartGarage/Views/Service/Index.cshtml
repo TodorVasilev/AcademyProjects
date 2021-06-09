@@ -4,23 +4,23 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <body>
-    <div class="container col-4 mt-md-4 pt-3 mb-4 pb-1" style="background-color:#212529">
-        <div class="form-actions no-color">
-            <p>
-                <input type="submit" value="Search" class="btn btn-outline-success" id="search" />
-                <input type="text" name="price" placeholder="Search by Price" id="price" />
-                <input type="text" name="name" placeholder="Search by Name" id="name" />
-                @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
-                {
-                    <a onclick="showInPopup('@Url.Action("Create","Service",null,Context.Request.Scheme)', 'New Service')" class="btn btn-outline-success float-right text-white">Create New</a>
-                }
+	<div class="container col-4 mt-md-4 pt-3 mb-4 pb-1" style="background-color:#212529">
+		<div class="form-actions no-color">
+			<p>
+				<input type="submit" value="Search" class="btn btn-outline-success" id="search" />
+				<input type="text" name="price" placeholder="Search by Price" id="price" />
+				<input type="text" name="name" placeholder="Search by Name" id="name" />
+				@if (User.IsInRole("Admin") || User.IsInRole("Employee"))
+				{
+					<a onclick="showInPopup('@Url.Action("Create","Service",null,Context.Request.Scheme)', 'New Service')" class="btn btn-outline-success float-right text-white">Create New</a>
+				}
 
-                @if (User.IsInRole("Customer"))
-                {
-                    <a class="btn btn-outline-primary float-right" style="" asp-action="IndexCustomer" role="button">My Services</a>
-                }
-            </p>
-        </div>
+				@if (User.IsInRole("Customer"))
+				{
+					<a class="btn btn-outline-primary float-right" style="" asp-action="IndexCustomer" role="button">My Services</a>
+				}
+			</p>
+		</div>
 
 
         <div id="partialView">
@@ -29,58 +29,10 @@
     </div>
 </body>
 
+
+
 @section Scripts {
-    <script>
-        $(document).ready(function () {
-            $(document).on("click", "#search", function () {
-                var price = $('#price').val();
-                var name = $('#name').val();
-                $.ajax({
-                    url: "/Service/Search",
-                    type: "GET",
-                    data: {
-                        price: price,
-                        name: name
-                    }
-                })
-                    .done(function (partialViewResult) {
-                        $("#partialView").html(partialViewResult);
-                    });
-            });
-            $(document).on("click", "#next", function () {
-                var price = $('#price').val();
-                var name = $('#name').val();
-                var page = $('#page').val();
-                $.ajax({
-                    url: "/Service/Search",
-                    type: "GET",
-                    data: {
-                        price: price,
-                        name: name,
-                        pageNumber: parseInt(page) + 1
-                    }
-                })
-                    .done(function (partialViewResult) {
-                        $("#partialView").html(partialViewResult);
-                    });
-            });
-            $(document).on("click", "#prev", function () {
-                var price = $('#price').val();
-                var name = $('#name').val();
-                var page = $('#page').val();
-                $.ajax({
-                    url: "/Service/Search",
-                    type: "GET",
-                    data: {
-                        price: price,
-                        name: name,
-                        pageNumber: parseInt(page) - 1
-                    }
-                })
-                    .done(function (partialViewResult) {
-                        $("#partialView").html(partialViewResult);
-                    });
-            });
-        });
-    </script>
+	@{
+		<script src="~/js/Custom_scripts/Index_Service.js"></script>
+	}
 }

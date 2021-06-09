@@ -15,7 +15,7 @@ namespace SmartGarage.Api_Controllers
 {
 	[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 	[ApiController]
-	[Route("api/[controller]")]
+	[Route("api/users")]
 	public class UserApiController : ControllerBase
 	{
 		private readonly IUserService userService;
@@ -27,6 +27,12 @@ namespace SmartGarage.Api_Controllers
 			this.userHelper = userHelper;
 		}
 
+
+		/// <summary>
+		/// Authenticates with JWT-tocken for Api.
+		/// </summary>
+		/// <param name="model">User name and password.</param>
+		/// <returns></returns>
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -77,6 +83,13 @@ namespace SmartGarage.Api_Controllers
 				return BadRequest(new { massage = "There is such an email." });
 			}
 		}
+
+		/// <summary>
+		/// Updates the user asynchronous.
+		/// </summary>
+		/// <param name="id">The identifier.</param>
+		/// <param name="updateUserDTO">The update user dto.</param>
+		/// <returns></returns>
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -93,6 +106,13 @@ namespace SmartGarage.Api_Controllers
 			}
 			return BadRequest(new { message = "Unable to update user!" });
 		}
+
+		/// <summary>
+		/// Updates role, only from admin user.
+		/// </summary>
+		/// <param name="id">The identifier.</param>
+		/// <param name="role">The role.</param>
+		/// <returns></returns>
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -119,6 +139,14 @@ namespace SmartGarage.Api_Controllers
 			}
 		}
 
+		/// <summary>
+		/// Gets all user asynchronous.
+		/// </summary>
+		/// <param name="filter">Filter by Name,Phone number, Email, Vehicle. Filter between start-date and end-date.</param>
+		/// <param name="order">Order by name or date.</param>
+		/// <param name="pageNumber">The page number.</param>
+		/// <param name="pageSize">Size of the page.</param>
+		/// <returns></returns>
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -135,6 +163,11 @@ namespace SmartGarage.Api_Controllers
 			return Ok(PaginatedList<GetUserDTO>.CreateAsync(await userService.GetAllCustomerAsync(filter, order), pageNumber, pageSize));
 		}
 
+		/// <summary>
+		/// Deletes user by Id.
+		/// </summary>
+		/// <param name="id">The identifier.</param>
+		/// <returns></returns>
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
