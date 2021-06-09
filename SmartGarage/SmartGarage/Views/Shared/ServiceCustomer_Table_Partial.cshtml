@@ -1,10 +1,10 @@
 ﻿@model PaginatedList<GetServiceDTO>
 
-<table class="table table-dark">
+<table class="table table-dark table-hover">
 	<thead>
 		<tr style="line-height: 3px;" class="active">
-			<th scope="row">
-				<p style="width: 50px">#</p>
+			<th style="width:103.55px;">
+                <p>#</p>
 			</th>
 			<th>
 				<p>Name</p>
@@ -26,8 +26,8 @@
 						<th scope="row">
 							@count
 						</th>
-						<td>@Html.DisplayFor(modelItem => item.Name)</td>
-						<td>@Html.DisplayFor(modelItem => item.Price)</td>						
+						<td style="width:369.11px;">@Html.DisplayFor(modelItem => item.Name)</td>
+						<td>@Html.DisplayFor(modelItem => item.Price)<b class="ml-1" style="font-size:10px;">EUR</b></td>						
 					</tr>
 				}
 				else
@@ -36,8 +36,8 @@
 						<th scope="row">
 							@count
 						</th>
-						<td>@Html.DisplayFor(modelItem => item.Name)</td>
-						<td>@Html.DisplayFor(modelItem => item.Price)</td>
+						<td style="width:369.11px;">@Html.DisplayFor(modelItem => item.Name)</td>
+						<td>@Html.DisplayFor(modelItem => item.Price)<b class="ml-1" style="font-size:10px;">EUR</b></td>
 						
 					</tr>
 				}
