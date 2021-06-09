@@ -389,29 +389,25 @@ namespace SmartGarage.Test
                 new VehicleType
                 {
                     Id = 1,
-                    Name = "Car",
-                    PriceCoefficient = 1.00
+                    Name = "Car"
                 },
 
                 new VehicleType
                 {
                     Id = 2,
-                    Name = "Motorcycle",
-                    PriceCoefficient = 0.90
+                    Name = "Motorcycle"
                 },
 
                 new VehicleType
                 {
                     Id = 3,
-                    Name = "Bus",
-                    PriceCoefficient = 2.0
+                    Name = "Bus"
                 },
 
                 new VehicleType
                 {
                     Id = 4,
-                    Name = "Truck",
-                    PriceCoefficient = 2.50
+                    Name = "Truck"
                 },
             };
 

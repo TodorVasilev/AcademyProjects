@@ -11,9 +11,7 @@ namespace SmartGarage.Data.Models
         [Required]
         public string Name { get; set; }
 
-        [Required]
-        public double PriceCoefficient { get; set; }
-
+       
         public List<VehicleModel> VehicleModels { get; set; } = new List<VehicleModel>();
     }
 }

@@ -10,7 +10,7 @@ using SmartGarage.Data;
 namespace SmartGarage.Data.Migrations
 {
     [DbContext(typeof(SmartGarageContext))]
-    [Migration("20210604120043_Initial")]
+    [Migration("20210609151620_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -216,7 +216,8 @@ namespace SmartGarage.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
 
                     b.HasKey("Id");
 
@@ -294,8 +295,8 @@ namespace SmartGarage.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ArrivalDate = new DateTime(2021, 6, 2, 15, 0, 42, 842, DateTimeKind.Local).AddTicks(6932),
-                            FinishDate = new DateTime(2021, 6, 4, 15, 0, 42, 844, DateTimeKind.Local).AddTicks(6194),
+                            ArrivalDate = new DateTime(2021, 6, 7, 18, 16, 20, 516, DateTimeKind.Local).AddTicks(7531),
+                            FinishDate = new DateTime(2021, 6, 9, 18, 16, 20, 518, DateTimeKind.Local).AddTicks(9451),
                             GarageId = 1,
                             IsDeleted = false,
                             OrderStatusId = 3,
@@ -304,7 +305,7 @@ namespace SmartGarage.Data.Migrations
                         new
                         {
                             Id = 2,
-                            ArrivalDate = new DateTime(2021, 6, 1, 15, 0, 42, 844, DateTimeKind.Local).AddTicks(6674),
+                            ArrivalDate = new DateTime(2021, 6, 6, 18, 16, 20, 518, DateTimeKind.Local).AddTicks(9849),
                             GarageId = 1,
                             IsDeleted = false,
                             OrderStatusId = 1,
@@ -313,7 +314,7 @@ namespace SmartGarage.Data.Migrations
                         new
                         {
                             Id = 3,
-                            ArrivalDate = new DateTime(2021, 5, 25, 15, 0, 42, 844, DateTimeKind.Local).AddTicks(6692),
+                            ArrivalDate = new DateTime(2021, 5, 30, 18, 16, 20, 518, DateTimeKind.Local).AddTicks(9874),
                             GarageId = 1,
                             IsDeleted = false,
                             OrderStatusId = 2,
@@ -322,7 +323,7 @@ namespace SmartGarage.Data.Migrations
                         new
                         {
                             Id = 4,
-                            ArrivalDate = new DateTime(2021, 5, 31, 15, 0, 42, 844, DateTimeKind.Local).AddTicks(6696),
+                            ArrivalDate = new DateTime(2021, 6, 5, 18, 16, 20, 518, DateTimeKind.Local).AddTicks(9879),
                             GarageId = 1,
                             IsDeleted = false,
                             OrderStatusId = 2,
@@ -331,7 +332,7 @@ namespace SmartGarage.Data.Migrations
                         new
                         {
                             Id = 5,
-                            ArrivalDate = new DateTime(2021, 6, 3, 15, 0, 42, 844, DateTimeKind.Local).AddTicks(6700),
+                            ArrivalDate = new DateTime(2021, 6, 8, 18, 16, 20, 518, DateTimeKind.Local).AddTicks(9882),
                             GarageId = 1,
                             IsDeleted = false,
                             OrderStatusId = 1,
@@ -404,21 +405,21 @@ namespace SmartGarage.Data.Migrations
                         new
                         {
                             Id = 1,
-                            ConcurrencyStamp = "719dd0cf-dc03-4a4e-a31c-c9e13efc5b0f",
+                            ConcurrencyStamp = "706160c6-5f17-4452-9840-7c3dbd238f4b",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = 2,
-                            ConcurrencyStamp = "85a34a66-56b8-4100-bbc5-43789bdc37a5",
+                            ConcurrencyStamp = "2607d08b-6b1b-4fdc-a329-1e7ac65da23e",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
                             Id = 3,
-                            ConcurrencyStamp = "aad65966-1e62-4115-a39a-ada51b546d38",
+                            ConcurrencyStamp = "89395fda-e6c5-451a-b319-9dc3f619b4c1",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
@@ -617,8 +618,8 @@ namespace SmartGarage.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(10)")
-                        .HasMaxLength(10);
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
@@ -660,7 +661,7 @@ namespace SmartGarage.Data.Migrations
                             AccessFailedCount = 0,
                             Address = "Sofia, Bulgaria",
                             Age = 37,
-                            ConcurrencyStamp = "fa6623e7-135f-44f9-b7eb-807b7bab637a",
+                            ConcurrencyStamp = "7da60fbc-66b6-4b52-b7af-16b022076e14",
                             CurrentRole = "ADMIN",
                             DrivingLicenseNumber = "93302193",
                             Email = "smartgarage@gmail.com",
@@ -671,9 +672,10 @@ namespace SmartGarage.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "SMARTGARAGE@GMAIL.COM",
                             NormalizedUserName = "SMARTGARAGE",
-                            PasswordHash = "AQAAAAEAACcQAAAAEL5R3cdKDbCqpzWDP+Gk1ofJKKchuc1fuiBiL0lWFR8vPF+nH4GmovW1yngKC3QS2A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFCWQlwKH7gRQdlf9upJ2mAOJHKek5S7SCa9KpTWesu4I+VsD49ojJathdojtIoT1w==",
+                            PhoneNumber = "0851547896",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "4bfbd989-3b2b-4e68-a850-e6efe6700ce3",
+                            SecurityStamp = "7c258773-18f9-4240-a5aa-9d1a2d68ca10",
                             TwoFactorEnabled = false,
                             UserName = "SmartGarage"
                         },
@@ -683,7 +685,7 @@ namespace SmartGarage.Data.Migrations
                             AccessFailedCount = 0,
                             Address = "Sofia, Bulgaria",
                             Age = 28,
-                            ConcurrencyStamp = "29fdc3f1-f177-457c-a40b-8fb25c822694",
+                            ConcurrencyStamp = "8661e004-f254-43d7-80b7-ab806c1ae25f",
                             CurrentRole = "EMPLOYEE",
                             DrivingLicenseNumber = "3241219",
                             Email = "petar@test.com",
@@ -694,9 +696,10 @@ namespace SmartGarage.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "PETAR@TEST.COM",
                             NormalizedUserName = "PETARPETROV",
-                            PasswordHash = "AQAAAAEAACcQAAAAEENYlNW6Nhf3nOlYQCF30KiWocE9MSq7wVbZi7G3w3CwtrYES+BX/rPBd7PGbFjBPg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKiW4KLOl8J0uhOUFgGC98Re35XnjlPZ42jRecVN+jz9aZFZmUZUPADemiBfWRtYYA==",
+                            PhoneNumber = "0851521896",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e3bbd956-e9d1-4a76-a052-6bb68c53efeb",
+                            SecurityStamp = "deb6b9eb-6a98-4475-b9e9-6e425c1acb07",
                             TwoFactorEnabled = false,
                             UserName = "PetarPetrov"
                         },
@@ -706,7 +709,7 @@ namespace SmartGarage.Data.Migrations
                             AccessFailedCount = 0,
                             Address = "Sofia, Bulgaria",
                             Age = 28,
-                            ConcurrencyStamp = "4212b327-c8c3-4e24-84f9-7e0b9dad595b",
+                            ConcurrencyStamp = "261bede5-6454-4ed1-a892-5e3a143774a2",
                             CurrentRole = "CUSTOMER",
                             DrivingLicenseNumber = "13302343",
                             Email = "firstcustomer@gmail.com",
@@ -717,9 +720,10 @@ namespace SmartGarage.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "FIRSTCUSTOMER@GMAIL.COM",
                             NormalizedUserName = "THEVERYFIRSTCUSTOMER",
-                            PasswordHash = "AQAAAAEAACcQAAAAEH0ZbUMFNluOv7DP/R87P4YYQLmCwmlys/OtoXewe5UX44KgiSjLDR2/tekjfsOPHQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEFvNkW3O54BIh4b6U8pgSE2yjn31XP4TQxEOaMGxvhO18sd68ZHovaCoEV9OFiVog==",
+                            PhoneNumber = "0851545496",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "afcb9e68-f639-43ce-a21e-235e9ad3c6ba",
+                            SecurityStamp = "20fc73e7-6d87-4104-a289-480a80d2c71e",
                             TwoFactorEnabled = false,
                             UserName = "TheVeryFirstCustomer"
                         },
@@ -729,7 +733,7 @@ namespace SmartGarage.Data.Migrations
                             AccessFailedCount = 0,
                             Address = "Burgas, Bulgaria",
                             Age = 40,
-                            ConcurrencyStamp = "0b49f815-81cb-4383-a8d1-9e175a998a49",
+                            ConcurrencyStamp = "a51d1efb-72af-4798-a382-48c7a7077486",
                             CurrentRole = "CUSTOMER",
                             DrivingLicenseNumber = "73322193",
                             Email = "ivangeorgiev14@gmail.com",
@@ -740,9 +744,10 @@ namespace SmartGarage.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "IVANGEORGIEV14@GMAIL.COM",
                             NormalizedUserName = "IVANG",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAyhInERoH0yh8Hr1//BeIFXHBF2/DObbJTHlARs5shN7ig7fReyIEXDF3Kvkbks1Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKCfDdcXMjEWNTIc3D+kchplYFWQtbn1PQ5MS9zej3UtpuvzY31C85LWqpWE2pCYtg==",
+                            PhoneNumber = "0878647896",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d32f9a25-016a-4e83-bb65-2a5871acfc4a",
+                            SecurityStamp = "ad3f9447-29b5-4458-82b3-64be461128bd",
                             TwoFactorEnabled = false,
                             UserName = "IvanG"
                         },
@@ -752,7 +757,7 @@ namespace SmartGarage.Data.Migrations
                             AccessFailedCount = 0,
                             Address = "Blagoevgrad, Bulgaria",
                             Age = 22,
-                            ConcurrencyStamp = "9534fac0-ae9a-42c1-b363-f6381cf3450d",
+                            ConcurrencyStamp = "5a8ad026-5f36-4374-93c9-250c3535a707",
                             CurrentRole = "CUSTOMER",
                             DrivingLicenseNumber = "91304433",
                             Email = "californication@gmail.com",
@@ -763,9 +768,10 @@ namespace SmartGarage.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "CALIFORNICATION@GMAIL.COM",
                             NormalizedUserName = "LOVETOACT",
-                            PasswordHash = "AQAAAAEAACcQAAAAEBP88Dzd1Myk3jLLoaisWd2TFRJXG3LDB9sEzrjCoM7ElKiD+X5fhj2bhreFIHadqA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEF89yaexWuBwciKfJXrX8U5JHgWcbrfCTFDUqbSw3X+KHxrEQjfq1FNyRwCx4d9P+g==",
+                            PhoneNumber = "0871247896",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "80a1ad4c-5a19-4b61-913f-9d75347e888b",
+                            SecurityStamp = "91917000-69e2-45bd-830e-6f5f73f40c95",
                             TwoFactorEnabled = false,
                             UserName = "LoveToAct"
                         },
@@ -775,7 +781,7 @@ namespace SmartGarage.Data.Migrations
                             AccessFailedCount = 0,
                             Address = "Blagoevgrad, Bulgaria",
                             Age = 24,
-                            ConcurrencyStamp = "0328dcbc-9c05-46be-896c-fc3dccc4c564",
+                            ConcurrencyStamp = "06c84c79-6de7-4fb3-92b0-6fb08d634241",
                             CurrentRole = "CUSTOMER",
                             DrivingLicenseNumber = "91304433123",
                             Email = "penkapetrova@gmail.com",
@@ -786,9 +792,10 @@ namespace SmartGarage.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "PENKAPETROVA@GMAIL.COM",
                             NormalizedUserName = "PENKAPETROVA",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHMaKxjGj1G1Eov7D5mU1W8ImZV62rflYKhWu+Ct08hhb9ZS7WVppd/RGBM2WPzjSA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKFd8+uUa2qIvLh/cxoDoAdrqW2XmKGR7wXPDMsAyxUGhTRLI9ygYbQwlzZtgBjcmg==",
+                            PhoneNumber = "0879737896",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a678a86d-b77a-47f1-b61d-e5b9205f366b",
+                            SecurityStamp = "459cc8c8-08c1-4e1c-887e-f2dfb0feac40",
                             TwoFactorEnabled = false,
                             UserName = "PenkaPetrova"
                         },
@@ -798,7 +805,7 @@ namespace SmartGarage.Data.Migrations
                             AccessFailedCount = 0,
                             Address = "Botevgrad, Bulgaria",
                             Age = 31,
-                            ConcurrencyStamp = "2308050d-3766-4a70-9032-172ca4fbb0fa",
+                            ConcurrencyStamp = "a64066f3-d5e2-46f5-ae19-926baa5bfe8d",
                             CurrentRole = "CUSTOMER",
                             DrivingLicenseNumber = "4984654156",
                             Email = "ivandimitrov@gmail.com",
@@ -809,9 +816,10 @@ namespace SmartGarage.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "IVANDIMITROV@GMAIL.COM",
                             NormalizedUserName = "IVANDIMITROV",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKEDfvxYH7m7rSuISSE2ZIpsZOQNJJVva5gu4VktXxjrQgDFBdD1r9R0R5LpFHhyOA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFC2b+Vq2bhcD9F+9SVKl/YHKrIFmoLrgk9ticeiR7nu/UzGs8SiGaf9qhBCOieEjA==",
+                            PhoneNumber = "08897247896",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b03a7231-9846-4d6b-a336-899d29510355",
+                            SecurityStamp = "0f7297b0-c2ca-43ee-a3fd-7c7457f03d38",
                             TwoFactorEnabled = false,
                             UserName = "IvanDimitrov"
                         },
@@ -821,7 +829,7 @@ namespace SmartGarage.Data.Migrations
                             AccessFailedCount = 0,
                             Address = "Russe, Bulgaria",
                             Age = 48,
-                            ConcurrencyStamp = "0f0560e4-99cd-4fbf-98e7-c15d9072c4a8",
+                            ConcurrencyStamp = "7387d5fc-f375-4c37-a0ad-c59120f31a46",
                             CurrentRole = "CUSTOMER",
                             DrivingLicenseNumber = "498124654156",
                             Email = "kuzmov34@gmail.com",
@@ -832,9 +840,10 @@ namespace SmartGarage.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "KUZMOV34@GMAIL.COM",
                             NormalizedUserName = "MARIANKUZMOV",
-                            PasswordHash = "AQAAAAEAACcQAAAAEGJBSY+KqyMdP4U33R/YHhuVP/KWSn/H9g6kRdcbjtJh4bKLBJ7ocNSmboM4JiUPyA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMtzU6/t/lmmyI1ztHcAPB1jSZ42/oiL+Q1rlTq0ajIfLODoAsZEZlzTSBwpILf88g==",
+                            PhoneNumber = "08897247943",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "6c7b22de-05d9-4491-8235-59eaa8f441af",
+                            SecurityStamp = "ad161f21-0c8d-4b19-a5ed-8c754a280682",
                             TwoFactorEnabled = false,
                             UserName = "MarianKusmov"
                         },
@@ -844,7 +853,7 @@ namespace SmartGarage.Data.Migrations
                             AccessFailedCount = 0,
                             Address = "Sofia, Bulgaria",
                             Age = 35,
-                            ConcurrencyStamp = "2e4ef8f3-71df-4cf8-89d7-e5832629a2a7",
+                            ConcurrencyStamp = "53c25bc0-f281-452b-a48e-fe6d76466291",
                             CurrentRole = "CUSTOMER",
                             DrivingLicenseNumber = "49812324654156",
                             Email = "pepilakov34@gmail.com",
@@ -855,9 +864,10 @@ namespace SmartGarage.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "PEPILAKOV34@GMAIL.COM",
                             NormalizedUserName = "PETARLAKOV",
-                            PasswordHash = "AQAAAAEAACcQAAAAENH43eL4xmuZz5LK9rNmla603ZSCbb/JVda0wf7owM1bMjwmBDrAz431sNrOXUU+KQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEK6bLBkDhv2oaghpdBu97DvZF91yzEGbxaQCWgM0EGmK2I9MVnQ4LRHXdU1gnsN4Qg==",
+                            PhoneNumber = "08897247444",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "239214f9-3de7-4cd5-8264-8aecb208477c",
+                            SecurityStamp = "743f20b9-745d-43ed-8afd-1fd67b5d2d53",
                             TwoFactorEnabled = false,
                             UserName = "PetarLakov"
                         },
@@ -867,7 +877,7 @@ namespace SmartGarage.Data.Migrations
                             AccessFailedCount = 0,
                             Address = "Dobrich, Bulgaria",
                             Age = 24,
-                            ConcurrencyStamp = "f26996aa-8ad1-478c-b38c-78951061bda7",
+                            ConcurrencyStamp = "594ddcc7-16db-4bec-9f1e-1aab803d2946",
                             CurrentRole = "CUSTOMER",
                             DrivingLicenseNumber = "4982124654156",
                             Email = "nikola12@gmail.com",
@@ -878,9 +888,10 @@ namespace SmartGarage.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "NIKOLA12@GMAIL.COM",
                             NormalizedUserName = "NIKOLAURUMOV",
-                            PasswordHash = "AQAAAAEAACcQAAAAEP374S2YpbYDkTu1H/2B/Hyutyz/6zDbDUvOQ2tPN28aiDhWJJlFpWVMSd8sFKdkZg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAP3R3HsQpX1pgbrLwCtWP9EMLpOoCYmcfslRzpnVcg9ZofaoPiIcd+VSU0+46vMmg==",
+                            PhoneNumber = "08897247111",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "3255bafb-6b83-41d4-92e4-d7e9775cd520",
+                            SecurityStamp = "411410b8-4f6a-43e2-937e-da22b3a7d1f4",
                             TwoFactorEnabled = false,
                             UserName = "NikolaUrumov"
                         },
@@ -890,7 +901,7 @@ namespace SmartGarage.Data.Migrations
                             AccessFailedCount = 0,
                             Address = "Pernik, Bulgaria",
                             Age = 49,
-                            ConcurrencyStamp = "ef74d0ff-585c-452f-aa41-cb16bbf5abae",
+                            ConcurrencyStamp = "6323ed1e-9986-4d30-9a53-08a324e380bd",
                             CurrentRole = "CUSTOMER",
                             DrivingLicenseNumber = "42134654156",
                             Email = "rumi@gmail.com",
@@ -901,9 +912,10 @@ namespace SmartGarage.Data.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "RUMI@GMAIL.COM",
                             NormalizedUserName = "RUMI123",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJOMnWIqNzfFgqhgKsnl2oiKmI/k9H/IvfowXCVBBMasv7D0O7l8mCdMF7OxO35vpQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHBNEZbCPwEFT3WQodKurndNfBK8fH8x8wcjoCfqBPHLtY1UcE9zcT6OvnoEG8yzug==",
+                            PhoneNumber = "0889724777",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e28729a3-caf3-47e7-9c48-6c0eb0b868ba",
+                            SecurityStamp = "0338a42e-b1cb-4a68-b4cf-952f6ab0202a",
                             TwoFactorEnabled = false,
                             UserName = "Rumi123"
                         });
@@ -1113,9 +1125,6 @@ namespace SmartGarage.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("PriceCoefficient")
-                        .HasColumnType("float");
-
                     b.HasKey("Id");
 
                     b.ToTable("VehicleTypes");
@@ -1124,26 +1133,22 @@ namespace SmartGarage.Data.Migrations
                         new
                         {
                             Id = 1,
-                            Name = "Car",
-                            PriceCoefficient = 1.0
+                            Name = "Car"
                         },
                         new
                         {
                             Id = 2,
-                            Name = "Motorcycle",
-                            PriceCoefficient = 0.90000000000000002
+                            Name = "Motorcycle"
                         },
                         new
                         {
                             Id = 3,
-                            Name = "Bus",
-                            PriceCoefficient = 2.0
+                            Name = "Bus"
                         },
                         new
                         {
                             Id = 4,
-                            Name = "Truck",
-                            PriceCoefficient = 2.5
+                            Name = "Truck"
                         });
                 });
 
