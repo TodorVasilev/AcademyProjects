@@ -136,8 +136,7 @@ namespace SmartGarage.Controllers
 
 			var viewModel = new OrderEditViewModel
 			{
-				OrderStatusId = orderModel.OrderStatusId,
-				VehicleId = orderModel.VehicleId,
+				OrderStatusId = orderModel.OrderStatusId,				
 			};
 
 			return View(viewModel);
