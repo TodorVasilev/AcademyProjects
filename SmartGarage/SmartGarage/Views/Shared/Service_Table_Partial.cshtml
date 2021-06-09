@@ -1,6 +1,6 @@
 ﻿@model PaginatedList<GetServiceDTO>
 
-<table class="table table-dark">
+<table class="table table-dark table-hover">
     <thead>
         <tr style="line-height: 3px;" class="active">
             <th scope="row">
@@ -16,7 +16,6 @@
             @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
             {
                 <th>
-                    <a onclick="showInPopup('@Url.Action("Create","Service",null,Context.Request.Scheme)', 'New Service')" class="btn btn-outline-success text-white">Create New</a>
                 </th>
             }
         </tr>
@@ -30,11 +29,11 @@
                 if (count % 2 != 0)
                 {
                     <tr style="line-height: 37px;" class="table-active">
-                        <td>
+                        <td class="text-white">
                             @count
                         </td>
                         <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Price)<b class="ml-1" style="font-size:10px;">EUR</b></td>
 
                         @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
                         {
@@ -48,11 +47,11 @@
                 else
                 {
                     <tr>
-                        <th scope="row">
+                        <th>
                             @count
                         </th>
                         <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Price)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Price)<b class="ml-1" style="font-size:10px;">EUR</b></td>
                         @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
                         {
                     <td>

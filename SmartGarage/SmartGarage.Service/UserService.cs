@@ -29,22 +29,24 @@ namespace SmartGarage.Service
 		{
 			var userToUpdate = await this.context.Users.FindAsync(id);
 
-			if (userToUpdate.Email!=updateUserDTO.Email)
+			if (userToUpdate.Email != updateUserDTO.Email)
 			{
-				var test = this.context.Users.AnyAsync(u => u.Email == updateUserDTO.Email);
-				if (test.Result)
-				{
-					return false;
-				}				
-			}
-			if (userToUpdate.UserName != updateUserDTO.UserName)
-			{
-				var test = this.context.Users.AnyAsync(u => u.Email == updateUserDTO.UserName);
-				if (test.Result)
+				var checkIsValid = this.context.Users.AnyAsync(u => u.Email == updateUserDTO.Email);
+				if (checkIsValid.Result)
 				{
 					return false;
 				}
 			}
+
+			if (userToUpdate.UserName != updateUserDTO.UserName)
+			{
+				var checkIsValid = this.context.Users.AnyAsync(u => u.Email == updateUserDTO.UserName);
+				if (checkIsValid.Result)
+				{
+					return false;
+				}
+			}
+
 			if (userToUpdate == null || userToUpdate.IsDeleted == true)
 			{
 				return false;
@@ -88,7 +90,7 @@ namespace SmartGarage.Service
 			{
 				return false;
 			}
-		
+
 			var oldRole = userToUpdate.CurrentRole;
 
 			userToUpdate.CurrentRole = role ?? userToUpdate.CurrentRole;
@@ -101,11 +103,8 @@ namespace SmartGarage.Service
 			{
 				await this.userManagerWrapper.RemoveFromRoleAsync(userToUpdate, oldRole);
 				await this.userManagerWrapper.AddToRoleAsync(userToUpdate, role);
-
-				return true;
 			}
-
-			return false;
+			return true;
 		}
 
 		public async Task<List<GetUserDTO>> GetAllCustomerAsync(UserSevicesFilterQueryObject filter, UserOrderQueryObject order)

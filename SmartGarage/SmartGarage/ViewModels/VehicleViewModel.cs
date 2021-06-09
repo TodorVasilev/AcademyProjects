@@ -8,9 +8,6 @@ namespace SmartGarage.ViewModels
     {
         public int Id { get; set; }
 
-        [Required]
-        public int UserId { get; set; }
-
         public string OwnerUserName { get; set; }
 
         [Required]

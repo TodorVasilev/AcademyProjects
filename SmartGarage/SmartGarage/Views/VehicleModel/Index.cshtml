@@ -1,6 +1,9 @@
 ﻿@model PaginatedList<GetVehicleModelDTO>
 <body>
     <div class="container col-4 mt-md-4 pt-3 mb-4 pb-1" style="background-color:#212529">
+        <p>
+            <a onclick="showInPopup('@Url.Action("Create", "VehicleModel",null, Context.Request.Scheme)', 'Create Vehhicle Model')" class="btn btn-outline-success float-right mb-3 text-white">Create New</a>
+        </p>
         <table class="table table-dark table-hover text-white">
             <thead>
                 <tr class="active">
@@ -17,7 +20,6 @@
                         <p>Vehicle type</p>
                     </th>
                     <th>
-                        <a onclick="showInPopup('@Url.Action("Create", "VehicleModel",null, Context.Request.Scheme)', 'Create Vehhicle Model')" class="btn btn-outline-success text-white">Create</a>
                     </th>
                 </tr>
             </thead>

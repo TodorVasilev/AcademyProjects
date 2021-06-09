@@ -4,121 +4,50 @@
 }
 
 <body>
-    <div class="container mt-3 pt-2" style="background-color:#212529;">
-        @if (TempData["Error"] != null)
-        {
-            <div class="alert" style="background:red;" role="alert">
-                <h4 class="text-white text-center">@TempData["Error"]</h4>
-            </div>
-        }
-        <div class="pt-1">
-            <a class="btn btn-success float-lg-right" onclick="showInPopup('Identity/Account/Register')">Register User</a>
-            <input type="submit" value="Search" class="btn btn-outline-success" id="search" />
-        </div>
-        <div>
-            <input type="text" name="name" placeholder="Name" id="name" />
-            <input type="text" name="phoneNumber" placeholder="Phone Number" id="phoneNumber" />
-            <input type="text" name="Email" placeholder="user@gmail.com" id="email" />
-            <input type="text" name="Vehicle" placeholder="Vehicle Brand" id="vehicle" />
-        </div>
-        <div>
-            <label class="control-label text-white-50"> Order From</label>
-            <input type="date" name="StartDate" placeholder="StartDate" id="startDate" />
-            <label class="control-label text-white-50">To</label>
-            <input type="date" name="EndDate" placeholder="EndDate Name" id="endDate" />
+	<div class="container col-7 mt-3 pt-2" style="background-color:#212529;">
+		@if (TempData["Error"] != null)
+		{
+			<div class="alert" style="background:red;" role="alert">
+				<h4 class="text-white text-center">@TempData["Error"]</h4>
+			</div>
+		}
+		<div class="pt-1">
 
-            <select id="orderName" name="Name">
-                <option value="">Name</option>
-                <option value="asc">ASC</option>
-                <option value="desc">DSC</option>
-            </select>
-            <select id="orderDate" name="Date">
-                <option value="">Date</option>
-                <option value="asc">ASC</option>
-                <option value="desc">DSC</option>
-            </select>
-        </div>
-        <div id="partialView">
-            <partial name="User_Table_Partial" model="@Model" id="partialView" />
-        </div>
-    </div>
+		</div>
+		<div>
+			<input type="submit" value="Search" class="btn btn-outline-success" id="search" />
+			<input type="text" name="name" placeholder="Name" id="name" />
+			<input type="text" name="phoneNumber" placeholder="Phone Number" id="phoneNumber" />
+			<input type="text" name="Email" placeholder="user@gmail.com" id="email" />
+			<input type="text" name="Vehicle" placeholder="Vehicle Brand" id="vehicle" />
+			<a class="btn btn-outline-success text-white float-md-right mr-1" onclick="showInPopup('Identity/Account/Register')">Register User</a>
+		</div>
+		<div>
+			<label class="control-label text-white-50"> Order From</label>
+			<input type="date" name="StartDate" placeholder="StartDate" id="startDate" />
+			<label class="control-label text-white-50">To</label>
+			<input type="date" name="EndDate" placeholder="EndDate Name" id="endDate" />
+
+			<select id="orderName" name="Name">
+				<option value="">Name</option>
+				<option value="asc">ASC</option>
+				<option value="desc">DSC</option>
+			</select>
+			<select id="orderDate" name="Date">
+				<option value="">Date</option>
+				<option value="asc">ASC</option>
+				<option value="desc">DSC</option>
+			</select>
+		</div>
+		<div id="partialView">
+			<partial name="User_Table_Partial" model="@Model" id="partialView" />
+		</div>
+	</div>
 </body>
 
 
 @section Scripts {
-	<script>
-		$(document).ready(function () {
-
-			$(document).on("click", "#search", function () {
-				var name = $('#name').val();
-				var phoneNumber = $('#phoneNumber').val();
-				var email = $('#email').val();
-				var vehicle = $('#vehicle').val();
-				var startDate = $('#startDate').val();
-				var endDate = $('#endDate').val();
-				var orderName = $('#orderName').val();
-				var orderDate = $('#orderDate').val();
-				$.ajax({
-					url: "/User/Search",
-					type: "GET",
-					data: {
-						name: name,
-						phoneNumber: phoneNumber,
-						email: email,
-						vehicle: vehicle,
-						startDate: startDate,
-						endDate: endDate,
-						orderByName: orderName,
-						OrderByDate: orderDate
-					}
-				})
-					.done(function (partialViewResult) {
-						$("#partialView").html(partialViewResult);
-					});
-			});
-
-			$(document).on("click", "#next", function () {
-
-				var page = $('#page').val();
-				$.ajax({
-					url: "/User/Search",
-					type: "GET",
-					data: {
-						name: name,
-						phoneNumber: phoneNumber,
-						email: email,
-						vehicle: vehicle,
-						startDate: startDate,
-						endDate: endDate,
-						orderByName: orderName,
-						OrderByDate: orderDate,
-						pageNumber: parseInt(page) + 1
-					}
-				})
-					.done(function (partialViewResult) {
-						$("#partialView").html(partialViewResult);
-					});
-			});
-			$(document).on("click", "#prev", function () {
-				var page = $('#page').val();
-				$.ajax({
-					url: "/User/Search",
-					type: "GET",
-					data: {
-						name: name,
-						phoneNumber: phoneNumber,
-						email: email,
-						vehicle: vehicle,
-						startDate: startDate,
-						endDate: endDate,
-						pageNumber: parseInt(page) - 1
-					}
-				})
-					.done(function (partialViewResult) {
-						$("#partialView").html(partialViewResult);
-					});
-			});
-		});
-	</script>
-
+	@{
+		<script src="~/js/Custom_scripts/Index_User.js"></script>
+	}
 }

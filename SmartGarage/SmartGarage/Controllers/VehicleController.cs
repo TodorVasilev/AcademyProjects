@@ -39,7 +39,7 @@ namespace SmartGarage.Controllers
 
             int pageNumber = 1;
             string name = default;
-            var pageSize = 10;
+            var pageSize = 8;
             var vehicles = await service.GetAll(name);
 
             if (user.CurrentRole == "CUSTOMER")
@@ -54,7 +54,7 @@ namespace SmartGarage.Controllers
         [HttpGet("Vehicle/Filter")]
         public async Task<IActionResult> PartialView(string name, int pageNumber = 1)
         {
-            var pageSize = 10;
+            var pageSize = 8;
             return PartialView("Vehicle_Table_Partial", PaginatedList<GetVehicleDTO>.CreateAsync(await service.GetAll(name), pageNumber, pageSize));
         }
 
@@ -87,7 +87,6 @@ namespace SmartGarage.Controllers
             {
                 Id = vehicle.Id,
                 VehicleModelId = vehicle.VehicleModelId,
-                UserId = vehicle.UserId,
                 VIN = vehicle.VIN,
                 NumberPlate = vehicle.NumberPlate,
                 Colour = vehicle.Colour,
@@ -107,7 +106,6 @@ namespace SmartGarage.Controllers
             var vehicleInformation = new UpdateVehicleDTO
             {
                 VehicleModelId = updateInformation.VehicleModelId,
-                UserId = updateInformation.UserId,
                 VIN = updateInformation.VIN,
                 NumberPlate = updateInformation.NumberPlate,
                 Colour = updateInformation.Colour
@@ -140,11 +138,11 @@ namespace SmartGarage.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin,Employee")]
-        public async Task<IActionResult> Create(VehicleViewModel vehicle)
+        public async Task<IActionResult> Create(VehicleViewModel vehicle, int id)
         {
             var createVehicle = new CreateVehicleDTO
             {
-                UserId = vehicle.UserId,
+                UserId = id,
                 NumberPlate = vehicle.NumberPlate,
                 Colour = vehicle.Colour,
                 VehicleModelId = vehicle.VehicleModelId,

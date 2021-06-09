@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <style>
         body {
-            background-image: url('images/Vehicles.jpg');
+            background-image: url('/images/Vehicles.jpg');
         }
     </style>
 </head>
@@ -21,14 +21,14 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-dark border-bottom box-shadow">
             <div class="container">
-                <a class="text-white" style="font-size:20px;" asp-area="" asp-controller="Home" asp-action="Index">SmartGarage</a>
+                <a asp-controller="Home" asp-action="Index"> <img src="https://i.ibb.co/2gc4BKN/Better-Logo.png" alt="Better-Logo" border="0"></a>
                 <button class="navbar-toggler flex-grow-1" type="button" data-toggle="collapse" data-target=".navbar-collapse"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <p><partial name="_LoginPartial" /></p>
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav flex-grow-1 justify-content-center">
                         @if (User.IsInRole("Employee") || User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
@@ -41,12 +41,17 @@
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-white " data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Customer</a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" style="width:160px" asp-controller="User"
-                                       asp-action="Index">All Customers</a>
-                                    <a class="dropdown-item" style="width:160px" asp-area="Identity" asp-page="/Account/ForgotPassword">Forgoten Password</a>
-                                    <a class="dropdown-item" style="width:160px" onclick="showInPopup('Identity/Account/Register')">Register User</a>
-                                </div>
+								<div class="dropdown-menu">
+									<a class="dropdown-item w-auto" asp-controller="User"
+									   asp-action="Index">All Customers</a>
+									<a class="dropdown-item w-auto" asp-area="Identity" asp-page="/Account/ForgotPassword">Forgoten Password</a>
+									<a class="dropdown-item w-auto" onclick="showInPopup('Identity/Account/Register')">Register User</a>
+									@if (User.IsInRole("Admin"))
+									{
+										<a class="dropdown-item w-auto"  asp-controller="User"
+									   asp-action="UpdateAdmin">Update Role</a>
+									}
+								</div>
                             </li>
                         }
                         @if (User.IsInRole("Employee") || User.IsInRole("Admin") || User.IsInRole("Customer"))
@@ -61,7 +66,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link link text-white" asp-area="" asp-controller="Service"
-                                   asp-action="Index">Service </a>
+                                   asp-action="Index">Services </a>
                             </li>
                             @if (User.IsInRole("Customer"))
                             {

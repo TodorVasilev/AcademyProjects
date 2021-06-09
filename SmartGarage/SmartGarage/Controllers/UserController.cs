@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace SmartGarage.Controllers
 {
+	[ApiExplorerSettings(IgnoreApi = true)]
 	public class UserController : Controller
 	{
 		private readonly IUserService service;
@@ -22,7 +23,7 @@ namespace SmartGarage.Controllers
 		public async Task<IActionResult> Index()
 		{
 			int pageNumber = 1;
-			var pageSize = 10;
+			var pageSize = 8;
 			var filer = new UserSevicesFilterQueryObject();
 			var order = new UserOrderQueryObject();
 
@@ -34,7 +35,7 @@ namespace SmartGarage.Controllers
 		[HttpGet("User/Search")]
 		public async Task<IActionResult> IndexPartial(UserSevicesFilterQueryObject filer, UserOrderQueryObject order, int pageNumber = 1)
 		{
-			var pageSize = 10;
+			var pageSize = 8;
 
 			var users = await service.GetAllCustomerAsync(filer, order);
 
@@ -55,11 +56,11 @@ namespace SmartGarage.Controllers
 			var result = await service.UpdateAdminAsync(model.Email, model.Role);
 			if (result == false)
 			{
-				TempData["Error"] = "Wrong email or role.";
+				TempData["Error"] = "Wrong Email!";
 			}
 			else
 			{
-				TempData["Success"] = "Update is completed";
+				TempData["Success"] = "Update is completed!";
 			}
 			return View();
 		}

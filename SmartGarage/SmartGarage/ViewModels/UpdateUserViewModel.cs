@@ -25,8 +25,9 @@ namespace SmartGarage.ViewModels
 		[Display(Name = "Family name:")]
 		public string LastName { get; set; }
 
-		[StringLength(10)]
+
 		[DataType(DataType.PhoneNumber)]
+		[RegularExpression(@"[0]{1}\d{9}", ErrorMessage = "Invalid phone number")]
 		[Display(Name = "Phone number:")]
 		public string PhoneNumber { get; set; }
 

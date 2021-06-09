@@ -23,21 +23,27 @@ namespace SmartGarage.Controllers
 		private readonly IOrderService orderService;
 		private readonly IUserManagerWrapper userManagerWrapper;
 		private readonly IServiceService serviceService;
+		private readonly IManufacturerService manufacturerService;
+		private readonly IVehicleModelService vehicleModelService;
 
 		public OrderController(IOrderService orderService,
 		IUserManagerWrapper userManagerWrapper,
-		IServiceService serviceService)
+		IServiceService serviceService,
+		IManufacturerService manufacturerService,
+		IVehicleModelService vehicleModelService)
 		{
 			this.orderService = orderService;
 			this.userManagerWrapper = userManagerWrapper;
 			this.serviceService = serviceService;
+			this.manufacturerService = manufacturerService;
+			this.vehicleModelService = vehicleModelService;
 		}
 
 		public async Task<IActionResult> Index()
 		{
 			string name = default;
 			int pageNumber = 1;
-			var pageSize = 10;
+			var pageSize = 6;
 			var user = await userManagerWrapper.FindByNameAsync(User.Identity.Name);
 
 			var orders = await orderService.GetAll(user, name);
@@ -48,7 +54,7 @@ namespace SmartGarage.Controllers
 		[HttpGet("Order/Search")]
 		public async Task<IActionResult> IndexPartial(string name, int pageNumber = 1)
 		{
-			var pageSize = 10;
+			var pageSize = 6;
 			var user = await userManagerWrapper.FindByNameAsync(User.Identity.Name);
 
 			var orders = await orderService.GetAll(user, name);
@@ -78,24 +84,45 @@ namespace SmartGarage.Controllers
 			}
 		}
 
-		public IActionResult Create()
+		public async Task<IActionResult> Create()
 		{
-			return View();
+			var model = new CreateOrderViewModel
+			{
+				Manufacturers = await manufacturerService.GetAll(),
+				Models = await vehicleModelService.GetAll()
+			};
+			return View(model);
 		}
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		[Authorize(Roles = "Admin,Employee")]
-		public async Task<IActionResult> Create(CreateOrderDTO createOrderDTO)
+		public async Task<IActionResult> Create(CreateOrderViewModel order)
 		{
-			if (ModelState.IsValid)
+			var createOrder = new CreateOrderDTO
 			{
-				await orderService.CreateAsync(createOrderDTO);
-				return RedirectToAction(nameof(Index));
-			}
+				FirstName = order.FirstName,
+				LastName=order.LastName,
+				UserName=order.UserName,
+				Email=order.Email,
+				PhoneNumber=order.PhoneNumber,
+				Address=order.Address,
+				Age=order.Age,
+				DrivingLicenseNumber=order.DrivingLicenseNumber,
+				NumberPlate=order.NumberPlate,
+				Colour=order.Colour,
+				GarageName=order.GarageName,
+				VehicleModelId=order.VehicleModelId,
+				VIN=order.VIN
 
-			return View(createOrderDTO);
+			};
+			
+				await orderService.CreateAsync(createOrder);
+				return RedirectToAction(nameof(Index));
+					
 		}
+
+
 		[ValidateAntiForgeryToken]
 		[Authorize(Roles = "Admin,Employee")]
 		[HttpPost()]
@@ -137,7 +164,6 @@ namespace SmartGarage.Controllers
 			var viewModel = new OrderEditViewModel
 			{
 				OrderStatusId = orderModel.OrderStatusId,
-				VehicleId = orderModel.VehicleId,
 			};
 
 			return View(viewModel);

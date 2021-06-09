@@ -26,7 +26,7 @@ namespace SmartGarage.Controllers
         [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Index(int pageNumber = 1)
         {
-            var pageSize = 10;
+            var pageSize = 8;
             var manufacturers = await service.GetAll();
 
             if (manufacturers.Count == 0)

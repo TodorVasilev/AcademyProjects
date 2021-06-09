@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace SmartGarage.Api_Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/services")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ServiceApiController : ControllerBase
     {

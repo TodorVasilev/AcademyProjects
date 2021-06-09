@@ -1,6 +1,9 @@
 ﻿@model PaginatedList<GetManufacturerDTO>
 <body>
-    <div class="container col-4 mt-md-4 pt-3 mb-4 pb-1" style="background-color:#212529">
+    <div class="container col-3 mt-md-4 pt-3 mb-4 pb-1" style="background-color:#212529">
+        <p>
+            <a onclick="showInPopup('@Url.Action("Create","Manufacturer",null,Context.Request.Scheme)', 'New Manufacturer')" class="btn btn-outline-success float-right mb-3 text-white">Create New</a>
+        </p>
         <table class="table table-dark table-hover text-white">
             <thead>
                 <tr class="active" style="line-height: 3px;">
@@ -11,7 +14,6 @@
                         <p>Name</p>
                     </th>
                     <th style="width:170px">
-                        <a onclick="showInPopup('@Url.Action("Create","Manufacturer",null,Context.Request.Scheme)', 'New Manufacturer')" class="btn btn-outline-success text-white">Create New</a>
                     </th>
                 </tr>
             </thead>

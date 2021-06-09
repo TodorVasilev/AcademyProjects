@@ -2,39 +2,40 @@
 using SmartGarage.Data;
 using SmartGarage.Service;
 using SmartGarage.Service.DTOs.GetDTOs;
-using SmartGarage.Service.QueryObjects;
-using System.Linq;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Test.ServiceTests.ServiceServiceTests
 {
-    [TestClass]
-    public class GetAllServices_Should
-    {
+	[TestClass]
+	public class GetAvailableServices_Should
+	{
         [TestMethod]
-        public async Task ReturnAllServices()
+        public async Task ReturnCorrectServic_ForSpecificOrder()
         {
             //Arrange
-            var options = Util.GetOptions(nameof(ReturnAllServices));
-            var filterObject = new ServiceFilterQueryObject();
-            var count = 0;
+            var options = Util.GetOptions(nameof(ReturnCorrectServic_ForSpecificOrder));
+            var order = 1;
+            var service = new Data.Models.Service();
 
             using (var arrCtx = new SmartGarageContext(options))
             {
                 arrCtx.SeedData();
                 await arrCtx.SaveChangesAsync();
-                count = arrCtx.Services.Count();
+
             }
 
             //Act
             using (var actCtx = new SmartGarageContext(options))
             {
                 var sut = new ServiceService(actCtx);
-                var result = await sut.GetAll(filterObject);
+                var result = await sut.GetAvailableServices(order);
 
                 //Assert
-                Assert.AreEqual(count, result.Count());
-                Assert.IsInstanceOfType(result[0], typeof(GetServiceDTO));
+                Assert.AreEqual(5, result.Count);
+                Assert.IsInstanceOfType(result, typeof(List<GetServiceDTO>));
             }
         }
     }

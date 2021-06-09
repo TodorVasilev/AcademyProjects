@@ -66,7 +66,7 @@ namespace SmartGarage.Service
 				.Where(s => !s.IsDeleted)
 				.AsQueryable()
 				.FilterServices(filterObject)
-				.OrderBy(s=>s.Name);		
+				.OrderBy(s => s.Name);
 
 			return await services.Select(x => new GetServiceDTO(x))
 				.ToListAsync();
@@ -78,7 +78,7 @@ namespace SmartGarage.Service
 				  .Where(s => !s.IsDeleted)
 				  .AsQueryable();
 
-			var result=services.Where(x => !x.ServiceOrder.Any(s => s.OrderId == orderID));
+			var result = services.Where(x => !x.ServiceOrder.Any(s => s.OrderId == orderID));
 
 			return await result.Select(x => new GetServiceDTO(x)).ToListAsync();
 
@@ -121,7 +121,7 @@ namespace SmartGarage.Service
 			{
 				service.UpdateService(updateInformation);
 			}
-				context.Update(service);
+			context.Update(service);
 
 			await context.SaveChangesAsync();
 			return true;
@@ -142,6 +142,7 @@ namespace SmartGarage.Service
 			//Returns null when there aren't any services linked to the customer.		
 
 			return await servicesOrders.Select(x => new GetServiceDTO(x.Service))
+				.Distinct()
 				.ToListAsync();
 		}
 	}
