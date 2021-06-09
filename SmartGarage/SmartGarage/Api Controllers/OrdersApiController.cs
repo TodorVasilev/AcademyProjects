@@ -29,7 +29,13 @@ namespace SmartGarage.Api_Controllers
 			this.service = service;
 			this.userManagerWrapper = userManagerWrapper;
 		}
-
+		/// <summary>
+		/// Gets all orders, filter by name.
+		/// </summary>
+		/// <param name="filterByName">Filter by user name.</param>
+		/// <param name="pageSize">Size of the page.</param>
+		/// <param name="pageNumber">The page number.</param>
+		/// <returns></returns>
 		[HttpGet()]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -41,6 +47,11 @@ namespace SmartGarage.Api_Controllers
 			return Ok(PaginatedList<GetOrderDTO>.CreateAsync(await service.GetAll(user, filterByName), pageNumber, pageSize));
 		}
 
+		/// <summary>
+		/// Gets order by identifier asynchronous.
+		/// </summary>
+		/// <param name="id">The identifier.</param>
+		/// <returns></returns>
 		[HttpGet("id")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -65,6 +76,11 @@ namespace SmartGarage.Api_Controllers
 			}
 		}
 
+		/// <summary>
+		/// Deletes specific Order.
+		/// </summary>
+		/// <param name="id">The identifier.</param>
+		/// <returns></returns>
 		[HttpDelete("id")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -79,6 +95,12 @@ namespace SmartGarage.Api_Controllers
 			return Ok();
 		}
 
+		/// <summary>
+		/// Updates order by specific Id.
+		/// </summary>
+		/// <param name="id">The identifier.</param>
+		/// <param name="updateOrder">The update order.</param>
+		/// <returns></returns>
 		[HttpPut("id")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -93,6 +115,11 @@ namespace SmartGarage.Api_Controllers
 			return Ok("Order is updated!");
 		}
 
+		/// <summary>
+		/// Creates order asynchronous.
+		/// </summary>
+		/// <param name="createOrder">The create order.</param>
+		/// <returns></returns>
 		[HttpPost("")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
