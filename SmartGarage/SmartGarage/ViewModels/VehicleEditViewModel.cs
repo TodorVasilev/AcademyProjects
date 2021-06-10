@@ -10,6 +10,8 @@ namespace SmartGarage.ViewModels
 
         public int UserId { get; set; }
 
+        [Required]
+        [StringLength(20, MinimumLength = 2, ErrorMessage = "{0} must be between {2} and {1} symbols.")]
         public string Colour { get; set; }
 
         [Required]

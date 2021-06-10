@@ -63,10 +63,13 @@ namespace SmartGarage.Service
         public async Task RecieveEmail(RecieveEmailViewModel recieveEmailModel)
         {
             var sb = new StringBuilder();
-            sb.AppendLine($"Person Name: {recieveEmailModel.PersonName}");
-            sb.AppendLine($"Person E-mail: {recieveEmailModel.PersonEmail}");
-            sb.AppendLine($"Person Number: {recieveEmailModel.PhoneNumber}");
-            sb.AppendLine($"Message {recieveEmailModel.Message}");
+            sb.AppendLine($"<div><h3>Person Name: {recieveEmailModel.PersonName}</h3></div>");
+            sb.AppendLine($"<div><h3>Person E-mail: {recieveEmailModel.PersonEmail}</h3></div>");
+            sb.AppendLine($"<div><h3>Person Number: {recieveEmailModel.PhoneNumber}</h3></div>");
+            sb.AppendLine($"<div style=\"margin-left:685px;\"><h2>Message: </h2></div>");
+            sb.AppendLine($"<hr>");
+            sb.AppendLine($"<div style=\"margin-left:285px; width:800px; \"><h3>{recieveEmailModel.Message}</h3></div>");
+            sb.AppendLine($"<hr>");
 
             using (MailMessage mail = new MailMessage())
             {
