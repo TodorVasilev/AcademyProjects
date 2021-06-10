@@ -48,6 +48,7 @@ namespace SmartGarage
             services.ConfigureApplicationCookie(options => { options.LoginPath = "/Identity/Account/login"; });
 
             services.AddControllersWithViews();
+
             services.AddRazorPages();
 
             services.AddSwaggerGen(c =>
@@ -121,8 +122,11 @@ namespace SmartGarage
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
                 app.UseDatabaseErrorPage();
+
                 app.UseSwagger();
+
                 app.UseSwaggerUI(c =>
                 {
                     c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
@@ -141,11 +145,13 @@ namespace SmartGarage
            .AllowAnyHeader());
 
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();
 
             app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

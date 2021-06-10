@@ -13,18 +13,14 @@
             </div>
         }
         <div asp-validation-summary="ModelOnly" class="text-danger" id="edit"></div>
-        <div>
-            <label asp-for="Manufacturers"></label>
-        </div>
+
         <div class="form-group">
-            <select asp-for="ManufacturerId" asp-items="Model.Manufacturers.ToSelectList()" class="form-control" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;" id="Make"></select>
+            <select hidden asp-for="ManufacturerId" asp-items="Model.Manufacturers.ToSelectList()" class="form-control" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;" id="Make"></select>
             <span asp-validation-for="ManufacturerId" class="text-danger"></span>
         </div>
-        <div>
-            <label asp-for="Models"></label>
-        </div>
+
         <div class="form-group">
-            <select asp-for="VehicleModelId" asp-items="Model.Models.ToSelectList()" class="form-control" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;" id="Model"></select>
+            <select hidden asp-for="VehicleModelId" asp-items="Model.Models.ToSelectList()" class="form-control" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;" id="Model"></select>
             <span asp-validation-for="VehicleModelId" class="text-danger"></span>
         </div>
         <div class="form-group">
@@ -33,8 +29,7 @@
             <span asp-validation-for="NumberPlate" class="text-danger"></span>
         </div>
         <div class="form-group">
-            <label asp-for="VIN" class="control-label"></label>
-            <input asp-for="VIN" class="form-control" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;" />
+            <input hidden asp-for="VIN" class="form-control" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;" />
             <span asp-validation-for="VIN" class="text-danger"></span>
         </div>
         <div class="form-group">

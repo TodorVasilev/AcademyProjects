@@ -1,17 +1,23 @@
 ﻿@model PaginatedList<GetVehicleModelDTO>
 <body>
-	<div class="container col-4 mt-md-4 pt-3 mb-4 pb-1" style="background-color:#212529">
-		<p>
-			<a onclick="showInPopup('@Url.Action("Create", "VehicleModel",null, Context.Request.Scheme)', 'Create Vehicle Model')" class="btn btn-outline-success float-right mb-3 text-white">Create New</a>
-		</p>
-		<div id="partialView">
-			<partial name="VehicleModel_Table_Partial" model="@Model" />
-		</div>
-	</div>
+    <div class="container col-4 mt-md-4 pt-3 mb-4 pb-1" style="background-color:#212529">
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert alert-danger text-center col-md-12 container" style="background-color:red" role="alert">
+                <p>@TempData["Error"]</p>
+            </div>
+        }
+        <p>
+            <a onclick="showInPopup('@Url.Action("Create", "VehicleModel",null, Context.Request.Scheme)', 'Create Vehicle Model')" class="btn btn-outline-success float-right mb-3 text-white">Create New</a>
+        </p>
+        <div id="partialView">
+            <partial name="VehicleModel_Table_Partial" model="@Model" />
+        </div>
+    </div>
 </body>
 
 @section Scripts {
-	@{
-		<script src="~/js/Custom_scripts/Index_VehicleModel.js"></script>
-	}
+    @{
+        <script src="~/js/Custom_scripts/Index_VehicleModel.js"></script>
+    }
 }

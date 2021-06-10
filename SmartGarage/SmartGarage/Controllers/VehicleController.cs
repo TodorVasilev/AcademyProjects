@@ -108,8 +108,6 @@ namespace SmartGarage.Controllers
         {
             var vehicleInformation = new UpdateVehicleDTO
             {
-                VehicleModelId = updateInformation.VehicleModelId,
-                VIN = updateInformation.VIN,
                 NumberPlate = updateInformation.NumberPlate,
                 Colour = updateInformation.Colour
             };
@@ -144,6 +142,12 @@ namespace SmartGarage.Controllers
         [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Create(VehicleViewModel vehicle, int id)
         {
+            if (vehicle.ManufacturerId == default || vehicle.VehicleModelId == default)
+            {
+                TempData["Error"] = "Please select existing manufacturer and vehicle model.";
+                return RedirectToAction("Index","User");
+            }
+
             var createVehicle = new CreateVehicleDTO
             {
                 UserId = id,

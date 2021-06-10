@@ -63,11 +63,10 @@ namespace SmartGarage.Controllers
         [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Create(VehicleModelViewModel vehicleModel)
         {
-
             if (vehicleModel.VehicleTypeId == default || vehicleModel.ManufacturerId == default)
             {
-                TempData["Error"] = "Please select among the options";
-                return RedirectToAction("Create");
+                TempData["Error"] = "Please select existing manufacturer and vehicle type.";
+                return RedirectToAction("Index");
             }
 
             var vehicleModelDTO = new VehicleModelDTO
@@ -118,6 +117,12 @@ namespace SmartGarage.Controllers
         [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Edit(int id, VehicleModelViewModel vehicleModel)
         {
+            if (vehicleModel.VehicleTypeId == default || vehicleModel.ManufacturerId == default)
+            {
+                TempData["Error"] = "Please select existing manufacturer and vehicle type.";
+                return RedirectToAction("Index");
+            }
+
             if (id != vehicleModel.Id)
             {
                 return NotFound();

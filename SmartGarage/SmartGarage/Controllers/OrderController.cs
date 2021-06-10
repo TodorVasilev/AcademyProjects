@@ -99,6 +99,12 @@ namespace SmartGarage.Controllers
         [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Create(CreateOrderViewModel order)
         {
+            if (order.ManufacturerId == default || order.VehicleModelId == default)
+            {
+                TempData["Error"] = "Please select existing manufacturer and vehicle model.";
+                return RedirectToAction("Index", "Order");
+            }
+
             var createOrder = new CreateOrderDTO
             {
                 FirstName = order.FirstName,

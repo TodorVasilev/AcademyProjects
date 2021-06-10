@@ -23,14 +23,6 @@ namespace SmartGarage.Service.ServiceHelpes
             {
                 vehicle.UserId = update.UserId;
             }
-            if (update.VIN != default)
-            {
-                vehicle.VIN = update.VIN;
-            }
-            if (update.VehicleModelId != default)
-            {
-                vehicle.VehicleModelId = update.VehicleModelId;
-            }
 
             return vehicle;
         }
