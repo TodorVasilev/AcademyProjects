@@ -1,6 +1,7 @@
 ﻿using SmartGarage.Service.DTOs.GetDTOs;
 using SmartGarage.Service.Helpers;
 using SmartGarage.Service.ServiceContracts;
+using System;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
@@ -45,7 +46,7 @@ namespace SmartGarage.Service
             {
                 mail.From = new MailAddress(fromEmail);
                 mail.To.Add(email);
-                mail.Subject = "New confirmation email with a login password";
+                mail.Subject = $"Your car is ready for pickup {DateTime.Now.ToString("dd-MM-yyyy")}";
                 mail.Body = "PDF";
                 mail.IsBodyHtml = true;
 
