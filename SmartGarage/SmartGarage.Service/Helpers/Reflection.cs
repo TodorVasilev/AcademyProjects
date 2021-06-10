@@ -7,4 +7,4 @@
             return item.GetType().GetProperty(propertyName).GetValue(item, null).ToString();
         }
     }
-}   
+}

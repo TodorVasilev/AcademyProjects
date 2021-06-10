@@ -5,12 +5,6 @@
     <h1>@ViewData["Title"]</h1>
     <div class="container col-md-3 mt-5 table-dark table-bordered p-3" style="border: 7px solid #212529;">
         <h2 class="text-center">Log in</h2>
-        @if (TempData["Success"] != null)
-        {
-            <div class="alert alert-success" role="alert">
-                <p>@TempData["Success"]</p>
-            </div>
-        }
         <section>
             <form id="account" method="post">
                 <h4 class="text-center">Use a local account to log in.</h4>
@@ -18,12 +12,12 @@
                 <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Input.Email"></label>
-                    <input asp-for="Input.Email" class="form-control box-shadow" style="box-shadow: 0 0 1px 2px #05abdc" />
+                    <input asp-for="Input.Email" class="form-control" style="box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;" />
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Input.Password"></label>
-                    <input asp-for="Input.Password" class="form-control box-shadow" style="box-shadow: 0 0 1px 2px #05abdc" />
+                    <input asp-for="Input.Password" class="form-control" style=" box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;" />
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
                 <div class="form-group">

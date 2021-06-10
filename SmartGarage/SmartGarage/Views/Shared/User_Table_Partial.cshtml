@@ -29,9 +29,9 @@
                         <td>@Html.DisplayFor(modelItem => item.Email)</td>
                         <td class="pr-5">
                             <a onclick="showInPopup('@Url.Action("Create", "Vehicle",new { id = item.Id }, Context.Request.Scheme)', 'Create Vehhicle')" class="btn btn-outline-success float-right text-white">Create Vehicle</a>
-                            <a onclick="showInPopup('@Url.Action("Edit", "User", new { Id = item.Id }, Context.Request.Scheme)', 'Edit User')" class="btn btn-outline-warning float-right text-white">Edit</a>
-                            <a onclick="showInPopup('@Url.Action("Delete", "User", new { Id = item.Id }, Context.Request.Scheme)', 'Delete User')" class="btn btn-outline-danger float-right text-white">Delete</a>
-                            <a onclick="showInPopup('@Url.Action("Details", "User", new { Id = item.Id }, Context.Request.Scheme)', 'User Details')" class="btn btn-outline-info float-right text-white">Details</a>
+                            <a onclick="showInPopup('@Url.Action("Edit", "User", new { Id = item.Id }, Context.Request.Scheme)', 'Edit User')" class="btn btn-outline-warning mr-1 float-right text-white">Edit</a>
+                            <a onclick="showInPopup('@Url.Action("Delete", "User", new { Id = item.Id }, Context.Request.Scheme)', 'Delete User')" class="btn btn-outline-danger mr-1 float-right text-white">Delete</a>
+                            <a onclick="showInPopup('@Url.Action("Details", "User", new { Id = item.Id }, Context.Request.Scheme)', 'User Details')" class="btn btn-outline-info mr-1 float-right text-white">Details</a>
                         </td>
                     </tr>
                     count++;

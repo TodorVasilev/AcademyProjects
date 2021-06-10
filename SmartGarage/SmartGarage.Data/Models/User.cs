@@ -16,7 +16,7 @@ namespace SmartGarage.Data.Models
         [MinLength(2), MaxLength(20)]
         public string LastName { get; set; }
 
-       
+
         [Required]
         [RegularExpression(@"[0]{1}\d{9}", ErrorMessage = "Invalid phone number")]
         public override string PhoneNumber { get => base.PhoneNumber; set => base.PhoneNumber = value; }

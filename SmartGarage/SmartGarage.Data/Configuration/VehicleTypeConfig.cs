@@ -13,13 +13,13 @@ namespace SmartGarage.Data.Configuration
                 new VehicleType
                 {
                     Id = 1,
-                    Name = "Car"                   
+                    Name = "Car"
                 },
 
                 new VehicleType
                 {
                     Id = 2,
-                    Name = "Motorcycle"            
+                    Name = "Motorcycle"
                 },
 
                 new VehicleType

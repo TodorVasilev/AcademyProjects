@@ -14,172 +14,172 @@ using System.Threading.Tasks;
 
 namespace SmartGarage.Controllers
 {
-	[ApiExplorerSettings(IgnoreApi = true)]
-	public class ServiceController : Controller
-	{
-		private readonly IServiceService service;
-		private readonly UserManager<User> userManager;
+    [ApiExplorerSettings(IgnoreApi = true)]
+    public class ServiceController : Controller
+    {
+        private readonly IServiceService service;
+        private readonly UserManager<User> userManager;
 
-		public ServiceController(IServiceService service, UserManager<User> userManager)
-		{
-			this.service = service;
-			this.userManager = userManager;
-		}
-
-
-		public async Task<IActionResult> IndexCustomer( )
-		{
-			var filterForCustomer = new CustomerServicesFilterQueryObject();
-
-			int pageNumber = 1;
-			var pageSize = 6;
-
-			var user = await userManager.GetUserAsync(HttpContext.User);
-
-			var services = await service.GetAllLinkedToCustomer(filterForCustomer, user.Id);
-	
-			return View(PaginatedList<GetServiceDTO>.CreateAsync(services, pageNumber, pageSize));
-
-		}
-		[HttpGet("Service/SearchCustomer")]
-		public async Task<IActionResult> PartialForCustomer(DateTime date, string numberPlate, int pageNumber = 1)
-		{
-			var filterForCustomer = new CustomerServicesFilterQueryObject
-			{
-				NumberPlate = numberPlate,
-				VisitDate = date
-			};
-
-			var pageSize = 6;
-
-			var user = await userManager.GetUserAsync(HttpContext.User);
-
-			var services = await service.GetAllLinkedToCustomer(filterForCustomer, user.Id);
-	
-			return PartialView("ServiceCustomer_Table_Partial", PaginatedList<GetServiceDTO>.CreateAsync(services, pageNumber, pageSize));
-
-		}
+        public ServiceController(IServiceService service, UserManager<User> userManager)
+        {
+            this.service = service;
+            this.userManager = userManager;
+        }
 
 
-		public async Task<IActionResult> Index()
-		{
-			int pageNumber = 1;
-			var pageSize = 6;
-			var filterService = new ServiceFilterQueryObject();
+        public async Task<IActionResult> IndexCustomer()
+        {
+            var filterForCustomer = new CustomerServicesFilterQueryObject();
 
-			var services = await service.GetAll(filterService);
+            int pageNumber = 1;
+            var pageSize = 6;
 
-			return View(PaginatedList<GetServiceDTO>.CreateAsync(services, pageNumber, pageSize));
-		}
+            var user = await userManager.GetUserAsync(HttpContext.User);
 
-		[HttpGet("Service/Search")]
-		public async Task<IActionResult> PartialForAdminEmployee(decimal? price, string name, int pageNumber = 1)
-		{
-			var pageSize = 6;
-			var filterService = new ServiceFilterQueryObject
-			{
-				Name = name,
-				Price = price
-			};
-			var services = await service.GetAll(filterService);
+            var services = await service.GetAllLinkedToCustomer(filterForCustomer, user.Id);
 
-			return PartialView("Service_Table_Partial", PaginatedList<GetServiceDTO>.CreateAsync(services, pageNumber, pageSize));
-		}
+            return View(PaginatedList<GetServiceDTO>.CreateAsync(services, pageNumber, pageSize));
 
-		public IActionResult Create()
-		{
-			return View();
-		}
+        }
+        [HttpGet("Service/SearchCustomer")]
+        public async Task<IActionResult> PartialForCustomer(DateTime date, string numberPlate, int pageNumber = 1)
+        {
+            var filterForCustomer = new CustomerServicesFilterQueryObject
+            {
+                NumberPlate = numberPlate,
+                VisitDate = date
+            };
 
+            var pageSize = 6;
 
-		[HttpPost]
-		[ValidateAntiForgeryToken]
-		[Authorize(Roles = "Admin,Employee")]
-		public async Task<IActionResult> Create(CreateServiceDTO serviceDTO)
-		{
-			if (ModelState.IsValid)
-			{
-				await service.CreateAsync(serviceDTO);
-				if (true)
-				{
+            var user = await userManager.GetUserAsync(HttpContext.User);
 
-				}
-				return RedirectToAction(nameof(Index));
-			}
+            var services = await service.GetAllLinkedToCustomer(filterForCustomer, user.Id);
 
-			return View(serviceDTO);
-		}
+            return PartialView("ServiceCustomer_Table_Partial", PaginatedList<GetServiceDTO>.CreateAsync(services, pageNumber, pageSize));
+
+        }
 
 
-		[Authorize(Roles = "Admin,Employee")]
-		[HttpPost()]
-		public async Task<IActionResult> Edit(int id, ServiceEditViewModel serviceModel)
-		{
-			if (ModelState.IsValid)
-			{
-				var updateInformation = new UpdateServiceDTO
-				{
-					Name = serviceModel.Name,
-					Price = serviceModel.Price,
-				};
+        public async Task<IActionResult> Index()
+        {
+            int pageNumber = 1;
+            var pageSize = 6;
+            var filterService = new ServiceFilterQueryObject();
 
-				try
-				{
-					await service.UpdateAsync(updateInformation, id);
-					return RedirectToAction(nameof(Index));
-				}
-				catch (System.Exception)
-				{
-					return RedirectToAction("Edit", "Service");
-				}
-			}
+            var services = await service.GetAll(filterService);
 
-			return View(serviceModel);
-		}
+            return View(PaginatedList<GetServiceDTO>.CreateAsync(services, pageNumber, pageSize));
+        }
 
-		[Authorize(Roles = "Admin,Employee")]
-		[HttpGet()]
-		public async Task<IActionResult> Edit(int id)
-		{
-			{
-				var serviceModel = await service.GetAsync(id);
+        [HttpGet("Service/Search")]
+        public async Task<IActionResult> PartialForAdminEmployee(decimal? price, string name, int pageNumber = 1)
+        {
+            var pageSize = 6;
+            var filterService = new ServiceFilterQueryObject
+            {
+                Name = name,
+                Price = price
+            };
+            var services = await service.GetAll(filterService);
 
-				if (serviceModel == null)
-				{
-					return NotFound();
-				}
+            return PartialView("Service_Table_Partial", PaginatedList<GetServiceDTO>.CreateAsync(services, pageNumber, pageSize));
+        }
 
-				var viewModel = new ServiceEditViewModel
-				{
-					Price = serviceModel.Price,
-					Name = serviceModel.Name,
-				};
+        public IActionResult Create()
+        {
+            return View();
+        }
 
-				return View(viewModel);
-			}
-		}
 
-		public async Task<IActionResult> Delete(int id)
-		{
-			var serviceToDelete = await service.GetAsync(id);
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Employee")]
+        public async Task<IActionResult> Create(CreateServiceDTO serviceDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                await service.CreateAsync(serviceDTO);
+                if (true)
+                {
 
-			if (serviceToDelete == null)
-			{
-				return NotFound();
-			}
+                }
+                return RedirectToAction(nameof(Index));
+            }
 
-			return View(serviceToDelete);
-		}
+            return View(serviceDTO);
+        }
 
-		[HttpPost, ActionName("Delete")]
-		[ValidateAntiForgeryToken]
-		[Authorize(Roles = "Admin,Employee")]
-		public async Task<IActionResult> DeleteConfirmed(int id)
-		{
-			await service.RemoveAsync(id);
 
-			return RedirectToAction(nameof(Index));
-		}
-	}
+        [Authorize(Roles = "Admin,Employee")]
+        [HttpPost()]
+        public async Task<IActionResult> Edit(int id, ServiceEditViewModel serviceModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var updateInformation = new UpdateServiceDTO
+                {
+                    Name = serviceModel.Name,
+                    Price = serviceModel.Price,
+                };
+
+                try
+                {
+                    await service.UpdateAsync(updateInformation, id);
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (System.Exception)
+                {
+                    return RedirectToAction("Edit", "Service");
+                }
+            }
+
+            return View(serviceModel);
+        }
+
+        [Authorize(Roles = "Admin,Employee")]
+        [HttpGet()]
+        public async Task<IActionResult> Edit(int id)
+        {
+            {
+                var serviceModel = await service.GetAsync(id);
+
+                if (serviceModel == null)
+                {
+                    return NotFound();
+                }
+
+                var viewModel = new ServiceEditViewModel
+                {
+                    Price = serviceModel.Price,
+                    Name = serviceModel.Name,
+                };
+
+                return View(viewModel);
+            }
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var serviceToDelete = await service.GetAsync(id);
+
+            if (serviceToDelete == null)
+            {
+                return NotFound();
+            }
+
+            return View(serviceToDelete);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Employee")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            await service.RemoveAsync(id);
+
+            return RedirectToAction(nameof(Index));
+        }
+    }
 }
 

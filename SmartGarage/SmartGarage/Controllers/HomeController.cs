@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using SmartGarage.Models;
 using SmartGarage.Service.Helpers;
 using SmartGarage.Service.ServiceContracts;
-using SmartGarage.ViewModels;
 using System.Diagnostics;
 
 namespace SmartGarage.Controllers

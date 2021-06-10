@@ -9,111 +9,111 @@ using System.Threading.Tasks;
 
 namespace SmartGarage.Test.ServiceTests.OrderServiceTests
 {
-	[TestClass]
-	public class DeleteOrder_Should
-	{
+    [TestClass]
+    public class DeleteOrder_Should
+    {
 
-		[TestClass]
-		public class CreateOrder_Should
-		{
-			[TestMethod]
-			public async Task DeleteOrder_When_ParamsAreValid()
-			{
-				//Arrange
-				var options = Util.GetOptions(nameof(DeleteOrder_When_ParamsAreValid));
-				var currencyServiceFake = new Mock<ICurrencyService>();
-				var userHelperMock = new Mock<IUserHelper>();
-				var vehicleServiceMock = new Mock<IVehicleService>();
-				var emailServiceMock = new Mock<IEmailsService>();
+        [TestClass]
+        public class CreateOrder_Should
+        {
+            [TestMethod]
+            public async Task DeleteOrder_When_ParamsAreValid()
+            {
+                //Arrange
+                var options = Util.GetOptions(nameof(DeleteOrder_When_ParamsAreValid));
+                var currencyServiceFake = new Mock<ICurrencyService>();
+                var userHelperMock = new Mock<IUserHelper>();
+                var vehicleServiceMock = new Mock<IVehicleService>();
+                var emailServiceMock = new Mock<IEmailsService>();
 
-				using (var arrCtx = new SmartGarageContext(options))
-				{
-					arrCtx.SeedData();
-					await arrCtx.SaveChangesAsync();
-				}
+                using (var arrCtx = new SmartGarageContext(options))
+                {
+                    arrCtx.SeedData();
+                    await arrCtx.SaveChangesAsync();
+                }
 
-				//Act
-				using (var actCtx = new SmartGarageContext(options))
-				{
+                //Act
+                using (var actCtx = new SmartGarageContext(options))
+                {
 
-					var sut = new OrderService(actCtx,
-						currencyServiceFake.Object,
-						userHelperMock.Object,
-						vehicleServiceMock.Object,
-						emailServiceMock.Object);
+                    var sut = new OrderService(actCtx,
+                        currencyServiceFake.Object,
+                        userHelperMock.Object,
+                        vehicleServiceMock.Object,
+                        emailServiceMock.Object);
 
-					var result = await sut.DeleteAsync(2);
-					var order = actCtx.Orders.FirstOrDefault(o => o.Id == 2);
+                    var result = await sut.DeleteAsync(2);
+                    var order = actCtx.Orders.FirstOrDefault(o => o.Id == 2);
 
 
-					//Assert
-					Assert.IsTrue(order.IsDeleted);
-				}
-			}
+                    //Assert
+                    Assert.IsTrue(order.IsDeleted);
+                }
+            }
 
-			[TestMethod]
-			public async Task Return_False_When_NotFound()
-			{
-				//Arrange
-				var options = Util.GetOptions(nameof(Return_False_When_NotFound));
+            [TestMethod]
+            public async Task Return_False_When_NotFound()
+            {
+                //Arrange
+                var options = Util.GetOptions(nameof(Return_False_When_NotFound));
 
-				var currencyServiceFake = new Mock<ICurrencyService>();
-				var userHelperMock = new Mock<IUserHelper>();
-				var vehicleServiceMock = new Mock<IVehicleService>();
-				var emailServiceMock = new Mock<IEmailsService>();
-				using (var arrCtx = new SmartGarageContext(options))
-				{
-					arrCtx.SeedData();
-					await arrCtx.SaveChangesAsync();
-				}
+                var currencyServiceFake = new Mock<ICurrencyService>();
+                var userHelperMock = new Mock<IUserHelper>();
+                var vehicleServiceMock = new Mock<IVehicleService>();
+                var emailServiceMock = new Mock<IEmailsService>();
+                using (var arrCtx = new SmartGarageContext(options))
+                {
+                    arrCtx.SeedData();
+                    await arrCtx.SaveChangesAsync();
+                }
 
-				//Act
-				using (var actCtx = new SmartGarageContext(options))
-				{
-					var sut = new OrderService(actCtx,
-				currencyServiceFake.Object,
-				userHelperMock.Object,
-				vehicleServiceMock.Object,
-				emailServiceMock.Object);
-					var result = await sut.DeleteAsync(3);
+                //Act
+                using (var actCtx = new SmartGarageContext(options))
+                {
+                    var sut = new OrderService(actCtx,
+                currencyServiceFake.Object,
+                userHelperMock.Object,
+                vehicleServiceMock.Object,
+                emailServiceMock.Object);
+                    var result = await sut.DeleteAsync(3);
 
-					//Assert
-					Assert.IsFalse(result);
-				}
-			}
+                    //Assert
+                    Assert.IsFalse(result);
+                }
+            }
 
-			[TestMethod]
-			public async Task Return_False_When_AlreadyDeleted()
-			{
-				//Arrange
-				var options = Util.GetOptions(nameof(Return_False_When_AlreadyDeleted));
-				var currencyServiceFake = new Mock<ICurrencyService>();
-				var userHelperMock = new Mock<IUserHelper>();
-				var vehicleServiceMock = new Mock<IVehicleService>();
-				var emailServiceMock = new Mock<IEmailsService>();
+            [TestMethod]
+            public async Task Return_False_When_AlreadyDeleted()
+            {
+                //Arrange
+                var options = Util.GetOptions(nameof(Return_False_When_AlreadyDeleted));
+                var currencyServiceFake = new Mock<ICurrencyService>();
+                var userHelperMock = new Mock<IUserHelper>();
+                var vehicleServiceMock = new Mock<IVehicleService>();
+                var emailServiceMock = new Mock<IEmailsService>();
 
-				using (var arrCtx = new SmartGarageContext(options))
-				{
-					arrCtx.SeedData();
-					await arrCtx.SaveChangesAsync();
-					var order = arrCtx.Orders.FirstOrDefault(o => o.Id == 2);
-					order.IsDeleted = true;
-					await arrCtx.SaveChangesAsync();
-				}
+                using (var arrCtx = new SmartGarageContext(options))
+                {
+                    arrCtx.SeedData();
+                    await arrCtx.SaveChangesAsync();
+                    var order = arrCtx.Orders.FirstOrDefault(o => o.Id == 2);
+                    order.IsDeleted = true;
+                    await arrCtx.SaveChangesAsync();
+                }
 
-				//Act
-				using (var actCtx = new SmartGarageContext(options))
-				{
-					var sut = new OrderService(actCtx,
-				currencyServiceFake.Object,
-				userHelperMock.Object,
-				vehicleServiceMock.Object,
-				emailServiceMock.Object);
-					var result = await sut.DeleteAsync(2);
-					//Assert
-					Assert.IsFalse(result);
-				}
-			}
-		}
-	}
+                //Act
+                using (var actCtx = new SmartGarageContext(options))
+                {
+                    var sut = new OrderService(actCtx,
+                currencyServiceFake.Object,
+                userHelperMock.Object,
+                vehicleServiceMock.Object,
+                emailServiceMock.Object);
+                    var result = await sut.DeleteAsync(2);
+                    //Assert
+                    Assert.IsFalse(result);
+                }
+            }
+        }
+    }
 }

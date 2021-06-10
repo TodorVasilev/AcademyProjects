@@ -55,7 +55,7 @@ namespace SmartGarage.Service
             }
         }
 
-        public async Task RecieveEmail (RecieveEmailViewModel recieveEmailModel)
+        public async Task RecieveEmail(RecieveEmailViewModel recieveEmailModel)
         {
             var sb = new StringBuilder();
             sb.AppendLine($"Person Name: {recieveEmailModel.PersonName}");

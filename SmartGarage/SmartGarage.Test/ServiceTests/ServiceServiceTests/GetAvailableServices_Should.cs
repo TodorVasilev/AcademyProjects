@@ -2,16 +2,14 @@
 using SmartGarage.Data;
 using SmartGarage.Service;
 using SmartGarage.Service.DTOs.GetDTOs;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SmartGarage.Test.ServiceTests.ServiceServiceTests
 {
-	[TestClass]
-	public class GetAvailableServices_Should
-	{
+    [TestClass]
+    public class GetAvailableServices_Should
+    {
         [TestMethod]
         public async Task ReturnCorrectServic_ForSpecificOrder()
         {
