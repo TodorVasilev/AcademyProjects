@@ -1,16 +1,22 @@
 ﻿
-@model PaginatedList<GetManufacturerDTO>
+@model PaginatedList<GetVehicleModelDTO>
 
 <table class="table table-dark table-hover text-white">
 	<thead>
-		<tr class="active" style="line-height: 3px;">
-			<th>
-				<p>#</p>
+		<tr class="active">
+			<th scope="row">
+				<p style="width: 75px">#</p>
 			</th>
 			<th>
 				<p>Name</p>
 			</th>
-			<th style="width:170px">
+			<th>
+				<p>Manufacturer</p>
+			</th>
+			<th>
+				<p>Vehicle type</p>
+			</th>
+			<th>
 			</th>
 		</tr>
 	</thead>
@@ -22,27 +28,29 @@
 			{
 				if (count % 2 != 0)
 				{
-					<tr class="table-active" style="line-height: 37px;">
+					<tr class="table-active">
 						<th scope="row">
 							@count
 						</th>
 						<td>@Html.DisplayFor(modelItem => item.Name)</td>
+						<td>@Html.DisplayFor(modelItem => item.ManafacturerName)</td>
+						<td>@Html.DisplayFor(modelItem => item.VehicleType)</td>
 						<td>
-							<a onclick="showInPopup('@Url.Action("Edit","Manufacturer",new {id = item.Id }, Context.Request.Scheme)', 'Update Manufacturer')" class="btn btn-outline-warning text-white">Edit</a>
-							<a onclick="showInPopup('@Url.Action("Details","Manufacturer",new {id = item.Id }, Context.Request.Scheme)', 'Manufacturer')" class="btn btn-outline-info text-white">Details</a>
+							<a onclick="showInPopup('@Url.Action("Edit", "VehicleModel",new { id = item.Id }, Context.Request.Scheme)', 'Edit Vehicle Model')" class="btn btn-outline-warning text-white">Edit</a>
 						</td>
 					</tr>
 				}
 				else
 				{
-					<tr style="line-height: 37px;">
+					<tr>
 						<th scope="row">
 							@count
 						</th>
 						<td>@Html.DisplayFor(modelItem => item.Name)</td>
+						<td>@Html.DisplayFor(modelItem => item.ManafacturerName)</td>
+						<td>@Html.DisplayFor(modelItem => item.VehicleType)</td>
 						<td>
-							<a onclick="showInPopup('@Url.Action("Edit","Manufacturer",new {id = item.Id }, Context.Request.Scheme)', 'Update Manufacturer')" class="btn btn-outline-warning text-white">Edit</a>
-							<a onclick="showInPopup('@Url.Action("Details","Manufacturer",new {id = item.Id }, Context.Request.Scheme)', 'Manufacturer')" class="btn btn-outline-info text-white">Details</a>
+							<a onclick="showInPopup('@Url.Action("Edit", "VehicleModel",new { id = item.Id }, Context.Request.Scheme)', 'Edit Vehicle Model')" class="btn btn-outline-warning text-white">Edit</a>
 						</td>
 					</tr>
 				}
