@@ -16,12 +16,17 @@ namespace SmartGarage.Service
         //Sends an E-mail to the user with random generated password.
         public async Task SendRegistrationEmail(string email, string userPassword)
         {
+            var sb = new StringBuilder();
+            sb.AppendLine($"<div><h3>Confirmation password: { userPassword } <h3></div>");
+            sb.AppendLine("<br>");
+            sb.AppendLine("<h3>Login page: <a href= 'https://localhost:5001/Identity/Account/Login'> https://localhost:5001/Identity/Account/Login </h3></ a >");
+
             using (MailMessage mail = new MailMessage())
             {
                 mail.From = new MailAddress(fromEmail);
                 mail.To.Add(email);
                 mail.Subject = "New confirmation email with a login password";
-                mail.Body = "Confirmation password " + userPassword + "<a href= 'https://localhost:5001/Identity/Account/Login' > Login page: https://localhost:5001/Identity/Account/Login </ a > ";
+                mail.Body = sb.ToString();
                 mail.IsBodyHtml = true;
 
                 using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
