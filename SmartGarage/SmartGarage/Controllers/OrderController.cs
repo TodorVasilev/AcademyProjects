@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 namespace SmartGarage.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = true)]
+    [Authorize]
     public class OrderController : Controller
     {
         private readonly IOrderService orderService;
@@ -36,6 +37,7 @@ namespace SmartGarage.Controllers
             this.vehicleModelService = vehicleModelService;
         }
 
+        [Authorize(Roles = "Admin,Employee,Customer")]
         public async Task<IActionResult> Index()
         {
             string name = default;
@@ -48,6 +50,7 @@ namespace SmartGarage.Controllers
             return View(PaginatedList<GetOrderDTO>.CreateAsync(orders, pageNumber, pageSize));
         }
 
+        [Authorize(Roles = "Admin,Employee,Customer")]
         [HttpGet("Order/Search")]
         public async Task<IActionResult> IndexPartial(string name, int pageNumber = 1)
         {
@@ -59,7 +62,7 @@ namespace SmartGarage.Controllers
             return PartialView("Order_Table_Partial", PaginatedList<GetOrderDTO>.CreateAsync(orders, pageNumber, pageSize));
         }
 
-
+        [Authorize(Roles = "Admin,Employee,Customer")]
         [HttpGet()]
         public async Task<IActionResult> Details(int id, [FromQuery] string currency = "EUR")
         {
@@ -80,7 +83,7 @@ namespace SmartGarage.Controllers
                 return Unauthorized();
             }
         }
-
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Create()
         {
             var model = new CreateOrderViewModel

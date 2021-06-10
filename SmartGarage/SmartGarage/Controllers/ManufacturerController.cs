@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 namespace SmartGarage.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = true)]
+    [Authorize]
     public class ManufacturerController : Controller
     {
         private readonly IManufacturerService service;
@@ -96,6 +97,7 @@ namespace SmartGarage.Controllers
         }
 
         // GET: Manufacturers/Create
+        [Authorize(Roles = "Admin,Employee")]
         public IActionResult Create()
         {
             return View();

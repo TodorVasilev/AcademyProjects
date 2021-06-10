@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 namespace SmartGarage.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = true)]
+    [Authorize]
     public class UserController : Controller
     {
         private readonly IUserService service;
@@ -20,6 +21,7 @@ namespace SmartGarage.Controllers
             this.service = service;
         }
 
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Index()
         {
             int pageNumber = 1;
@@ -32,6 +34,7 @@ namespace SmartGarage.Controllers
             return View(PaginatedList<GetUserDTO>.CreateAsync(users, pageNumber, pageSize));
         }
 
+        [Authorize(Roles = "Admin,Employee")]
         [HttpGet("User/Search")]
         public async Task<IActionResult> IndexPartial(UserSevicesFilterQueryObject filer, UserOrderQueryObject order, int pageNumber = 1)
         {
@@ -42,15 +45,16 @@ namespace SmartGarage.Controllers
             return PartialView("User_Table_Partial", PaginatedList<GetUserDTO>.CreateAsync(users, pageNumber, pageSize));
         }
 
+        [Authorize(Roles = "Admin")]
         public IActionResult UpdateAdmin()
         {
             return View();
         }
 
 
-        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateAdmin(UpdateAdminViewModel model)
         {
             var result = await service.UpdateAdminAsync(model.Email, model.Role);
@@ -66,6 +70,7 @@ namespace SmartGarage.Controllers
         }
 
         [HttpGet()]
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Details(int id)
         {
             var user = await service.GetById(id);
