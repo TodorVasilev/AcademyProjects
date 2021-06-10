@@ -4,7 +4,7 @@
 <div class="col-12">
     <table class="table table-dark table-hover">
         <thead>
-            <tr style="line-height: 27px;" class="active">
+            <tr style="line-height: 37px;" class="active">
                 <th class="pr-5">#</th>
                 <th>Arrival Date</th>
                 <th>Finish Date</th>
@@ -23,29 +23,58 @@
 
                 foreach (var item in Model.ItemsCollection)
                 {
+                    if (count % 2 != 0)
+                    {
+                        <tr style="line-height: 37px;" class="table-active">
 
-                    <tr style="line-height: 37px;" class="table-active">
-                        <th scope="row">
-                            @count
-                        </th>
-                        <td>@Html.DisplayFor(modelItem => item.ArrivalDate) </td>
-                        <td>@Html.DisplayFor(modelItem => item.FinishDate)</td>
-                        <td>@Html.DisplayFor(modelItem => item.OrderStatus)</td>
-                        <td>@Html.DisplayFor(modelItem => item.VehicleNumberPlate)</td>
-                        @if (User.IsInRole("Employee") || User.IsInRole("Admin"))
-                        {
-                            <td>@Html.DisplayFor(modelItem => item.CustomerName)</td>
-
-                        }
-                        <td>
-                            <a type="button" class="btn btn-outline-info btn text-white" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            <th scope="row">
+                                @count
+                            </th>
+                            <td>@Html.DisplayFor(modelItem => item.ArrivalDate) </td>
+                            <td>@Html.DisplayFor(modelItem => item.FinishDate)</td>
+                            <td>@Html.DisplayFor(modelItem => item.OrderStatus)</td>
+                            <td>@Html.DisplayFor(modelItem => item.VehicleNumberPlate)</td>
                             @if (User.IsInRole("Employee") || User.IsInRole("Admin"))
                             {
-                                <a onclick="showInPopup('@Url.Action("Edit","Order",new {id = item.Id }, Context.Request.Scheme)', 'Update Order')" class="btn btn-outline-warning text-white">Edit</a>
-                                <a type="button" class="btn btn-outline-success btn text-white" asp-action="EditServices" asp-route-id="@item.Id">AddServices</a>
+                                <td>@Html.DisplayFor(modelItem => item.CustomerName)</td>
+
                             }
-                        </td>
-                    </tr>
+                            <td>
+                                <a type="button" class="btn btn-outline-info btn text-white" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                @if (User.IsInRole("Employee") || User.IsInRole("Admin"))
+                                {
+                                    <a onclick="showInPopup('@Url.Action("Edit", "Order", new { id = item.Id }, Context.Request.Scheme)', 'Update Order')" class="btn btn-outline-warning text-white">Edit</a>
+                                    <a type="button" class="btn btn-outline-success btn text-white" asp-action="EditServices" asp-route-id="@item.Id">AddServices</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr style="line-height: 37px;">
+
+                            <th scope="row">
+                                @count
+                            </th>
+                            <td>@Html.DisplayFor(modelItem => item.ArrivalDate) </td>
+                            <td>@Html.DisplayFor(modelItem => item.FinishDate)</td>
+                            <td>@Html.DisplayFor(modelItem => item.OrderStatus)</td>
+                            <td>@Html.DisplayFor(modelItem => item.VehicleNumberPlate)</td>
+                            @if (User.IsInRole("Employee") || User.IsInRole("Admin"))
+                            {
+                                <td>@Html.DisplayFor(modelItem => item.CustomerName)</td>
+
+                            }
+                            <td>
+                                <a type="button" class="btn btn-outline-info btn text-white" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                @if (User.IsInRole("Employee") || User.IsInRole("Admin"))
+                                {
+                                    <a onclick="showInPopup('@Url.Action("Edit", "Order", new { id = item.Id }, Context.Request.Scheme)', 'Update Order')" class="btn btn-outline-warning text-white">Edit</a>
+                                    <a type="button" class="btn btn-outline-success btn text-white" asp-action="EditServices" asp-route-id="@item.Id">AddServices</a>
+                                }
+                            </td>
+                        </tr>
+                    }
                     count++;
                 }
             }

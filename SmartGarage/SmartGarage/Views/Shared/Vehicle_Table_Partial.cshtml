@@ -2,18 +2,18 @@
 
 <table class="table table-dark table-hover text-white">
     <thead>
-        <tr class="active" style="line-height: 2px;">
-            <th >
-                <p style="width: 50px">#</p>
+        <tr style="line-height: 37px;">
+            <th>
+                <p class="m-0" style="width: 50px">#</p>
             </th>
             <th>
-                <p>Manufacturer</p>
+                <p class="m-0">Manufacturer</p>
             </th>
             <th>
-                <p>Model</p>
+                <p class="m-0">Model</p>
             </th>
             <th>
-                <p>Owner (UserName)</p>
+                <p  class="m-0">Owner (UserName)</p>
             </th>
             @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
             {
@@ -22,7 +22,7 @@
             @if (User.IsInRole("Customer"))
             {
                 <th>
-                    <p>Number Plate</p>
+                    <p class="m-0">Number Plate</p>
                 </th>
             }
         </tr>
