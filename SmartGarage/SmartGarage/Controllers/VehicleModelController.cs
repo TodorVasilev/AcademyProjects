@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 namespace SmartGarage.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = true)]
+    [Authorize]
     public class VehicleModelController : Controller
     {
         private readonly IVehicleModelService service;
@@ -26,10 +27,21 @@ namespace SmartGarage.Controllers
 
         // GET: VehicleModels
         [Authorize(Roles = "Admin,Employee")]
-        public async Task<IActionResult> Index(int pageNumber = 1)
+        public async Task<IActionResult> Index()
+        {
+            int pageNumber = 1;
+            var pageSize = 8;
+            var services= await service.GetAll();
+            return View(PaginatedList<GetVehicleModelDTO>.CreateAsync(services, pageNumber, pageSize));
+        }
+
+        [HttpGet("VehicleModel/Get")]
+        [Authorize(Roles = "Admin,Employee")]
+        public async Task<IActionResult> IndexParital(int pageNumber = 1)
         {
             var pageSize = 8;
-            return View(PaginatedList<GetVehicleModelDTO>.CreateAsync(await service.GetAll(), pageNumber, pageSize));
+            var services = await service.GetAll();
+            return PartialView("VehicleModel_Table_Partial", PaginatedList<GetVehicleModelDTO>.CreateAsync(services, pageNumber, pageSize));
         }
 
         // GET: VehicleModels/Create

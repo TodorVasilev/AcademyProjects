@@ -34,8 +34,7 @@ namespace SmartGarage
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<SmartGarageContext>(options =>
-           options.UseSqlServer(
-               Configuration.GetConnectionString("DefaultConnection")));
+                     options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<User, Role>(options =>
             {
@@ -88,11 +87,7 @@ namespace SmartGarage
             var appSettings = appSettingsSection.Get<AppSettings>();
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
 
-            services.AddAuthentication(config =>
-            {
-                // config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                // config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
+            services.AddAuthentication()
                 .AddCookie(config => config.SlidingExpiration = true)
                 .AddJwtBearer(config =>
                 {

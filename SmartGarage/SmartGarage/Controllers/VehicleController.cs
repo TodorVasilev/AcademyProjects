@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 namespace SmartGarage.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = true)]
+    [Authorize]
     public class VehicleController : Controller
     {
         private readonly IVehicleService service;
@@ -33,6 +34,7 @@ namespace SmartGarage.Controllers
             this.userManager = userManager;
         }
 
+        [Authorize(Roles = "Admin,Employee,Customer")]
         public async Task<IActionResult> Index()
         {
             var user = await userManager.FindByNameAsync(User.Identity.Name);
@@ -52,6 +54,7 @@ namespace SmartGarage.Controllers
         }
 
         [HttpGet("Vehicle/Filter")]
+        [Authorize(Roles = "Admin,Employee,Customer")]
         public async Task<IActionResult> PartialView(string name, int pageNumber = 1)
         {
             var pageSize = 8;
@@ -123,6 +126,7 @@ namespace SmartGarage.Controllers
         }
 
         // GET: Vehicles/Create
+        [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Create()
         {
             var model = new VehicleViewModel
