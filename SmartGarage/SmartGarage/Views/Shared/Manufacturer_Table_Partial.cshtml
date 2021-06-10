@@ -1,30 +1,17 @@
-﻿@model PaginatedList<GetVehicleDTO>
+﻿
+@model PaginatedList<GetManufacturerDTO>
 
 <table class="table table-dark table-hover text-white">
     <thead>
         <tr style="line-height: 37px;">
             <th>
-                <p class="m-0" style="width: 50px">#</p>
+                <p class="m-0">#</p>
             </th>
             <th>
-                <p class="m-0">Manufacturer</p>
+                <p class="m-0">Name</p>
             </th>
-            <th>
-                <p class="m-0">Model</p>
+            <th style="width:170px">
             </th>
-            <th>
-                <p  class="m-0">Owner (UserName)</p>
-            </th>
-            @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
-            {
-                <th></th>
-            }
-            @if (User.IsInRole("Customer"))
-            {
-                <th>
-                    <p class="m-0">Number Plate</p>
-                </th>
-            }
         </tr>
     </thead>
     <tbody>
@@ -39,21 +26,11 @@
                         <th scope="row">
                             @count
                         </th>
-                        <td>@item.Manufacturer</td>
-                        <td>@item.VehicleModel (@item.Colour)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Owner) (@item.OwnerUserName)</td>
-                        @if (User.IsInRole("Admin") || User.IsInRole("Em    ployee"))
-                        {
-                            <td>
-                                <a onclick="showInPopup('@Url.Action("Details", "Vehicle", new { id = item.Id }, Context.Request.Scheme)', 'Vehicle Details')" class="btn btn-outline-info text-white">Details</a>
-                                <a onclick="showInPopup('@Url.Action("Edit", "Vehicle",new { id = item.Id }, Context.Request.Scheme)', 'Edit Vehicle')" class="btn btn-outline-warning text-white">Edit</a>
-                                <a onclick="showInPopup('@Url.Action("Delete", "Vehicle", new { id = item.Id }, Context.Request.Scheme)', 'Delete Vehicle')" class="btn btn-outline-danger text-white">Delete</a>
-                            </td>
-                        }
-                        else
-                        {
-                            <td>@item.NumberPlate</td>
-                        }
+                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td>
+                            <a onclick="showInPopup('@Url.Action("Edit","Manufacturer",new {id = item.Id }, Context.Request.Scheme)', 'Update Manufacturer')" class="btn btn-outline-warning text-white">Edit</a>
+                            <a onclick="showInPopup('@Url.Action("Details","Manufacturer",new {id = item.Id }, Context.Request.Scheme)', 'Manufacturer')" class="btn btn-outline-info text-white">Details</a>
+                        </td>
                     </tr>
                 }
                 else
@@ -62,21 +39,11 @@
                         <th scope="row">
                             @count
                         </th>
-                        <td>@item.Manufacturer</td>
-                        <td>@item.VehicleModel (@item.Colour)</td>
-                        <td>@Html.DisplayFor(modelItem => item.Owner) (@item.OwnerUserName)</td>
-                        @if (User.IsInRole("Admin") || User.IsInRole("Em    ployee"))
-                        {
-                            <td>
-                                <a onclick="showInPopup('@Url.Action("Details", "Vehicle", new { id = item.Id }, Context.Request.Scheme)', 'Vehicle Details')" class="btn btn-outline-info text-white">Details</a>
-                                <a onclick="showInPopup('@Url.Action("Edit", "Vehicle",new { id = item.Id }, Context.Request.Scheme)', 'Edit Vehicle')" class="btn btn-outline-warning text-white">Edit</a>
-                                <a onclick="showInPopup('@Url.Action("Delete", "Vehicle", new { id = item.Id }, Context.Request.Scheme)', 'Delete Vehicle')" class="btn btn-outline-danger text-white">Delete</a>
-                            </td>
-                        }
-                        else
-                        {
-                            <td>@item.NumberPlate</td>
-                        }
+                        <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                        <td>
+                            <a onclick="showInPopup('@Url.Action("Edit","Manufacturer",new {id = item.Id }, Context.Request.Scheme)', 'Update Manufacturer')" class="btn btn-outline-warning text-white">Edit</a>
+                            <a onclick="showInPopup('@Url.Action("Details","Manufacturer",new {id = item.Id }, Context.Request.Scheme)', 'Manufacturer')" class="btn btn-outline-info text-white">Details</a>
+                        </td>
                     </tr>
                 }
                 count++;
@@ -85,14 +52,13 @@
     </tbody>
 </table>
 
-
-
 @{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
+
 <nav aria-label="...">
-    <ul class="pagination pb-3">
+    <ul class="pagination">
         @if (Model.PageIndex > 4 && Model.PageIndex + 3 < Model.TotalPages)
         {
             <li class="page-item disabled">

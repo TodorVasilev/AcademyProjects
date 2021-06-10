@@ -54,12 +54,12 @@ namespace SmartGarage.Test.ServiceTests.OrderServiceTests
                  vehicleServiceMock.Object,
                  emailServiceMock.Object);
 
-                var result = await sut.GetAll(adminUser,default);
+                var result = await sut.GetAll(adminUser, default);
 
-				
-				Assert.AreEqual(result.Count, 3);
-				Assert.IsInstanceOfType(result, typeof(List<GetOrderDTO>));
-			}
+
+                Assert.AreEqual(result.Count, 3);
+                Assert.IsInstanceOfType(result, typeof(List<GetOrderDTO>));
+            }
         }
         [TestMethod]
         public async Task GetAllOrders_When_Customer()
@@ -89,11 +89,11 @@ namespace SmartGarage.Test.ServiceTests.OrderServiceTests
                   vehicleServiceMock.Object,
                   emailServiceMock.Object);
 
-                var result = await sut.GetAll(customer,default);
-	
-				Assert.AreEqual(result.Count, 1);
-				Assert.IsInstanceOfType(result, typeof(List<GetOrderDTO>));
-			}
+                var result = await sut.GetAll(customer, default);
+
+                Assert.AreEqual(result.Count, 1);
+                Assert.IsInstanceOfType(result, typeof(List<GetOrderDTO>));
+            }
         }
         [TestMethod]
         public async Task GetAllFilteredOrders_When_ParamsAreValid()

@@ -11,7 +11,7 @@ namespace SmartGarage.Data.Models
         [Required]
         public string Name { get; set; }
 
-       
+
         public List<VehicleModel> VehicleModels { get; set; } = new List<VehicleModel>();
     }
 }

@@ -6,10 +6,10 @@ namespace SmartGarage.Service.DTOs.GetDTOs
 {
     public class GetVehicleDTO
     {
-		public GetVehicleDTO()
-		{
+        public GetVehicleDTO()
+        {
 
-		}
+        }
         public GetVehicleDTO(Vehicle vehicle)
         {
             this.Id = vehicle.Id;

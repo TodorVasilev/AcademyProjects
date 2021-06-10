@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 namespace SmartGarage.Controllers
 {
 	[ApiExplorerSettings(IgnoreApi = true)]
+	[Authorize]
 	public class ServiceController : Controller
 	{
 		private readonly IServiceService service;
@@ -26,8 +27,8 @@ namespace SmartGarage.Controllers
 			this.userManager = userManager;
 		}
 
-
-		public async Task<IActionResult> IndexCustomer( )
+		[Authorize(Roles = "Admin,Employee,Customer")]
+		public async Task<IActionResult> IndexCustomer()
 		{
 			var filterForCustomer = new CustomerServicesFilterQueryObject();
 
@@ -37,11 +38,13 @@ namespace SmartGarage.Controllers
 			var user = await userManager.GetUserAsync(HttpContext.User);
 
 			var services = await service.GetAllLinkedToCustomer(filterForCustomer, user.Id);
-	
+
 			return View(PaginatedList<GetServiceDTO>.CreateAsync(services, pageNumber, pageSize));
 
 		}
+
 		[HttpGet("Service/SearchCustomer")]
+		[Authorize(Roles = "Admin,Employee,Customer")]
 		public async Task<IActionResult> PartialForCustomer(DateTime date, string numberPlate, int pageNumber = 1)
 		{
 			var filterForCustomer = new CustomerServicesFilterQueryObject
@@ -55,12 +58,12 @@ namespace SmartGarage.Controllers
 			var user = await userManager.GetUserAsync(HttpContext.User);
 
 			var services = await service.GetAllLinkedToCustomer(filterForCustomer, user.Id);
-	
+
 			return PartialView("ServiceCustomer_Table_Partial", PaginatedList<GetServiceDTO>.CreateAsync(services, pageNumber, pageSize));
 
 		}
 
-
+		[AllowAnonymous]
 		public async Task<IActionResult> Index()
 		{
 			int pageNumber = 1;
@@ -73,6 +76,7 @@ namespace SmartGarage.Controllers
 		}
 
 		[HttpGet("Service/Search")]
+		[AllowAnonymous]
 		public async Task<IActionResult> PartialForAdminEmployee(decimal? price, string name, int pageNumber = 1)
 		{
 			var pageSize = 6;
@@ -86,6 +90,7 @@ namespace SmartGarage.Controllers
 			return PartialView("Service_Table_Partial", PaginatedList<GetServiceDTO>.CreateAsync(services, pageNumber, pageSize));
 		}
 
+		[Authorize(Roles = "Admin,Employee")]
 		public IActionResult Create()
 		{
 			return View();
@@ -111,8 +116,8 @@ namespace SmartGarage.Controllers
 		}
 
 
-		[Authorize(Roles = "Admin,Employee")]
 		[HttpPost()]
+		[Authorize(Roles = "Admin,Employee")]
 		public async Task<IActionResult> Edit(int id, ServiceEditViewModel serviceModel)
 		{
 			if (ModelState.IsValid)
@@ -137,8 +142,8 @@ namespace SmartGarage.Controllers
 			return View(serviceModel);
 		}
 
-		[Authorize(Roles = "Admin,Employee")]
 		[HttpGet()]
+		[Authorize(Roles = "Admin,Employee")]
 		public async Task<IActionResult> Edit(int id)
 		{
 			{
@@ -159,6 +164,7 @@ namespace SmartGarage.Controllers
 			}
 		}
 
+		[Authorize(Roles = "Admin,Employee")]
 		public async Task<IActionResult> Delete(int id)
 		{
 			var serviceToDelete = await service.GetAsync(id);

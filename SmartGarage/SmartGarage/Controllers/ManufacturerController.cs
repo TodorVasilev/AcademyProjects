@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 namespace SmartGarage.Controllers
 {
     [ApiExplorerSettings(IgnoreApi = true)]
+    [Authorize]
     public class ManufacturerController : Controller
     {
         private readonly IManufacturerService service;
@@ -24,18 +25,24 @@ namespace SmartGarage.Controllers
 
         // GET: Manufacturers
         [Authorize(Roles = "Admin,Employee")]
-        public async Task<IActionResult> Index(int pageNumber = 1)
+        public async Task<IActionResult> Index()
+        {
+            int pageNumber = 1;
+            var pageSize = 8;
+            var manufacturers = await service.GetAll();
+
+            return View(PaginatedList<GetManufacturerDTO>.CreateAsync(manufacturers, pageNumber, pageSize));
+        }
+
+        [Authorize(Roles = "Admin,Employee")]
+        [HttpGet("Manufacturer/Get")]
+        public async Task<IActionResult> IndexPartial(int pageNumber)
         {
             var pageSize = 8;
             var manufacturers = await service.GetAll();
 
-            if (manufacturers.Count == 0)
-            {
-                return Ok();
-            }
-            return View(PaginatedList<GetManufacturerDTO>.CreateAsync(manufacturers, pageNumber, pageSize));
+            return PartialView("Manufacturer_Table_Partial", PaginatedList<GetManufacturerDTO>.CreateAsync(manufacturers, pageNumber, pageSize));
         }
-
         //GET: Manufacturers/Details/5       
         [Authorize(Roles = "Admin,Employee")]
         public async Task<IActionResult> Details(int id)
@@ -90,6 +97,7 @@ namespace SmartGarage.Controllers
         }
 
         // GET: Manufacturers/Create
+        [Authorize(Roles = "Admin,Employee")]
         public IActionResult Create()
         {
             return View();

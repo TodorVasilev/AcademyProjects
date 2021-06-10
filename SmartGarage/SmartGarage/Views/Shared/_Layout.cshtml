@@ -40,17 +40,17 @@
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle text-white " data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Customer</a>
-								<div class="dropdown-menu">
-									<a class="dropdown-item w-auto" asp-controller="User"
-									   asp-action="Index">All Customers</a>
-									<a class="dropdown-item w-auto" asp-area="Identity" asp-page="/Account/ForgotPassword">Forgoten Password</a>
-									<a class="dropdown-item w-auto" onclick="showInPopup('Identity/Account/Register')">Register User</a>
-									@if (User.IsInRole("Admin"))
-									{
-										<a class="dropdown-item w-auto"  asp-controller="User"
-									   asp-action="UpdateAdmin">Update Role</a>
-									}
-								</div>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item w-auto" asp-controller="User"
+                                       asp-action="Index">All Customers</a>
+                                    <a class="dropdown-item w-auto" asp-area="Identity" asp-page="/Account/ForgotPassword">Forgoten Password</a>
+                                    <a class="dropdown-item w-auto" onclick="showInPopup('Identity/Account/Register','Register user')">Register User</a>
+                                    @if (User.IsInRole("Admin"))
+                                    {
+                                        <a class="dropdown-item w-auto" asp-controller="User"
+                                           asp-action="UpdateAdmin">Update Role</a>
+                                    }
+                                </div>
                             </li>
                         }
                         @if (User.IsInRole("Employee") || User.IsInRole("Admin") || User.IsInRole("Customer"))
@@ -70,7 +70,7 @@
                             @if (User.IsInRole("Customer"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-white" onclick="showInPopup('Identity/Account/ChangePassword')">Reset Password</a>
+                                    <a class="nav-link link text-white" asp-area="Identity" asp-page="/Account/ChangePassword">Reset Password</a>
                                 </li>
                             }
                         }
@@ -87,12 +87,12 @@
     <div class="modal" tabindex="-1" role="dialog" id="form-modal">
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header" style="background-color:#E8E8E8;">
                     <h5 class="modal-title"></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
                     <span aria-hidden="true">&times;</span>
                 </div>
-                <div class="modal-body p-2">
+                <div class="modal-body p-0 mt-0" style="background-color:#E8E8E8;">
                 </div>
             </div>
         </div>

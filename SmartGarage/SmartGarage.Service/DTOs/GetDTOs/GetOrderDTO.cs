@@ -1,5 +1,4 @@
 ﻿using SmartGarage.Data.Models;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -67,7 +66,7 @@ namespace SmartGarage.Service.DTOs.GetDTOs
         [DisplayName("Total Price:")]
         public decimal TotalPrice { get; set; }
 
-       
+
         public string Currency { get; set; }
 
         [JsonIgnore]

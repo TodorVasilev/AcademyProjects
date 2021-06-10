@@ -29,7 +29,7 @@ namespace SmartGarage.Test.ServiceTests.ServiceServiceTests
                 var serviceToUpdate = await arrCtx.Services
                     .FirstOrDefaultAsync(v => v.Id == vehicleId);
 
-                serviceToUpdate.Price =(decimal) updateInfo.Price;
+                serviceToUpdate.Price = (decimal)updateInfo.Price;
                 await arrCtx.SaveChangesAsync();
             }
 

@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SmartGarage.Data.Models;
-using System;
-using System.Collections.Generic;
 using System.Reflection;
 
 namespace SmartGarage.Data
@@ -36,7 +33,7 @@ namespace SmartGarage.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly()); 
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
     }
 }

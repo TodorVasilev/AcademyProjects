@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 
 namespace SmartGarage.Service.Contracts
 {
-	public interface IUserManagerWrapper
-	{
-		Task<IdentityResult> RemoveFromRoleAsync(User user, string role);
+    public interface IUserManagerWrapper
+    {
+        Task<IdentityResult> RemoveFromRoleAsync(User user, string role);
 
-		Task<IdentityResult> AddToRoleAsync(User user, string role);
+        Task<IdentityResult> AddToRoleAsync(User user, string role);
 
-		Task<IList<string>> GetRolesAsync(User user);
+        Task<IList<string>> GetRolesAsync(User user);
 
-		Task<User> FindByNameAsync(string userName);
-	}
+        Task<User> FindByNameAsync(string userName);
+    }
 }

@@ -17,7 +17,7 @@ namespace SmartGarage.Service.Helpers
         public string PhoneNumber { get; set; }
 
         [Required]
-        [StringLength(200, MinimumLength = 10, ErrorMessage = "{0} must be between {2} and {1} symbols.")]
+        [StringLength(500, MinimumLength = 10, ErrorMessage = "{0} must be between {2} and {1} symbols.")]
         public string Message { get; set; }
     }
 }

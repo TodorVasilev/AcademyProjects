@@ -5,38 +5,30 @@
     Layout = "~/Views/Shared/_LayoutForPopup.cshtml";
 }
 <body style="background-image: url('https://localhost:5001/images/Vehicles.jpg')">
-
-    <div>
-        <div class="container mt-4 col-10"></div>
-        <div class="col-sm-12 mb-4">
-            <div>
-                <h5><b style="margin-right:73px;"> @Html.DisplayNameFor(model => model.FirstName)</b>  @Html.DisplayFor(model => model.FirstName)</h5>
-            </div>
-            <div>
-                <h5><b style="margin-right:53px;">  @Html.DisplayNameFor(model => model.LastName)</b>  @Html.DisplayFor(model => model.LastName)</h5>
-            </div>
-            <div>
-                <h5><b style="margin-right:71px;">  @Html.DisplayNameFor(model => model.UserName)</b> @Html.DisplayFor(model => model.UserName)</h5>
-            </div>
-            <div>
-                <h5><b style="margin-right:111px;">  @Html.DisplayNameFor(model => model.Email)</b> @Html.DisplayFor(model => model.Email)</h5>
-            </div>
-            <div>
-                <h5><b style="margin-right:36px;">  @Html.DisplayNameFor(model => model.PhoneNumber)</b> @Html.DisplayFor(model => model.PhoneNumber)</h5>
-            </div>
-            <div>
-                <h5><b style="margin-right:131px;">  @Html.DisplayNameFor(model => model.Age)</b> @Html.DisplayFor(model => model.Age)</h5>
-            </div>
-            <div>
-                <h5><b style="margin-right:26px;"> License Number:</b>@Html.DisplayFor(model => model.DrivingLicenseNumber)</h5>
-            </div>
-            <div>
-                <h5><b style="margin-right:93px;">  @Html.DisplayNameFor(model => model.Address)</b> @Html.DisplayFor(model => model.Address)</h5>
-            </div>
+    <div class="col-sm-12 pb-3">
+        <div>
+            <h5><b style="margin-right:73px;"> @Html.DisplayNameFor(model => model.FirstName)</b>  @Html.DisplayFor(model => model.FirstName)</h5>
         </div>
+        <div>
+            <h5><b style="margin-right:53px;">  @Html.DisplayNameFor(model => model.LastName)</b>  @Html.DisplayFor(model => model.LastName)</h5>
+        </div>
+        <div>
+            <h5><b style="margin-right:71px;">  @Html.DisplayNameFor(model => model.UserName)</b> @Html.DisplayFor(model => model.UserName)</h5>
+        </div>
+        <div>
+            <h5><b style="margin-right:111px;">  @Html.DisplayNameFor(model => model.Email)</b> @Html.DisplayFor(model => model.Email)</h5>
+        </div>
+        <div>
+            <h5><b style="margin-right:36px;">  @Html.DisplayNameFor(model => model.PhoneNumber)</b> @Html.DisplayFor(model => model.PhoneNumber)</h5>
+        </div>
+        <div>
+            <h5><b style="margin-right:131px;">  @Html.DisplayNameFor(model => model.Age)</b> @Html.DisplayFor(model => model.Age)</h5>
+        </div>
+        <div>
+            <h5><b style="margin-right:26px;"> License Number:</b>@Html.DisplayFor(model => model.DrivingLicenseNumber)</h5>
+        </div>
+        <div>
+            <h5><b style="margin-right:93px;">  @Html.DisplayNameFor(model => model.Address)</b> @Html.DisplayFor(model => model.Address)</h5>
+        </div>
+    </div>
 </body>
-
-
-
-
-

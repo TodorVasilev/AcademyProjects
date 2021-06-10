@@ -35,7 +35,7 @@ namespace SmartGarage.Api_Controllers
         {
             var vehicleType = await service.GetAll();
 
-            if(vehicleType.Count == 0)
+            if (vehicleType.Count == 0)
             {
                 return NotFound();
             }

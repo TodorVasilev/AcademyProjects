@@ -2,15 +2,15 @@
 
 <table class="table table-dark table-hover">
     <thead>
-        <tr style="line-height: 3px;" class="active">
+        <tr style="line-height: 37px;">
             <th scope="row">
-                <p style="width: 50px">#</p>
+                <p class="m-0" style="width: 50px">#</p>
             </th>
             <th>
-                <p>Name</p>
+                <p class="m-0">Name</p>
             </th>
             <th>
-                <p>Price</p>
+                <p class="m-0">Price</p>
             </th>
 
             @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
@@ -46,7 +46,7 @@
                 }
                 else
                 {
-                    <tr>
+                    <tr style="line-height: 37px;">
                         <th>
                             @count
                         </th>
@@ -54,10 +54,10 @@
                         <td>@Html.DisplayFor(modelItem => item.Price)<b class="ml-1" style="font-size:10px;">EUR</b></td>
                         @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
                         {
-                    <td>
-                        <a onclick="showInPopup('@Url.Action("Edit", "Service",new { id = item.Id }, Context.Request.Scheme)', 'Edit Service')" class="btn btn-outline-warning text-white">Edit</a>
-                        <a onclick="showInPopup('@Url.Action("Delete", "Service", new { id = item.Id }, Context.Request.Scheme)', 'Delete Service')" class="btn btn-outline-danger text-white">Delete</a>
-                    </td>
+                            <td>
+                                <a onclick="showInPopup('@Url.Action("Edit", "Service",new { id = item.Id }, Context.Request.Scheme)', 'Edit Service')" class="btn btn-outline-warning text-white">Edit</a>
+                                <a onclick="showInPopup('@Url.Action("Delete", "Service", new { id = item.Id }, Context.Request.Scheme)', 'Delete Service')" class="btn btn-outline-danger text-white">Delete</a>
+                            </td>
                         }
 
                     </tr>
